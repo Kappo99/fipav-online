@@ -11,7 +11,7 @@ import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
 
@@ -38,13 +38,13 @@ public class NewsMockRepository implements INewsRepository {
     @Override
     public void fetchNews(String country, int page, long lastUpdate) {
 
-        NewsApiResponse newsApiResponse = null;
+        CampionatoApiResponse campionatoApiResponse = null;
         CampionatoJSONParserUtil campionatoJsonParserUtil = new CampionatoJSONParserUtil(application);
 
         switch (jsonParserType) {
             case GSON:
                 try {
-                    newsApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
+                    campionatoApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -54,8 +54,8 @@ public class NewsMockRepository implements INewsRepository {
                 break;
         }
 
-        if (newsApiResponse != null) {
-            saveDataInDatabase(newsApiResponse.getNewsList());
+        if (campionatoApiResponse != null) {
+            saveDataInDatabase(campionatoApiResponse.getNewsList());
         } else {
             newsResponseCallback.onFailure(application.getString(R.string.error_retrieving_news));
         }

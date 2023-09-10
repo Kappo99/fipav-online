@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.NewsResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.data.source.news.BaseFavoriteNewsDataSource;
@@ -91,8 +91,8 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public void onSuccessFromRemote(NewsApiResponse newsApiResponse, long lastUpdate) {
-        newsLocalDataSource.insertNews(newsApiResponse);
+    public void onSuccessFromRemote(CampionatoApiResponse campionatoApiResponse, long lastUpdate) {
+        newsLocalDataSource.insertNews(campionatoApiResponse);
     }
 
     @Override
@@ -102,15 +102,15 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public void onSuccessFromLocal(NewsApiResponse newsApiResponse) {
+    public void onSuccessFromLocal(CampionatoApiResponse campionatoApiResponse) {
         if (allNewsMutableLiveData.getValue() != null && allNewsMutableLiveData.getValue().isSuccess()) {
             List<Campionato> campionatoList = ((Result.NewsResponseSuccess)allNewsMutableLiveData.getValue()).getData().getNewsList();
-            campionatoList.addAll(newsApiResponse.getNewsList());
-            newsApiResponse.setNewsList(campionatoList);
-            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(newsApiResponse);
+            campionatoList.addAll(campionatoApiResponse.getNewsList());
+            campionatoApiResponse.setNewsList(campionatoList);
+            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(campionatoApiResponse);
             allNewsMutableLiveData.postValue(result);
         } else {
-            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(newsApiResponse);
+            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(campionatoApiResponse);
             allNewsMutableLiveData.postValue(result);
         }
     }

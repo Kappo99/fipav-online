@@ -6,7 +6,7 @@ import static it.unimib.fipavonline.util.Constants.UNEXPECTED_ERROR;
 
 import java.io.IOException;
 
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 
 /**
@@ -26,12 +26,12 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
 
     @Override
     public void getNews(String country, int page) {
-        NewsApiResponse newsApiResponse = null;
+        CampionatoApiResponse campionatoApiResponse = null;
 
         switch (jsonParserType) {
             case GSON:
                 try {
-                    newsApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
+                    campionatoApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -41,8 +41,8 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
                 break;
         }
 
-        if (newsApiResponse != null) {
-            newsCallback.onSuccessFromRemote(newsApiResponse, System.currentTimeMillis());
+        if (campionatoApiResponse != null) {
+            newsCallback.onSuccessFromRemote(campionatoApiResponse, System.currentTimeMillis());
         } else {
             newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
         }

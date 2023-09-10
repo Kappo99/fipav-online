@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.model.User;
 import it.unimib.fipavonline.data.source.news.BaseNewsLocalDataSource;
@@ -142,8 +142,8 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
     }
 
     @Override
-    public void onSuccessFromLocal(NewsApiResponse newsApiResponse) {
-        Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(newsApiResponse);
+    public void onSuccessFromLocal(CampionatoApiResponse campionatoApiResponse) {
+        Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(campionatoApiResponse);
         userFavoriteNewsMutableLiveData.postValue(result);
     }
 
@@ -159,7 +159,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
     }
 
     @Override
-    public void onSuccessFromRemote(NewsApiResponse newsApiResponse, long lastUpdate) {
+    public void onSuccessFromRemote(CampionatoApiResponse campionatoApiResponse, long lastUpdate) {
 
     }
 

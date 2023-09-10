@@ -8,15 +8,15 @@ import java.util.List;
  * Class to represent the API response of NewsAPI.org (https://newsapi.org)
  * associated with the endpoint "Top headlines" - /v2/top-headlines.
  */
-public class NewsApiResponse extends NewsResponse {
+public class CampionatoApiResponse extends NewsResponse {
     private String status;
     private int totalResults;
 
-    public NewsApiResponse() {
+    public CampionatoApiResponse() {
         super();
     }
 
-    public NewsApiResponse(String status, int totalResults, List<Campionato> articles) {
+    public CampionatoApiResponse(String status, int totalResults, List<Campionato> articles) {
         super(articles);
         this.status = status;
         this.totalResults = totalResults;
@@ -40,7 +40,7 @@ public class NewsApiResponse extends NewsResponse {
 
     @Override
     public String toString() {
-        return "NewsApiResponse{" +
+        return "CampionatoApiResponse{" +
                 "status='" + status + '\'' +
                 ", totalResults=" + totalResults +
                 '}';
@@ -64,21 +64,21 @@ public class NewsApiResponse extends NewsResponse {
         this.totalResults = source.readInt();
     }
 
-    protected NewsApiResponse(Parcel in) {
+    protected CampionatoApiResponse(Parcel in) {
         super(in);
         this.status = in.readString();
         this.totalResults = in.readInt();
     }
 
-    public static final Creator<NewsApiResponse> CREATOR = new Creator<NewsApiResponse>() {
+    public static final Creator<CampionatoApiResponse> CREATOR = new Creator<CampionatoApiResponse>() {
         @Override
-        public NewsApiResponse createFromParcel(Parcel source) {
-            return new NewsApiResponse(source);
+        public CampionatoApiResponse createFromParcel(Parcel source) {
+            return new CampionatoApiResponse(source);
         }
 
         @Override
-        public NewsApiResponse[] newArray(int size) {
-            return new NewsApiResponse[size];
+        public CampionatoApiResponse[] newArray(int size) {
+            return new CampionatoApiResponse[size];
         }
     };
 }

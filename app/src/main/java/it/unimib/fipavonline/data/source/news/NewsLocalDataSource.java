@@ -11,7 +11,7 @@ import java.util.List;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.util.DataEncryptionUtil;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
@@ -42,9 +42,9 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     public void getNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             //TODO Fix this instruction
-            NewsApiResponse newsApiResponse = new NewsApiResponse();
-            newsApiResponse.setNewsList(campionatoDao.getAll());
-            newsCallback.onSuccessFromLocal(newsApiResponse);
+            CampionatoApiResponse campionatoApiResponse = new CampionatoApiResponse();
+            campionatoApiResponse.setNewsList(campionatoDao.getAll());
+            newsCallback.onSuccessFromLocal(campionatoApiResponse);
         });
     }
 
@@ -103,14 +103,14 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
      * Saves the news in the local database.
      * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
-     * @param newsApiResponse the list of news to be written in the local database.
+     * @param campionatoApiResponse the list of news to be written in the local database.
      */
     @Override
-    public void insertNews(NewsApiResponse newsApiResponse) {
+    public void insertNews(CampionatoApiResponse campionatoApiResponse) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
             List<Campionato> allNews = campionatoDao.getAll();
-            List<Campionato> campionatoList = newsApiResponse.getNewsList();
+            List<Campionato> campionatoList = campionatoApiResponse.getNewsList();
 
             if (campionatoList != null) {
 
@@ -142,7 +142,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                 sharedPreferencesUtil.writeStringData(SHARED_PREFERENCES_FILE_NAME,
                         LAST_UPDATE, String.valueOf(System.currentTimeMillis()));
 
-                newsCallback.onSuccessFromLocal(newsApiResponse);
+                newsCallback.onSuccessFromLocal(campionatoApiResponse);
             }
         });
     }
@@ -187,8 +187,8 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                     campionatoList.get(i).setId(insertedNewsIds.get(i));
                 }
 
-                NewsApiResponse newsApiResponse = new NewsApiResponse();
-                newsApiResponse.setNewsList(campionatoList);
+                CampionatoApiResponse campionatoApiResponse = new CampionatoApiResponse();
+                campionatoApiResponse.setNewsList(campionatoList);
                 newsCallback.onSuccessSynchronization();
             }
         });

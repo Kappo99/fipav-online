@@ -16,7 +16,6 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +35,7 @@ import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.adapter.CampionatoRecyclerViewAdapter;
 import it.unimib.fipavonline.databinding.FragmentCampionatoListBinding;
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.NewsResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
@@ -175,7 +174,7 @@ public class CampionatoListFragment extends Fragment {
 
                     if (!newsViewModel.isLoading()) {
                         if (newsViewModel.isFirstLoading()) {
-                            newsViewModel.setTotalResults(((NewsApiResponse) newsResponse).getTotalResults());
+                            newsViewModel.setTotalResults(((CampionatoApiResponse) newsResponse).getTotalResults());
                             newsViewModel.setFirstLoading(false);
                             this.campionatoList.addAll(fetchedNews);
                             campionatoRecyclerViewAdapter.notifyItemRangeInserted(0,

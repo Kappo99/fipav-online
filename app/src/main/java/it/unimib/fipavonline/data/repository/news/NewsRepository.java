@@ -14,7 +14,7 @@ import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.NewsApiResponse;
+import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.data.service.NewsApiService;
 import it.unimib.fipavonline.util.ServiceLocator;
 import retrofit2.Call;
@@ -50,13 +50,13 @@ public class NewsRepository implements INewsRepository {
         // It gets the news from the Web Service if the last download
         // of the news has been performed more than FRESH_TIMEOUT value ago
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
-            Call<NewsApiResponse> newsResponseCall = newsApiService.getNews(country,
+            Call<CampionatoApiResponse> newsResponseCall = newsApiService.getNews(country,
                     TOP_HEADLINES_PAGE_SIZE_VALUE, page, application.getString(R.string.api_key));
 
-            newsResponseCall.enqueue(new Callback<NewsApiResponse>() {
+            newsResponseCall.enqueue(new Callback<CampionatoApiResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<NewsApiResponse> call,
-                                       @NonNull Response<NewsApiResponse> response) {
+                public void onResponse(@NonNull Call<CampionatoApiResponse> call,
+                                       @NonNull Response<CampionatoApiResponse> response) {
 
                     if (response.body() != null && response.isSuccessful() &&
                             !response.body().getStatus().equals("error")) {
@@ -68,7 +68,7 @@ public class NewsRepository implements INewsRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<NewsApiResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<CampionatoApiResponse> call, @NonNull Throwable t) {
                     newsResponseCallback.onFailure(t.getMessage());
                 }
             });
