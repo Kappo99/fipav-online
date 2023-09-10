@@ -13,9 +13,9 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_topic_news"
-        android:name="it.unimib.fipavonline.ui.main.TopicNewsFragment"
+        android:name="it.unimib.fipavonline.ui.main.PartitaListFragment"
         android:label="@string/topic_news"
-        tools:layout="@layout/fragment_topic_news" />
+        tools:layout="@layout/fragment_partita_list" />
     <fragment
         android:id="@+id/fragment_favorite_news"
         android:name="it.unimib.fipavonline.ui.main.FavoriteCampionatoFragment"

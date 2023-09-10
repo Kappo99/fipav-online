@@ -19,9 +19,9 @@ import it.unimib.fipavonline.R;
 /**
  * Fragment that shows the news associated with topics of interest of the user.
  */
-public class TopicNewsFragment extends Fragment {
+public class PartitaListFragment extends Fragment {
 
-    public TopicNewsFragment() {
+    public PartitaListFragment() {
         // Required empty public constructor
     }
 
@@ -29,10 +29,10 @@ public class TopicNewsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment.
      *
-     * @return A new instance of fragment TopicNewsFragment.
+     * @return A new instance of fragment PartitaListFragment.
      */
-    public static TopicNewsFragment newInstance() {
-        return new TopicNewsFragment();
+    public static PartitaListFragment newInstance() {
+        return new PartitaListFragment();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TopicNewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_topic_news, container, false);
+        return inflater.inflate(R.layout.fragment_partita_list, container, false);
     }
 
     @Override
