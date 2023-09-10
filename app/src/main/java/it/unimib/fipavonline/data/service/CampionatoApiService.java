@@ -8,7 +8,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Query;
 
 /**
- * Interface for Service to get news from the Web Service.
+ * Interface for Service to get campionato from the Web Service.
  */
 public interface CampionatoApiService {
     @GET(Constants.CAMPIONATO_ENDPOINT)
