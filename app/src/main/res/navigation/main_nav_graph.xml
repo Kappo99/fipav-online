@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/fragment_country_news"
-        android:name="it.unimib.fipavonline.ui.main.CountryNewsFragment"
+        android:name="it.unimib.fipavonline.ui.main.CampionatoListFragment"
         android:label="@string/country_news"
-        tools:layout="@layout/fragment_country_news" >
+        tools:layout="@layout/fragment_campionato_list" >
         <action
             android:id="@+id/action_countryNewsFragment_to_newsDetailFragment"
             app:destination="@id/fragment_news_details"

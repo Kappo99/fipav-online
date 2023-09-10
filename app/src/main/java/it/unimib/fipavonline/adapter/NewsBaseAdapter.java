@@ -49,7 +49,7 @@ public class NewsBaseAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.news_list_item, parent, false);
+                    inflate(R.layout.campionato_list_item, parent, false);
         }
 
         TextView textViewTitle = convertView.findViewById(R.id.textview_title);

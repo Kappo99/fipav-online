@@ -93,7 +93,7 @@ public class NewsDetailFragment extends Fragment {
                 findNavController(view).getPreviousBackStackEntry();
 
         // Logic to highlight the correct tab in BottomNavigationView when the user
-        // goes to NewsDetailFragment from a tab which is neither CountryNewsFragment
+        // goes to NewsDetailFragment from a tab which is neither CampionatoListFragment
         // nor FavoriteNewsFragment
         if (navBackStackEntry != null &&
                 navBackStackEntry.getDestination().getId() == R.id.fragment_country_news) {

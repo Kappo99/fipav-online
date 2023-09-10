@@ -71,5 +71,6 @@
     <string name="content_description_fav_addition">Add the news to the favorite list</string>
     <string name="content_description_fav_delete">Remove the news from the favorite list</string>
     <string name="content_description_news_cover_image">News cover image</string>
+    <string name="campionato_list_item_nome">Serie X</string>
 
 </resources>

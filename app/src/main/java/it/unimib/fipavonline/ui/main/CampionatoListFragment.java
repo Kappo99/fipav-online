@@ -33,8 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.fipavonline.R;
-import it.unimib.fipavonline.adapter.NewsRecyclerViewAdapter;
-import it.unimib.fipavonline.databinding.FragmentCountryNewsBinding;
+import it.unimib.fipavonline.adapter.CampionatoRecyclerViewAdapter;
+import it.unimib.fipavonline.databinding.FragmentCampionatoListBinding;
 import it.unimib.fipavonline.model.News;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.model.NewsResponse;
@@ -47,14 +47,14 @@ import it.unimib.fipavonline.util.SharedPreferencesUtil;
 /**
  * Fragment that shows the news associated with a Country.
  */
-public class CountryNewsFragment extends Fragment {
+public class CampionatoListFragment extends Fragment {
 
-    private static final String TAG = CountryNewsFragment.class.getSimpleName();
+    private static final String TAG = CampionatoListFragment.class.getSimpleName();
 
-    private FragmentCountryNewsBinding fragmentCountryNewsBinding;
+    private FragmentCampionatoListBinding fragmentCampionatoListBinding;
 
     private List<News> newsList;
-    private NewsRecyclerViewAdapter newsRecyclerViewAdapter;
+    private CampionatoRecyclerViewAdapter campionatoRecyclerViewAdapter;
     private NewsViewModel newsViewModel;
     private SharedPreferencesUtil sharedPreferencesUtil;
 
@@ -66,7 +66,7 @@ public class CountryNewsFragment extends Fragment {
     // Look at the if condition at line 237 to see how it is used
     private final int threshold = 1;
 
-    public CountryNewsFragment() {
+    public CampionatoListFragment() {
         // Required empty public constructor
     }
 
@@ -74,10 +74,10 @@ public class CountryNewsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment.
      *
-     * @return A new instance of fragment CountryNewsFragment.
+     * @return A new instance of fragment CampionatoListFragment.
      */
-    public static CountryNewsFragment newInstance() {
-        return new CountryNewsFragment();
+    public static CampionatoListFragment newInstance() {
+        return new CampionatoListFragment();
     }
 
     @Override
@@ -110,8 +110,8 @@ public class CountryNewsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        fragmentCountryNewsBinding = FragmentCountryNewsBinding.inflate(inflater, container, false);
-        return fragmentCountryNewsBinding.getRoot();
+        fragmentCampionatoListBinding = FragmentCampionatoListBinding.inflate(inflater, container, false);
+        return fragmentCampionatoListBinding.getRoot();
     }
 
     @Override
@@ -138,13 +138,13 @@ public class CountryNewsFragment extends Fragment {
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
 
-        newsRecyclerViewAdapter = new NewsRecyclerViewAdapter(newsList,
+        campionatoRecyclerViewAdapter = new CampionatoRecyclerViewAdapter(newsList,
                 requireActivity().getApplication(),
-                new NewsRecyclerViewAdapter.OnItemClickListener() {
+                new CampionatoRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onNewsItemClick(News news) {
-                CountryNewsFragmentDirections.ActionCountryNewsFragmentToNewsDetailFragment action =
-                        CountryNewsFragmentDirections.actionCountryNewsFragmentToNewsDetailFragment(news);
+                CampionatoListFragmentDirections.ActionCountryNewsFragmentToNewsDetailFragment action =
+                        CampionatoListFragmentDirections.actionCountryNewsFragmentToNewsDetailFragment(news);
                 Navigation.findNavController(view).navigate(action);
             }
 
@@ -155,7 +155,7 @@ public class CountryNewsFragment extends Fragment {
             }
         });
         recyclerViewCountryNews.setLayoutManager(layoutManager);
-        recyclerViewCountryNews.setAdapter(newsRecyclerViewAdapter);
+        recyclerViewCountryNews.setAdapter(campionatoRecyclerViewAdapter);
 
         String lastUpdate = "0";
         if (sharedPreferencesUtil.readStringData(
@@ -164,7 +164,7 @@ public class CountryNewsFragment extends Fragment {
                     SHARED_PREFERENCES_FILE_NAME, LAST_UPDATE);
         }
 
-        fragmentCountryNewsBinding.progressBar.setVisibility(View.VISIBLE);
+        fragmentCampionatoListBinding.progressBar.setVisibility(View.VISIBLE);
 
         // Observe the LiveData associated with the MutableLiveData containing all the news
         // returned by the method getNews(String, long) of NewsViewModel class.
@@ -185,15 +185,15 @@ public class CountryNewsFragment extends Fragment {
                             newsViewModel.setTotalResults(((NewsApiResponse) newsResponse).getTotalResults());
                             newsViewModel.setFirstLoading(false);
                             this.newsList.addAll(fetchedNews);
-                            newsRecyclerViewAdapter.notifyItemRangeInserted(0,
+                            campionatoRecyclerViewAdapter.notifyItemRangeInserted(0,
                                     this.newsList.size());
                         } else {
                             // Updates related to the favorite status of the news
                             newsList.clear();
                             newsList.addAll(fetchedNews);
-                            newsRecyclerViewAdapter.notifyItemChanged(0, fetchedNews.size());
+                            campionatoRecyclerViewAdapter.notifyItemChanged(0, fetchedNews.size());
                         }
-                        fragmentCountryNewsBinding.progressBar.setVisibility(View.GONE);
+                        fragmentCampionatoListBinding.progressBar.setVisibility(View.GONE);
                     } else {
                         newsViewModel.setLoading(false);
                         newsViewModel.setCurrentResults(newsList.size());
@@ -210,7 +210,7 @@ public class CountryNewsFragment extends Fragment {
                         for (int i = startIndex; i < fetchedNews.size(); i++) {
                             newsList.add(fetchedNews.get(i));
                         }
-                        newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, newsList.size());
+                        campionatoRecyclerViewAdapter.notifyItemRangeInserted(initialSize, newsList.size());
                     }
                 } else {
                     ErrorMessagesUtil errorMessagesUtil =
@@ -218,7 +218,7 @@ public class CountryNewsFragment extends Fragment {
                     Snackbar.make(view, errorMessagesUtil.
                                     getErrorMessage(((Result.Error)result).getMessage()),
                         Snackbar.LENGTH_SHORT).show();
-                    fragmentCountryNewsBinding.progressBar.setVisibility(View.GONE);
+                    fragmentCampionatoListBinding.progressBar.setVisibility(View.GONE);
                 }
             });
 
@@ -250,7 +250,7 @@ public class CountryNewsFragment extends Fragment {
 
                             newsViewModel.setLoading(true);
                             newsList.add(null);
-                            newsRecyclerViewAdapter.notifyItemRangeInserted(newsList.size(),
+                            campionatoRecyclerViewAdapter.notifyItemRangeInserted(newsList.size(),
                                     newsList.size() + 1);
 
                             int page = newsViewModel.getPage() + 1;
@@ -286,6 +286,6 @@ public class CountryNewsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        fragmentCountryNewsBinding = null;
+        fragmentCampionatoListBinding = null;
     }
 }

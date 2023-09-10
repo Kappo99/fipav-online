@@ -24,7 +24,7 @@ import it.unimib.fipavonline.util.DateTimeUtil;
  * Custom adapter that extends RecyclerView.Adapter to show an ArrayList of News
  * with a RecyclerView.
  */
-public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int NEWS_VIEW_TYPE = 0;
     private static final int LOADING_VIEW_TYPE = 1;
@@ -42,8 +42,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final Application application;
     private final OnItemClickListener onItemClickListener;
 
-    public NewsRecyclerViewAdapter(List<News> newsList, Application application,
-                                   OnItemClickListener onItemClickListener) {
+    public CampionatoRecyclerViewAdapter(List<News> newsList, Application application,
+                                         OnItemClickListener onItemClickListener) {
         this.newsList = newsList;
         this.application = application;
         this.onItemClickListener = onItemClickListener;
@@ -66,7 +66,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         if (viewType == NEWS_VIEW_TYPE) {
             view = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.news_list_item, parent, false);
+                    inflate(R.layout.campionato_list_item, parent, false);
             return new NewsViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).
@@ -95,31 +95,25 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     /**
      * Custom ViewHolder to bind data to the RecyclerView items.
      */
-    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final ImageView imageViewSesso;
         private final TextView textViewTitle;
-        private final TextView textViewDate;
-        private final ImageView imageViewNewsCoverImage;
         private final ImageView imageViewFavoriteNews;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.textview_title);
-            textViewDate = itemView.findViewById(R.id.textview_date);
-            imageViewNewsCoverImage = itemView.findViewById(R.id.imageview_news_cover_image);
-            imageViewFavoriteNews = itemView.findViewById(R.id.imageview_favorite_news);
+            imageViewSesso = itemView.findViewById(R.id.imageview_sex);
+            textViewTitle = itemView.findViewById(R.id.textview_nome);
+            imageViewFavoriteNews = itemView.findViewById(R.id.imageview_favorite);
             itemView.setOnClickListener(this);
             imageViewFavoriteNews.setOnClickListener(this);
         }
 
         public void bind(News news) {
-            textViewTitle.setText(news.getTitle());
-            textViewDate.setText(DateTimeUtil.getDate(news.getDate()));
-            setImageViewFavoriteNews(newsList.get(getAdapterPosition()).isFavorite());
-            Glide.with(application)
-                    .load(news.getUrlToImage())
-                    .placeholder(R.drawable.ic_baseline_cloud_download_24)
-                    .into(imageViewNewsCoverImage);
+            textViewTitle.setText(news.getNome());
+            setImageViewSesso(news.getSesso());
+            setImageViewFavoriteNews(news.isFavorite());
         }
 
         @Override
@@ -129,6 +123,18 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 onItemClickListener.onFavoriteButtonPressed(getAdapterPosition());
             } else {
                 onItemClickListener.onNewsItemClick(newsList.get(getAdapterPosition()));
+            }
+        }
+
+        private void setImageViewSesso(String sesso) {
+            if (sesso.equals("M")) {
+                imageViewSesso.setImageDrawable(
+                        AppCompatResources.getDrawable(application,
+                                R.drawable.ic_baseline_man_24));
+            } else {
+                imageViewSesso.setImageDrawable(
+                        AppCompatResources.getDrawable(application,
+                                R.drawable.ic_baseline_woman_24));
             }
         }
 
