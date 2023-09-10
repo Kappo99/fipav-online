@@ -49,7 +49,7 @@ public class CampionatoApiResponse extends CampionatoResponse {
 
     @Override
     public String toString() {
-        return "CampionatoApiResponse{" +
+        return "CampionatoApiResponse {" +
                 "status=" + status +
                 ", info='" + info + '\'' +
                 ", results=" + results +
