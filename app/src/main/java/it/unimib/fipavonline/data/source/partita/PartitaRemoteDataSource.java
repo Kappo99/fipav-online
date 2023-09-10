@@ -42,8 +42,10 @@ public class PartitaRemoteDataSource extends BasePartitaRemoteDataSource {
                 Constants.SHARED_PREFERENCES_FILE_NAME, Constants.FAVORITE_CAMPIONATO_LIST);
         List<Campionato> favoriteCampionatoList = CampionatoJSONParserUtil.parseJSONToList(jsonList);
         List<Long> favoriteIdList = new ArrayList<>();
-        for (Campionato c : favoriteCampionatoList) {
-            favoriteIdList.add(c.getId());
+        if (favoriteCampionatoList != null) {
+            for (Campionato c : favoriteCampionatoList) {
+                favoriteIdList.add(c.getId());
+            }
         }
 
         Call<PartitaApiResponse> partitaResponseCall =
