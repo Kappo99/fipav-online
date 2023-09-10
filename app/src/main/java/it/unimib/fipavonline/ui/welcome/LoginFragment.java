@@ -152,7 +152,7 @@ public class LoginFragment extends Fragment {
         progressIndicator.setVisibility(View.VISIBLE);
 
         userViewModel.getUserFavoriteCampionatoMutableLiveData(user.getIdToken()).observe(
-            getViewLifecycleOwner(), userFavoriteNewsRetrievalResult -> {
+            getViewLifecycleOwner(), userFavoriteCampionatoRetrievalResult -> {
                 progressIndicator.setVisibility(View.GONE);
                 startActivityBasedOnCondition(MainActivityWithBottomNavigationView.class, destination);
             }
