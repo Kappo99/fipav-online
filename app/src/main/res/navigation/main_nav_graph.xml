@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/fragment_country_news"
         android:name="it.unimib.fipavonline.ui.main.CampionatoListFragment"
-        android:label="@string/country_news"
+        android:label="@string/campionato_list"
         tools:layout="@layout/fragment_campionato_list" >
     </fragment>
     <fragment
         android:id="@+id/fragment_topic_news"
         android:name="it.unimib.fipavonline.ui.main.PartitaListFragment"
-        android:label="@string/topic_news"
+        android:label="@string/partita_list"
         tools:layout="@layout/fragment_partita_list" />
     <fragment
         android:id="@+id/fragment_favorite_news"
         android:name="it.unimib.fipavonline.ui.main.FavoriteCampionatoFragment"
-        android:label="@string/favorite_news"
+        android:label="@string/favorite_campionato"
         tools:layout="@layout/fragment_favorite_campionato" >
     </fragment>
     <fragment

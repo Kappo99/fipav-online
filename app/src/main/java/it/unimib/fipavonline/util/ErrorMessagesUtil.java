@@ -27,7 +27,7 @@ public class ErrorMessagesUtil {
     public String getErrorMessage(String errorType) {
         switch(errorType) {
             case RETROFIT_ERROR:
-                return application.getString(R.string.error_retrieving_news);
+                return application.getString(R.string.error_retrieving_api);
             case API_KEY_ERROR:
                 return application.getString(R.string.api_key_error);
             default:
