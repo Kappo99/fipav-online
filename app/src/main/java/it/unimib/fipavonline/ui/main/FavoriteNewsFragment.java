@@ -125,7 +125,7 @@ public class FavoriteNewsFragment extends Fragment {
             if (result != null) {
                 if (result.isSuccess()) {
                     campionatoList.clear();
-                    campionatoList.addAll(((Result.NewsResponseSuccess)result).getData().getCampionatoList());
+                    campionatoList.addAll(((Result.CampionatoResponseSuccess)result).getData().getCampionatoList());
                     campionatoListAdapter.notifyDataSetChanged();
                     if (isFirstLoading) {
                         sharedPreferencesUtil.writeBooleanData(Constants.SHARED_PREFERENCES_FILE_NAME,

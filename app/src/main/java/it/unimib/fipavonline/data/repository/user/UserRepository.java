@@ -143,7 +143,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
 
     @Override
     public void onSuccessFromLocal(CampionatoApiResponse campionatoApiResponse) {
-        Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(campionatoApiResponse);
+        Result.CampionatoResponseSuccess result = new Result.CampionatoResponseSuccess(campionatoApiResponse);
         userFavoriteNewsMutableLiveData.postValue(result);
     }
 
@@ -155,7 +155,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
 
     @Override
     public void onSuccessSynchronization() {
-        userFavoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(null));
+        userFavoriteNewsMutableLiveData.postValue(new Result.CampionatoResponseSuccess(null));
     }
 
     @Override

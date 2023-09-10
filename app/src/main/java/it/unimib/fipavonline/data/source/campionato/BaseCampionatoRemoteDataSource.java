@@ -6,7 +6,7 @@ package it.unimib.fipavonline.data.source.campionato;
 public abstract class BaseCampionatoRemoteDataSource {
     protected CampionatoCallback campionatoCallback;
 
-    public void setNewsCallback(CampionatoCallback campionatoCallback) {
+    public void setCampionatoCallback(CampionatoCallback campionatoCallback) {
         this.campionatoCallback = campionatoCallback;
     }
 

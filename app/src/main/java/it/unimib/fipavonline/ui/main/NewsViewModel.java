@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.Result;
-import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.ICampionatoRepositoryWithLiveData;
 
 /**
  * ViewModel to manage the list of Campionato and the list of favorite Campionato.
@@ -14,7 +14,7 @@ public class NewsViewModel extends ViewModel {
 
     private static final String TAG = NewsViewModel.class.getSimpleName();
 
-    private final INewsRepositoryWithLiveData newsRepositoryWithLiveData;
+    private final ICampionatoRepositoryWithLiveData newsRepositoryWithLiveData;
     private int page;
     private int currentResults;
     private int totalResults;
@@ -23,8 +23,8 @@ public class NewsViewModel extends ViewModel {
     private MutableLiveData<Result> newsListLiveData;
     private MutableLiveData<Result> favoriteNewsListLiveData;
 
-    public NewsViewModel(INewsRepositoryWithLiveData iNewsRepositoryWithLiveData) {
-        this.newsRepositoryWithLiveData = iNewsRepositoryWithLiveData;
+    public NewsViewModel(ICampionatoRepositoryWithLiveData iCampionatoRepositoryWithLiveData) {
+        this.newsRepositoryWithLiveData = iCampionatoRepositoryWithLiveData;
         this.page = 1;
         this.totalResults = 0;
         this.firstLoading = true;
@@ -59,11 +59,11 @@ public class NewsViewModel extends ViewModel {
      * @param campionato The campionato to be updated.
      */
     public void updateNews(Campionato campionato) {
-        newsRepositoryWithLiveData.updateNews(campionato);
+        newsRepositoryWithLiveData.updateCampionato(campionato);
     }
 
     public void fetchNews() {
-        newsRepositoryWithLiveData.fetchNews();
+        newsRepositoryWithLiveData.fetchCampionato();
     }
 
     /**
@@ -71,7 +71,7 @@ public class NewsViewModel extends ViewModel {
      * and to associate it with the LiveData object.
      */
     private void fetchNews(long lastUpdate) {
-        newsListLiveData = newsRepositoryWithLiveData.fetchNews(lastUpdate);
+        newsListLiveData = newsRepositoryWithLiveData.fetchCampionato(lastUpdate);
     }
 
     /**
@@ -79,7 +79,7 @@ public class NewsViewModel extends ViewModel {
      * and to associate it with the LiveData object.
      */
     private void getFavoriteNews(boolean firstLoading) {
-        favoriteNewsListLiveData = newsRepositoryWithLiveData.getFavoriteNews(firstLoading);
+        favoriteNewsListLiveData = newsRepositoryWithLiveData.getFavoriteCampionato(firstLoading);
     }
 
     /**
@@ -87,14 +87,14 @@ public class NewsViewModel extends ViewModel {
      * @param campionato The campionato to be removed from the list of favorite campionato.
      */
     public void removeFromFavorite(Campionato campionato) {
-        newsRepositoryWithLiveData.updateNews(campionato);
+        newsRepositoryWithLiveData.updateCampionato(campionato);
     }
 
     /**
      * Clears the list of favorite news.
      */
     public void deleteAllFavoriteNews() {
-        newsRepositoryWithLiveData.deleteFavoriteNews();
+        newsRepositoryWithLiveData.deleteFavoriteCampionato();
     }
 
     public int getPage() {

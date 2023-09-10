@@ -7,7 +7,7 @@ import it.unimib.fipavonline.model.CampionatoApiResponse;
 
 /**
  * Interface to send data from DataSource to Repositories
- * that implement INewsRepositoryWithLiveData interface.
+ * that implement ICampionatoRepositoryWithLiveData interface.
  */
 public interface CampionatoCallback {
     void onSuccessFromRemote(CampionatoApiResponse campionatoApiResponse, long lastUpdate);

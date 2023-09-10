@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.ICampionatoRepositoryWithLiveData;
 
 /**
  * Custom ViewModelProvider to be able to have a custom constructor
@@ -12,15 +12,15 @@ import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveD
  */
 public class NewsViewModelFactory implements ViewModelProvider.Factory {
 
-    private final INewsRepositoryWithLiveData iNewsRepositoryWithLiveData;
+    private final ICampionatoRepositoryWithLiveData iCampionatoRepositoryWithLiveData;
 
-    public NewsViewModelFactory(INewsRepositoryWithLiveData iNewsRepositoryWithLiveData) {
-        this.iNewsRepositoryWithLiveData = iNewsRepositoryWithLiveData;
+    public NewsViewModelFactory(ICampionatoRepositoryWithLiveData iCampionatoRepositoryWithLiveData) {
+        this.iCampionatoRepositoryWithLiveData = iCampionatoRepositoryWithLiveData;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new NewsViewModel(iNewsRepositoryWithLiveData);
+        return (T) new NewsViewModel(iCampionatoRepositoryWithLiveData);
     }
 }

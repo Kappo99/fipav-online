@@ -33,12 +33,12 @@ import java.util.List;
 
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.adapter.CampionatoRecyclerViewAdapter;
+import it.unimib.fipavonline.data.repository.campionato.ICampionatoRepositoryWithLiveData;
 import it.unimib.fipavonline.databinding.FragmentCampionatoListBinding;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
-import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
@@ -85,7 +85,7 @@ public class CampionatoListFragment extends Fragment {
 
         sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
 
-        INewsRepositoryWithLiveData newsRepositoryWithLiveData =
+        ICampionatoRepositoryWithLiveData newsRepositoryWithLiveData =
                 ServiceLocator.getInstance().getNewsRepository(
                         requireActivity().getApplication(),
                         requireActivity().getApplication().getResources().getBoolean(R.bool.debug_mode)
@@ -169,7 +169,7 @@ public class CampionatoListFragment extends Fragment {
             result -> {
                 if (result.isSuccess()) {
 
-                    CampionatoResponse campionatoResponse = ((Result.NewsResponseSuccess) result).getData();
+                    CampionatoResponse campionatoResponse = ((Result.CampionatoResponseSuccess) result).getData();
                     List<Campionato> fetchedNews = campionatoResponse.getCampionatoList();
 
                     if (!newsViewModel.isLoading()) {

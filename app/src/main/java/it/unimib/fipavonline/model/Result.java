@@ -8,7 +8,7 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof NewsResponseSuccess || this instanceof UserResponseSuccess) {
+        if (this instanceof CampionatoResponseSuccess || this instanceof UserResponseSuccess) {
             return true;
         } else {
             return false;
@@ -19,9 +19,9 @@ public abstract class Result {
      * Class that represents a successful action during the interaction
      * with a Web Service or a local database.
      */
-    public static final class NewsResponseSuccess extends Result {
+    public static final class CampionatoResponseSuccess extends Result {
         private final CampionatoResponse campionatoResponse;
-        public NewsResponseSuccess(CampionatoResponse campionatoResponse) {
+        public CampionatoResponseSuccess(CampionatoResponse campionatoResponse) {
             this.campionatoResponse = campionatoResponse;
         }
         public CampionatoResponse getData() {

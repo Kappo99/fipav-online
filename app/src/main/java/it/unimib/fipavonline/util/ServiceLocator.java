@@ -10,7 +10,7 @@ import java.security.GeneralSecurityException;
 
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
-import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.ICampionatoRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.campionato.CampionatoRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.data.repository.user.UserRepository;
@@ -74,12 +74,12 @@ public class ServiceLocator {
     }
 
     /**
-     * Returns an instance of INewsRepositoryWithLiveData.
+     * Returns an instance of ICampionatoRepositoryWithLiveData.
      * @param application Param for accessing the global application state.
      * @param debugMode Param to establish if the application is run in debug mode.
-     * @return An instance of INewsRepositoryWithLiveData.
+     * @return An instance of ICampionatoRepositoryWithLiveData.
      */
-    public INewsRepositoryWithLiveData getNewsRepository(Application application, boolean debugMode) {
+    public ICampionatoRepositoryWithLiveData getNewsRepository(Application application, boolean debugMode) {
         BaseCampionatoRemoteDataSource newsRemoteDataSource;
         BaseCampionatoLocalDataSource newsLocalDataSource;
         BaseFavoriteCampionatoDataSource favoriteNewsDataSource;
