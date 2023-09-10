@@ -7,7 +7,7 @@
     tools:context=".ui.main.CampionatoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_country_news"
+        android:id="@+id/recyclerview_campionato_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="80dp"

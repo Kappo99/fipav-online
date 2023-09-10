@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +43,7 @@ import it.unimib.fipavonline.util.ServiceLocator;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
 /**
- * Fragment that shows the news associated with a Country.
+ * Fragment that shows the campionato associated with a Country.
  */
 public class CampionatoListFragment extends Fragment {
 
@@ -54,16 +53,8 @@ public class CampionatoListFragment extends Fragment {
 
     private List<Campionato> campionatoList;
     private CampionatoRecyclerViewAdapter campionatoRecyclerViewAdapter;
-    private NewsViewModel newsViewModel;
+    private CampionatoViewModel campionatoViewModel;
     private SharedPreferencesUtil sharedPreferencesUtil;
-
-    private int totalItemCount; // Total number of news
-    private int lastVisibleItem; // The position of the last visible news item
-    private int visibleItemCount; // Number or total visible news items
-
-    // Based on this value, the process of loading more news is anticipated or postponed
-    // Look at the if condition at line 237 to see how it is used
-    private final int threshold = 1;
 
     public CampionatoListFragment() {
         // Required empty public constructor
@@ -85,18 +76,18 @@ public class CampionatoListFragment extends Fragment {
 
         sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
 
-        ICampionatoRepositoryWithLiveData newsRepositoryWithLiveData =
-                ServiceLocator.getInstance().getNewsRepository(
+        ICampionatoRepositoryWithLiveData campionatoRepositoryWithLiveData =
+                ServiceLocator.getInstance().getCampionatoRepository(
                         requireActivity().getApplication(),
                         requireActivity().getApplication().getResources().getBoolean(R.bool.debug_mode)
                 );
 
-        if (newsRepositoryWithLiveData != null) {
+        if (campionatoRepositoryWithLiveData != null) {
             // This is the way to create a ViewModel with custom parameters
-            // (see NewsViewModelFactory class for the implementation details)
-            newsViewModel = new ViewModelProvider(
+            // (see CampionatoViewModelFactory class for the implementation details)
+            campionatoViewModel = new ViewModelProvider(
                     requireActivity(),
-                    new NewsViewModelFactory(newsRepositoryWithLiveData)).get(NewsViewModel.class);
+                    new CampionatoViewModelFactory(campionatoRepositoryWithLiveData)).get(CampionatoViewModel.class);
         } else {
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
                     getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
@@ -132,7 +123,7 @@ public class CampionatoListFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerViewCountryNews = view.findViewById(R.id.recyclerview_country_news);
+        RecyclerView recyclerViewCampionatoList = view.findViewById(R.id.recyclerview_campionato_list);
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
@@ -143,11 +134,11 @@ public class CampionatoListFragment extends Fragment {
             @Override
             public void onFavoriteButtonPressed(int position) {
                 campionatoList.get(position).setFavorite(!campionatoList.get(position).isFavorite());
-                newsViewModel.updateNews(campionatoList.get(position));
+                campionatoViewModel.updateCampionato(campionatoList.get(position));
             }
         });
-        recyclerViewCountryNews.setLayoutManager(layoutManager);
-        recyclerViewCountryNews.setAdapter(campionatoRecyclerViewAdapter);
+        recyclerViewCampionatoList.setLayoutManager(layoutManager);
+        recyclerViewCampionatoList.setAdapter(campionatoRecyclerViewAdapter);
 
         String lastUpdate = "0";
         if (sharedPreferencesUtil.readStringData(
@@ -158,37 +149,37 @@ public class CampionatoListFragment extends Fragment {
 
         fragmentCampionatoListBinding.progressBar.setVisibility(View.VISIBLE);
 
-        // Observe the LiveData associated with the MutableLiveData containing all the news
-        // returned by the method getNews(String, long) of NewsViewModel class.
+        // Observe the LiveData associated with the MutableLiveData containing all the campionato
+        // returned by the method getCampionato(long) of CampionatoViewModel class.
         // Pay attention to which LifecycleOwner you give as value to
         // the method observe(LifecycleOwner, Observer).
         // In this case, getViewLifecycleOwner() refers to
         // androidx.fragment.app.FragmentViewLifecycleOwner and not to the Fragment itself.
         // You can read more details here: https://stackoverflow.com/a/58663143/4255576
-        newsViewModel.getNews(Long.parseLong(lastUpdate)).observe(getViewLifecycleOwner(),
+        campionatoViewModel.getCampionato(Long.parseLong(lastUpdate)).observe(getViewLifecycleOwner(),
             result -> {
                 if (result.isSuccess()) {
 
                     CampionatoResponse campionatoResponse = ((Result.CampionatoResponseSuccess) result).getData();
-                    List<Campionato> fetchedNews = campionatoResponse.getCampionatoList();
+                    List<Campionato> fetchedCampionato = campionatoResponse.getCampionatoList();
 
-                    if (!newsViewModel.isLoading()) {
-                        if (newsViewModel.isFirstLoading()) {
-                            newsViewModel.setTotalResults(((CampionatoApiResponse) campionatoResponse).getResults());
-                            newsViewModel.setFirstLoading(false);
-                            this.campionatoList.addAll(fetchedNews);
+                    if (!campionatoViewModel.isLoading()) {
+                        if (campionatoViewModel.isFirstLoading()) {
+                            campionatoViewModel.setTotalResults(((CampionatoApiResponse) campionatoResponse).getResults());
+                            campionatoViewModel.setFirstLoading(false);
+                            this.campionatoList.addAll(fetchedCampionato);
                             campionatoRecyclerViewAdapter.notifyItemRangeInserted(0,
                                     this.campionatoList.size());
                         } else {
-                            // Updates related to the favorite status of the news
+                            // Updates related to the favorite status of the campionato
                             campionatoList.clear();
-                            campionatoList.addAll(fetchedNews);
-                            campionatoRecyclerViewAdapter.notifyItemChanged(0, fetchedNews.size());
+                            campionatoList.addAll(fetchedCampionato);
+                            campionatoRecyclerViewAdapter.notifyItemChanged(0, fetchedCampionato.size());
                         }
                         fragmentCampionatoListBinding.progressBar.setVisibility(View.GONE);
                     } else {
-                        newsViewModel.setLoading(false);
-                        newsViewModel.setCurrentResults(campionatoList.size());
+                        campionatoViewModel.setLoading(false);
+                        campionatoViewModel.setCurrentResults(campionatoList.size());
 
                         int initialSize = campionatoList.size();
 
@@ -197,10 +188,10 @@ public class CampionatoListFragment extends Fragment {
                                 campionatoList.remove(campionatoList.get(i));
                             }
                         }
-                        int startIndex = (newsViewModel.getPage()*TOP_HEADLINES_PAGE_SIZE_VALUE) -
+                        int startIndex = (campionatoViewModel.getPage()*TOP_HEADLINES_PAGE_SIZE_VALUE) -
                                                                     TOP_HEADLINES_PAGE_SIZE_VALUE;
-                        for (int i = startIndex; i < fetchedNews.size(); i++) {
-                            campionatoList.add(fetchedNews.get(i));
+                        for (int i = startIndex; i < fetchedCampionato.size(); i++) {
+                            campionatoList.add(fetchedCampionato.get(i));
                         }
                         campionatoRecyclerViewAdapter.notifyItemRangeInserted(initialSize, campionatoList.size());
                     }
@@ -213,46 +204,6 @@ public class CampionatoListFragment extends Fragment {
                     fragmentCampionatoListBinding.progressBar.setVisibility(View.GONE);
                 }
             });
-
-        recyclerViewCountryNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                boolean isConnected = isConnected();
-
-                if (isConnected && totalItemCount != newsViewModel.getTotalResults()) {
-
-                    totalItemCount = layoutManager.getItemCount();
-                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                    visibleItemCount = layoutManager.getChildCount();
-
-                    // Condition to enable the loading of other news while the user is scrolling the list
-                    if (totalItemCount == visibleItemCount ||
-                            (totalItemCount <= (lastVisibleItem + threshold) &&
-                                    dy > 0 &&
-                                    !newsViewModel.isLoading()
-                            ) &&
-                            newsViewModel.getNewsResponseLiveData().getValue() != null &&
-                            newsViewModel.getCurrentResults() != newsViewModel.getTotalResults()
-                    ) {
-                        MutableLiveData<Result> newsListMutableLiveData = newsViewModel.getNewsResponseLiveData();
-
-                        if (newsListMutableLiveData.getValue() != null &&
-                                newsListMutableLiveData.getValue().isSuccess()) {
-
-                            newsViewModel.setLoading(true);
-                            campionatoList.add(null);
-                            campionatoRecyclerViewAdapter.notifyItemRangeInserted(campionatoList.size(),
-                                    campionatoList.size() + 1);
-
-                            int page = newsViewModel.getPage() + 1;
-                            newsViewModel.setPage(page);
-                            newsViewModel.fetchNews();
-                        }
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -271,8 +222,8 @@ public class CampionatoListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        newsViewModel.setFirstLoading(true);
-        newsViewModel.setLoading(false);
+        campionatoViewModel.setFirstLoading(true);
+        campionatoViewModel.setLoading(false);
     }
 
     @Override

@@ -34,16 +34,16 @@ import it.unimib.fipavonline.util.SharedPreferencesUtil;
 /**
  * Fragment that shows the favorite news of the user.
  */
-public class FavoriteNewsFragment extends Fragment {
+public class FavoriteCampionatoFragment extends Fragment {
 
-    private static final String TAG = FavoriteNewsFragment.class.getSimpleName();
+    private static final String TAG = FavoriteCampionatoFragment.class.getSimpleName();
 
     private List<Campionato> campionatoList;
     private CampionatoListAdapter campionatoListAdapter;
     private ProgressBar progressBar;
-    private NewsViewModel newsViewModel;
+    private CampionatoViewModel campionatoViewModel;
 
-    public FavoriteNewsFragment() {
+    public FavoriteCampionatoFragment() {
         // Required empty public constructor
     }
 
@@ -51,24 +51,24 @@ public class FavoriteNewsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment.
      *
-     * @return A new instance of fragment FavoriteNewsFragment.
+     * @return A new instance of fragment FavoriteCampionatoFragment.
      */
-    public static FavoriteNewsFragment newInstance() {
-        return new FavoriteNewsFragment();
+    public static FavoriteCampionatoFragment newInstance() {
+        return new FavoriteCampionatoFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         campionatoList = new ArrayList<>();
-        newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
+        campionatoViewModel = new ViewModelProvider(requireActivity()).get(CampionatoViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_news, container, false);
+        return inflater.inflate(R.layout.fragment_favorite_campionato, container, false);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class FavoriteNewsFragment extends Fragment {
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.delete) {
-                    newsViewModel.deleteAllFavoriteNews();
+                    campionatoViewModel.deleteAllFavoriteCampionato();
                 }
                 return false;
             }
@@ -99,10 +99,10 @@ public class FavoriteNewsFragment extends Fragment {
 
         campionatoListAdapter =
                 new CampionatoListAdapter(requireContext(), requireActivity().getApplication(),
-                        R.layout.favorite_news_list_item, campionatoList,
+                        R.layout.favorite_campionato_list_item, campionatoList,
                         news -> {
                             news.setFavorite(false);
-                            newsViewModel.removeFromFavorite(news);
+                            campionatoViewModel.removeFromFavorite(news);
                         });
         listViewFavNews.setAdapter(campionatoListAdapter);
 
@@ -115,13 +115,13 @@ public class FavoriteNewsFragment extends Fragment {
                 Constants.SHARED_PREFERENCES_FIRST_LOADING);
 
         // Observe the LiveData associated with the MutableLiveData containing the favorite news
-        // returned by the method getFavoriteNewsLiveData() of NewsViewModel class.
+        // returned by the method getFavoriteNewsLiveData() of CampionatoViewModel class.
         // Pay attention to which LifecycleOwner you give as value to
         // the method observe(LifecycleOwner, Observer).
         // In this case, getViewLifecycleOwner() refers to
         // androidx.fragment.app.FragmentViewLifecycleOwner and not to the Fragment itself.
         // You can read more details here: https://stackoverflow.com/a/58663143/4255576
-        newsViewModel.getFavoriteNewsLiveData(isFirstLoading).observe(getViewLifecycleOwner(), result -> {
+        campionatoViewModel.getFavoriteCampionatoLiveData(isFirstLoading).observe(getViewLifecycleOwner(), result -> {
             if (result != null) {
                 if (result.isSuccess()) {
                     campionatoList.clear();

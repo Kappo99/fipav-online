@@ -114,7 +114,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.imageview_favorite_news) {
+            if (v.getId() == R.id.imageview_favorite) {
                 setImageViewFavoriteNews(!campionatoList.get(getAdapterPosition()).isFavorite());
                 onItemClickListener.onFavoriteButtonPressed(getAdapterPosition());
             }

@@ -54,18 +54,18 @@ public class CampionatoListAdapter extends ArrayAdapter<Campionato> {
                     inflate(layout, parent, false);
         }
 
-        TextView textViewTitle = convertView.findViewById(R.id.textview_title);
+        TextView textViewNome = convertView.findViewById(R.id.textview_nome);
         ImageView imageViewSesso = convertView.findViewById(R.id.imageview_sex);
-        ImageView imageViewFavoriteCampionato = convertView.findViewById(R.id.imageview_favorite_news);
+        ImageView imageViewFavorite = convertView.findViewById(R.id.imageview_favorite);
 
-        imageViewFavoriteCampionato.setOnClickListener(new View.OnClickListener() {
+        imageViewFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onFavoriteButtonClickListener.onFavoriteButtonClick(campionatoList.get(position));
             }
         });
 
-        textViewTitle.setText(campionatoList.get(position).getNome());
+        textViewNome.setText(campionatoList.get(position).getNome());
         setImageViewSesso(imageViewSesso, campionatoList.get(position).getSesso());
 
         return convertView;

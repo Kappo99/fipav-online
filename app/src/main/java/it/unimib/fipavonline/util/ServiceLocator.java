@@ -79,27 +79,27 @@ public class ServiceLocator {
      * @param debugMode Param to establish if the application is run in debug mode.
      * @return An instance of ICampionatoRepositoryWithLiveData.
      */
-    public ICampionatoRepositoryWithLiveData getNewsRepository(Application application, boolean debugMode) {
-        BaseCampionatoRemoteDataSource newsRemoteDataSource;
-        BaseCampionatoLocalDataSource newsLocalDataSource;
-        BaseFavoriteCampionatoDataSource favoriteNewsDataSource;
+    public ICampionatoRepositoryWithLiveData getCampionatoRepository(Application application, boolean debugMode) {
+        BaseCampionatoRemoteDataSource campionatoRemoteDataSource;
+        BaseCampionatoLocalDataSource campionatoLocalDataSource;
+        BaseFavoriteCampionatoDataSource favoriteCampionatoDataSource;
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
         DataEncryptionUtil dataEncryptionUtil = new DataEncryptionUtil(application);
 
         if (debugMode) {
             CampionatoJSONParserUtil campionatoJsonParserUtil = new CampionatoJSONParserUtil(application);
-            newsRemoteDataSource =
+            campionatoRemoteDataSource =
                     new CampionatoMockRemoteDataSource(campionatoJsonParserUtil, CampionatoJSONParserUtil.JsonParserType.GSON);
         } else {
-            newsRemoteDataSource =
+            campionatoRemoteDataSource =
                     new CampionatoRemoteDataSource(application.getString(R.string.api_key));
         }
 
-        newsLocalDataSource = new CampionatoLocalDataSource(getFipavOnlineDao(application),
+        campionatoLocalDataSource = new CampionatoLocalDataSource(getFipavOnlineDao(application),
                 sharedPreferencesUtil, dataEncryptionUtil);
 
         try {
-            favoriteNewsDataSource = new FavoriteCampionatoDataSource(dataEncryptionUtil.
+            favoriteCampionatoDataSource = new FavoriteCampionatoDataSource(dataEncryptionUtil.
                     readSecretDataWithEncryptedSharedPreferences(
                             ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN
                     )
@@ -108,8 +108,8 @@ public class ServiceLocator {
             return null;
         }
 
-        return new CampionatoRepositoryWithLiveData(newsRemoteDataSource,
-                newsLocalDataSource, favoriteNewsDataSource);
+        return new CampionatoRepositoryWithLiveData(campionatoRemoteDataSource,
+                campionatoLocalDataSource, favoriteCampionatoDataSource);
     }
 
     /**
@@ -127,11 +127,11 @@ public class ServiceLocator {
 
         DataEncryptionUtil dataEncryptionUtil = new DataEncryptionUtil(application);
 
-        BaseCampionatoLocalDataSource newsLocalDataSource =
+        BaseCampionatoLocalDataSource campionatoLocalDataSource =
                 new CampionatoLocalDataSource(getFipavOnlineDao(application), sharedPreferencesUtil,
                         dataEncryptionUtil);
 
         return new UserRepository(userRemoteAuthenticationDataSource,
-                userDataRemoteDataSource, newsLocalDataSource);
+                userDataRemoteDataSource, campionatoLocalDataSource);
     }
 }

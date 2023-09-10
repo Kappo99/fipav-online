@@ -8,19 +8,19 @@ import it.unimib.fipavonline.data.repository.campionato.ICampionatoRepositoryWit
 
 /**
  * Custom ViewModelProvider to be able to have a custom constructor
- * for the NewsViewModel class.
+ * for the CampionatoViewModel class.
  */
-public class NewsViewModelFactory implements ViewModelProvider.Factory {
+public class CampionatoViewModelFactory implements ViewModelProvider.Factory {
 
     private final ICampionatoRepositoryWithLiveData iCampionatoRepositoryWithLiveData;
 
-    public NewsViewModelFactory(ICampionatoRepositoryWithLiveData iCampionatoRepositoryWithLiveData) {
+    public CampionatoViewModelFactory(ICampionatoRepositoryWithLiveData iCampionatoRepositoryWithLiveData) {
         this.iCampionatoRepositoryWithLiveData = iCampionatoRepositoryWithLiveData;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new NewsViewModel(iCampionatoRepositoryWithLiveData);
+        return (T) new CampionatoViewModel(iCampionatoRepositoryWithLiveData);
     }
 }
