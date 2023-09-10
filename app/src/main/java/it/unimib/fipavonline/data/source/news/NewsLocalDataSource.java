@@ -9,7 +9,7 @@ import static it.unimib.fipavonline.util.Constants.UNEXPECTED_ERROR;
 import java.util.List;
 
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
-import it.unimib.fipavonline.data.database.NewsDao;
+import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.util.DataEncryptionUtil;
@@ -20,7 +20,7 @@ import it.unimib.fipavonline.util.SharedPreferencesUtil;
  */
 public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
-    private final NewsDao newsDao;
+    private final CampionatoDao campionatoDao;
     private final SharedPreferencesUtil sharedPreferencesUtil;
     private final DataEncryptionUtil dataEncryptionUtil;
 
@@ -28,7 +28,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                                SharedPreferencesUtil sharedPreferencesUtil,
                                DataEncryptionUtil dataEncryptionUtil
                                ) {
-        this.newsDao = fipavOnlineRoomDatabase.newsDao();
+        this.campionatoDao = fipavOnlineRoomDatabase.newsDao();
         this.sharedPreferencesUtil = sharedPreferencesUtil;
         this.dataEncryptionUtil = dataEncryptionUtil;
     }
@@ -43,7 +43,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             //TODO Fix this instruction
             NewsApiResponse newsApiResponse = new NewsApiResponse();
-            newsApiResponse.setNewsList(newsDao.getAll());
+            newsApiResponse.setNewsList(campionatoDao.getAll());
             newsCallback.onSuccessFromLocal(newsApiResponse);
         });
     }
@@ -51,7 +51,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     @Override
     public void getFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = newsDao.getFavoriteNews();
+            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
             newsCallback.onNewsFavoriteStatusChanged(favoriteNews);
         });
     }
@@ -60,21 +60,21 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     public void updateNews(Campionato campionato) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (campionato != null) {
-                int rowUpdatedCounter = newsDao.updateSingleFavoriteNews(campionato);
+                int rowUpdatedCounter = campionatoDao.updateSingleFavoriteNews(campionato);
                 // It means that the update succeeded because only one row had to be updated
                 if (rowUpdatedCounter == 1) {
-                    Campionato updatedCampionato = newsDao.getNews(campionato.getId());
-                    newsCallback.onNewsFavoriteStatusChanged(updatedCampionato, newsDao.getFavoriteNews());
+                    Campionato updatedCampionato = campionatoDao.getNews(campionato.getId());
+                    newsCallback.onNewsFavoriteStatusChanged(updatedCampionato, campionatoDao.getFavoriteNews());
                 } else {
                     newsCallback.onFailureFromLocal(new Exception(UNEXPECTED_ERROR));
                 }
             } else {
                 // When the user deleted all favorite campionato from remote
                 //TODO Check if it works fine and there are not drawbacks
-                List<Campionato> allNews = newsDao.getAll();
+                List<Campionato> allNews = campionatoDao.getAll();
                 for (Campionato n : allNews) {
                     n.setSynchronized(false);
-                    newsDao.updateSingleFavoriteNews(n);
+                    campionatoDao.updateSingleFavoriteNews(n);
                 }
             }
         });
@@ -83,11 +83,11 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     @Override
     public void deleteFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = newsDao.getFavoriteNews();
+            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
             for (Campionato campionato : favoriteNews) {
                 campionato.setFavorite(false);
             }
-            int updatedRowsNumber = newsDao.updateListFavoriteNews(favoriteNews);
+            int updatedRowsNumber = campionatoDao.updateListFavoriteNews(favoriteNews);
 
             // It means that the update succeeded because the number of updated rows is
             // equal to the number of the original favorite news
@@ -109,7 +109,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     public void insertNews(NewsApiResponse newsApiResponse) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
-            List<Campionato> allNews = newsDao.getAll();
+            List<Campionato> allNews = campionatoDao.getAll();
             List<Campionato> campionatoList = newsApiResponse.getNewsList();
 
             if (campionatoList != null) {
@@ -131,7 +131,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                 }
 
                 // Writes the news in the database and gets the associated primary keys
-                List<Long> insertedNewsIds = newsDao.insertNewsList(campionatoList);
+                List<Long> insertedNewsIds = campionatoDao.insertNewsList(campionatoList);
                 for (int i = 0; i < campionatoList.size(); i++) {
                     // Adds the primary key to the corresponding object Campionato just downloaded so that
                     // if the user marks the news as favorite (and vice-versa), we can use its id
@@ -159,7 +159,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
             if (campionatoList != null) {
 
                 // Reads the news from the database
-                List<Campionato> allNews = newsDao.getAll();
+                List<Campionato> allNews = campionatoDao.getAll();
 
                 // Checks if the news just downloaded has already been downloaded earlier
                 // in order to preserve the news status (marked as favorite or not)
@@ -179,7 +179,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                 }
 
                 // Writes the news in the database and gets the associated primary keys
-                List<Long> insertedNewsIds = newsDao.insertNewsList(campionatoList);
+                List<Long> insertedNewsIds = campionatoDao.insertNewsList(campionatoList);
                 for (int i = 0; i < campionatoList.size(); i++) {
                     // Adds the primary key to the corresponding object Campionato just downloaded so that
                     // if the user marks the news as favorite (and vice-versa), we can use its id
@@ -197,8 +197,8 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     @Override
     public void deleteAll() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            int newsCounter = newsDao.getAll().size();
-            int newsDeletedNews = newsDao.deleteAll();
+            int newsCounter = campionatoDao.getAll().size();
+            int newsDeletedNews = campionatoDao.deleteAll();
 
             // It means that everything has been deleted
             if (newsCounter == newsDeletedNews) {

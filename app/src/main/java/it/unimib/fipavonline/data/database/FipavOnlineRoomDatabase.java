@@ -21,7 +21,7 @@ import it.unimib.fipavonline.model.Campionato;
 @Database(entities = {Campionato.class}, version = DATABASE_VERSION)
 public abstract class FipavOnlineRoomDatabase extends RoomDatabase {
 
-    public abstract NewsDao newsDao();
+    public abstract CampionatoDao newsDao();
 
     private static volatile FipavOnlineRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();

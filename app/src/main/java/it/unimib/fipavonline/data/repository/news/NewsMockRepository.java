@@ -9,7 +9,7 @@ import java.util.List;
 
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
-import it.unimib.fipavonline.data.database.NewsDao;
+import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
@@ -23,7 +23,7 @@ public class NewsMockRepository implements INewsRepository {
 
     private final Application application;
     private final NewsResponseCallback newsResponseCallback;
-    private final NewsDao newsDao;
+    private final CampionatoDao campionatoDao;
     private final CampionatoJSONParserUtil.JsonParserType jsonParserType;
 
     public NewsMockRepository(Application application, NewsResponseCallback newsResponseCallback,
@@ -31,7 +31,7 @@ public class NewsMockRepository implements INewsRepository {
         this.application = application;
         this.newsResponseCallback = newsResponseCallback;
         FipavOnlineRoomDatabase fipavOnlineRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
-        this.newsDao = fipavOnlineRoomDatabase.newsDao();
+        this.campionatoDao = fipavOnlineRoomDatabase.newsDao();
         this.jsonParserType = jsonParserType;
     }
 
@@ -69,7 +69,7 @@ public class NewsMockRepository implements INewsRepository {
     @Override
     public void updateNews(Campionato campionato) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsDao.updateSingleFavoriteNews(campionato);
+            campionatoDao.updateSingleFavoriteNews(campionato);
             newsResponseCallback.onNewsFavoriteStatusChanged(campionato);
         });
     }
@@ -80,7 +80,7 @@ public class NewsMockRepository implements INewsRepository {
     @Override
     public void getFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsResponseCallback.onSuccess(newsDao.getFavoriteNews(), System.currentTimeMillis());
+            newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
         });
     }
 
@@ -90,12 +90,12 @@ public class NewsMockRepository implements INewsRepository {
     @Override
     public void deleteFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = newsDao.getFavoriteNews();
+            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
             for (Campionato campionato : favoriteNews) {
                 campionato.setFavorite(false);
             }
-            newsDao.updateListFavoriteNews(favoriteNews);
-            newsResponseCallback.onSuccess(newsDao.getFavoriteNews(), System.currentTimeMillis());
+            campionatoDao.updateListFavoriteNews(favoriteNews);
+            newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
         });
     }
 
@@ -108,7 +108,7 @@ public class NewsMockRepository implements INewsRepository {
     private void saveDataInDatabase(List<Campionato> campionatoList) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
-            List<Campionato> allNews = newsDao.getAll();
+            List<Campionato> allNews = campionatoDao.getAll();
 
             // Checks if the news just downloaded has already been downloaded earlier
             // in order to preserve the news status (marked as favorite or not)
@@ -127,7 +127,7 @@ public class NewsMockRepository implements INewsRepository {
             }
 
             // Writes the news in the database and gets the associated primary keys
-            List<Long> insertedNewsIds = newsDao.insertNewsList(campionatoList);
+            List<Long> insertedNewsIds = campionatoDao.insertNewsList(campionatoList);
             for (int i = 0; i < campionatoList.size(); i++) {
                 // Adds the primary key to the corresponding object Campionato just downloaded so that
                 // if the user marks the news as favorite (and vice-versa), we can use its id
@@ -146,7 +146,7 @@ public class NewsMockRepository implements INewsRepository {
      */
     private void readDataFromDatabase(long lastUpdate) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsResponseCallback.onSuccess(newsDao.getAll(), lastUpdate);
+            newsResponseCallback.onSuccess(campionatoDao.getAll(), lastUpdate);
         });
     }
 }

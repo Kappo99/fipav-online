@@ -17,14 +17,14 @@ import it.unimib.fipavonline.model.Campionato;
  * https://developer.android.com/training/data-storage/room/accessing-data
  */
 @Dao
-public interface NewsDao {
+public interface CampionatoDao {
     @Query("SELECT * FROM Campionato ORDER BY nome")
     List<Campionato> getAll();
 
     @Query("SELECT * FROM Campionato WHERE id = :id")
     Campionato getNews(long id);
 
-    @Query("SELECT * FROM Campionato WHERE is_favorite = 1 ORDER BY nome DESC")
+    @Query("SELECT * FROM Campionato WHERE is_favorite = 1 ORDER BY nome")
     List<Campionato> getFavoriteNews();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
