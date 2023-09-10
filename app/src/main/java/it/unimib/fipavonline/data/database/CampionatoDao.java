@@ -34,7 +34,7 @@ public interface CampionatoDao {
     void insertAll(Campionato... campionatoes);
 
     @Update
-    int updateSingleFavoritecAMPIONATO(Campionato campionato);
+    int updateSingleFavoriteCampionato(Campionato campionato);
 
     @Update
     int updateListFavoriteCampionato(List<Campionato> campionatoes);

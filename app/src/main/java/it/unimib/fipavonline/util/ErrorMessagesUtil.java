@@ -1,5 +1,6 @@
 package it.unimib.fipavonline.util;
 
+import static it.unimib.fipavonline.util.Constants.API_DATA_NOT_FOUND_ERROR;
 import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;
 
@@ -30,6 +31,8 @@ public class ErrorMessagesUtil {
                 return application.getString(R.string.error_retrieving_api);
             case API_KEY_ERROR:
                 return application.getString(R.string.api_key_error);
+            case API_DATA_NOT_FOUND_ERROR:
+                return application.getString(R.string.api_data_not_found_error);
             default:
                 return application.getString(R.string.unexpected_error);
         }

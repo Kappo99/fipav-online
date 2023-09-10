@@ -6,13 +6,17 @@ import static it.unimib.fipavonline.util.Constants.LAST_UPDATE;
 import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 import static it.unimib.fipavonline.util.Constants.UNEXPECTED_ERROR;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
+import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
+import it.unimib.fipavonline.util.Constants;
 import it.unimib.fipavonline.util.DataEncryptionUtil;
+import it.unimib.fipavonline.util.ServiceLocator;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
 /**
@@ -60,7 +64,7 @@ public class CampionatoLocalDataSource extends BaseCampionatoLocalDataSource {
     public void updateCampionato(Campionato campionato) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (campionato != null) {
-                int rowUpdatedCounter = campionatoDao.updateSingleFavoritecAMPIONATO(campionato);
+                int rowUpdatedCounter = campionatoDao.updateSingleFavoriteCampionato(campionato);
                 // It means that the update succeeded because only one row had to be updated
                 if (rowUpdatedCounter == 1) {
                     Campionato updatedCampionato = campionatoDao.getCampionato(campionato.getId());
@@ -74,7 +78,7 @@ public class CampionatoLocalDataSource extends BaseCampionatoLocalDataSource {
                 List<Campionato> allCampionato = campionatoDao.getAll();
                 for (Campionato n : allCampionato) {
                     n.setSynchronized(false);
-                    campionatoDao.updateSingleFavoritecAMPIONATO(n);
+                    campionatoDao.updateSingleFavoriteCampionato(n);
                 }
             }
         });
@@ -96,6 +100,9 @@ public class CampionatoLocalDataSource extends BaseCampionatoLocalDataSource {
             } else {
                 campionatoCallback.onFailureFromLocal(new Exception(UNEXPECTED_ERROR));
             }
+
+            sharedPreferencesUtil.writeStringData(Constants.SHARED_PREFERENCES_FILE_NAME,
+                    Constants.FAVORITE_CAMPIONATO_LIST, CampionatoJSONParserUtil.convertListToJSON(new ArrayList<>()));
         });
     }
 
