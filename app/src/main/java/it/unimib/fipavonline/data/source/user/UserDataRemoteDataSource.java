@@ -3,9 +3,7 @@ package it.unimib.fipavonline.data.source.user;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_FAVORITE_CAMPIONATO_COLLECTION;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_REALTIME_DATABASE;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_USERS_COLLECTION;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_FILE_NAME;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_TOPICS_OF_INTEREST;
 
 import android.util.Log;
 
@@ -99,54 +97,5 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                     userResponseCallback.onSuccessFromRemoteDatabase(campionatoList);
                 }
             });
-    }
-
-    @Override
-    public void getUserPreferences(String idToken) {
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(SHARED_PREFERENCES_COUNTRY_OF_INTEREST).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    String countryOfInterest = task.getResult().getValue(String.class);
-                    sharedPreferencesUtil.writeStringData(
-                            SHARED_PREFERENCES_FILE_NAME,
-                            SHARED_PREFERENCES_COUNTRY_OF_INTEREST,
-                            countryOfInterest);
-
-                    databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-                        child(SHARED_PREFERENCES_TOPICS_OF_INTEREST).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    List<String> favoriteTopics = new ArrayList<>();
-                                    for(DataSnapshot ds : task.getResult().getChildren()) {
-                                        String favoriteTopic = ds.getValue(String.class);
-                                        favoriteTopics.add(favoriteTopic);
-                                    }
-
-                                    if (favoriteTopics.size() > 0) {
-                                        Set<String> favoriteCampionatoSet = new HashSet<>(favoriteTopics);
-                                        favoriteCampionatoSet.addAll(favoriteTopics);
-
-                                        sharedPreferencesUtil.writeStringSetData(
-                                                SHARED_PREFERENCES_FILE_NAME,
-                                                SHARED_PREFERENCES_TOPICS_OF_INTEREST,
-                                                favoriteCampionatoSet);
-                                    }
-                                    userResponseCallback.onSuccessFromGettingUserPreferences();
-                                }
-                            }
-                        });
-                }
-            });
-    }
-
-    @Override
-    public void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-        //TODO Add listeners to manage error cases
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-                child(SHARED_PREFERENCES_COUNTRY_OF_INTEREST).setValue(favoriteCountry);
-
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-                child(SHARED_PREFERENCES_TOPICS_OF_INTEREST).setValue(new ArrayList<>(favoriteTopics));
     }
 }

@@ -65,12 +65,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     }
 
     @Override
-    public MutableLiveData<Result> getUserPreferences(String idToken) {
-        userDataRemoteDataSource.getUserPreferences(idToken);
-        return userPreferencesMutableLiveData;
-    }
-
-    @Override
     public User getLoggedUser() {
         return userRemoteDataSource.getLoggedUser();
     }
@@ -94,11 +88,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     @Override
     public void signInWithGoogle(String token) {
         userRemoteDataSource.signInWithGoogle(token);
-    }
-
-    @Override
-    public void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-        userDataRemoteDataSource.saveUserPreferences(favoriteCountry, favoriteTopics, idToken);
     }
 
     @Override

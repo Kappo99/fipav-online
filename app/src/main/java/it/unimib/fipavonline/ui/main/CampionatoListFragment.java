@@ -1,9 +1,5 @@
 package it.unimib.fipavonline.ui.main;
 
-import static it.unimib.fipavonline.util.Constants.LAST_UPDATE;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_FILE_NAME;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -37,6 +33,7 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
+import it.unimib.fipavonline.util.Constants;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
@@ -107,9 +104,6 @@ public class CampionatoListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String country = sharedPreferencesUtil.readStringData(
-                SHARED_PREFERENCES_FILE_NAME, SHARED_PREFERENCES_COUNTRY_OF_INTEREST);
-
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -141,9 +135,9 @@ public class CampionatoListFragment extends Fragment {
 
         String lastUpdate = "0";
         if (sharedPreferencesUtil.readStringData(
-                        SHARED_PREFERENCES_FILE_NAME, LAST_UPDATE) != null) {
+                Constants.SHARED_PREFERENCES_FILE_NAME, Constants.LAST_UPDATE) != null) {
             lastUpdate = sharedPreferencesUtil.readStringData(
-                    SHARED_PREFERENCES_FILE_NAME, LAST_UPDATE);
+                    Constants.SHARED_PREFERENCES_FILE_NAME, Constants.LAST_UPDATE);
         }
 
         fragmentCampionatoListBinding.progressBar.setVisibility(View.VISIBLE);
