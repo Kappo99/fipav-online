@@ -108,27 +108,23 @@ public class CampionatoLocalDataSource extends BaseCampionatoLocalDataSource {
     @Override
     public void insertCampionato(CampionatoApiResponse campionatoApiResponse) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            // Reads the campionato from the database
             List<Campionato> allCampionato = campionatoDao.getAll();
             List<Campionato> campionatoList = campionatoApiResponse.getCampionatoList();
 
             if (campionatoList != null) {
-
-                // Checks if the campionato just downloaded has already been downloaded earlier
-                // in order to preserve the campionato status (marked as favorite or not)
+                // Controlla se un Campionato è già stato scaricato prima per mantenere il suo
+                // stato "preferito"
                 for (Campionato campionato : allCampionato) {
-                    // This check works because Campionato classes have their own
-                    // implementation of equals(Object) and hashCode() methods
                     if (campionatoList.contains(campionato)) {
-                        // The primary key and the favorite status is contained only in the Campionato objects
-                        // retrieved from the database, and not in the Campionato objects downloaded from the
-                        // Web Service. If the same campionato was already downloaded earlier, the following
-                        // line of code replaces the the Campionato object in campionatoList with the corresponding
-                        // Campionato object saved in the database, so that it has the primary key and the
-                        // favorite status.
+                        // Campionato appena scaricati NON hanno lo stato "preferito"
+                        // Se precedentemente ho già scaricato lo stesso (presente nel DB)
+                        // lo sostituisco così da mantenere lo stato "preferito"
                         campionatoList.set(campionatoList.indexOf(campionato), campionato);
                     }
                 }
+
+                // Inserisci i Campionato nel Database
+                campionatoDao.insertCampionatoList(campionatoList);
 
                 sharedPreferencesUtil.writeStringData(SHARED_PREFERENCES_FILE_NAME,
                         LAST_UPDATE, String.valueOf(System.currentTimeMillis()));
@@ -147,23 +143,16 @@ public class CampionatoLocalDataSource extends BaseCampionatoLocalDataSource {
     @Override
     public void insertCampionato(List<Campionato> campionatoList) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
+            List<Campionato> allCampionato = campionatoDao.getAll();
+
             if (campionatoList != null) {
-
-                // Reads the campionato from the database
-                List<Campionato> allCampionato = campionatoDao.getAll();
-
-                // Checks if the campionato just downloaded has already been downloaded earlier
-                // in order to preserve the campionato status (marked as favorite or not)
+                // Controlla se un Campionato è già stato scaricato prima per mantenere il suo
+                // stato "preferito"
                 for (Campionato campionato : allCampionato) {
-                    // This check works because Campionato classes have their own
-                    // implementation of equals(Object) and hashCode() methods
                     if (campionatoList.contains(campionato)) {
-                        // The primary key and the favorite status is contained only in the Campionato objects
-                        // retrieved from the database, and not in the Campionato objects downloaded from the
-                        // Web Service. If the same campionato was already downloaded earlier, the following
-                        // line of code replaces the the Campionato object in campionatoList with the corresponding
-                        // Campionato object saved in the database, so that it has the primary key and the
-                        // favorite status.
+                        // Campionato appena scaricati NON hanno lo stato "preferito"
+                        // Se precedentemente ho già scaricato lo stesso (presente nel DB)
+                        // lo sostituisco così da mantenere lo stato "preferito"
                         campionato.setSynchronized(true);
                         campionatoList.set(campionatoList.indexOf(campionato), campionato);
                     }

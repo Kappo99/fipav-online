@@ -70,6 +70,7 @@ public class Campionato implements Parcelable {
         this.sesso = sesso;
     }
 
+    @Exclude
     public boolean isFavorite() {
         return isFavorite;
     }
