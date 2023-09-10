@@ -41,5 +41,13 @@
         android:id="@+id/registrationFragment"
         android:name="it.unimib.fipavonline.ui.welcome.RegistrationFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/navigate_to_mainActivityWithBottomNavigationView"
+            app:destination="@id/mainActivityWithBottomNavigationView"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"></action>
+    </fragment>
 </navigation>
