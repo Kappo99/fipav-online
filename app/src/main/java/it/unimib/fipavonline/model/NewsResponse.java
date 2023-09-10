@@ -12,20 +12,20 @@ public class NewsResponse implements Parcelable {
     private boolean isLoading;
 
     @SerializedName("articles")
-    private List<News> newsList;
+    private List<Campionato> campionatoList;
 
     public NewsResponse() {}
 
-    public NewsResponse(List<News> newsList) {
-        this.newsList = newsList;
+    public NewsResponse(List<Campionato> campionatoList) {
+        this.campionatoList = campionatoList;
     }
 
-    public List<News> getNewsList() {
-        return newsList;
+    public List<Campionato> getNewsList() {
+        return campionatoList;
     }
 
-    public void setNewsList(List<News> newsList) {
-        this.newsList = newsList;
+    public void setNewsList(List<Campionato> campionatoList) {
+        this.campionatoList = campionatoList;
     }
 
     public boolean isLoading() {
@@ -39,7 +39,7 @@ public class NewsResponse implements Parcelable {
     @Override
     public String toString() {
         return "NewsResponse{" +
-                "newsList=" + newsList +
+                "campionatoList=" + campionatoList +
                 '}';
     }
 
@@ -51,17 +51,17 @@ public class NewsResponse implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.isLoading ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.newsList);
+        dest.writeTypedList(this.campionatoList);
     }
 
     public void readFromParcel(Parcel source) {
         this.isLoading = source.readByte() != 0;
-        this.newsList = source.createTypedArrayList(News.CREATOR);
+        this.campionatoList = source.createTypedArrayList(Campionato.CREATOR);
     }
 
     protected NewsResponse(Parcel in) {
         this.isLoading = in.readByte() != 0;
-        this.newsList = in.createTypedArrayList(News.CREATOR);
+        this.campionatoList = in.createTypedArrayList(Campionato.CREATOR);
     }
 
     public static final Parcelable.Creator<NewsResponse> CREATOR = new Parcelable.Creator<NewsResponse>() {

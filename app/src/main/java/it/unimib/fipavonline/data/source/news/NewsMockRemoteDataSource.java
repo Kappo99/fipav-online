@@ -4,25 +4,23 @@ import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.NEWS_API_TEST_JSON_FILE;
 import static it.unimib.fipavonline.util.Constants.UNEXPECTED_ERROR;
 
-import org.json.JSONException;
-
 import java.io.IOException;
 
 import it.unimib.fipavonline.model.NewsApiResponse;
-import it.unimib.fipavonline.util.JSONParserUtil;
+import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 
 /**
  * Class to get the news from a local JSON file to simulate the Web Service response.
  */
 public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
 
-    private final JSONParserUtil jsonParserUtil;
-    private final JSONParserUtil.JsonParserType jsonParserType;
+    private final CampionatoJSONParserUtil campionatoJsonParserUtil;
+    private final CampionatoJSONParserUtil.JsonParserType jsonParserType;
 
-    public NewsMockRemoteDataSource(JSONParserUtil jsonParserUtil,
-                                    JSONParserUtil.JsonParserType jsonParserType) {
+    public NewsMockRemoteDataSource(CampionatoJSONParserUtil campionatoJsonParserUtil,
+                                    CampionatoJSONParserUtil.JsonParserType jsonParserType) {
 
-        this.jsonParserUtil = jsonParserUtil;
+        this.campionatoJsonParserUtil = campionatoJsonParserUtil;
         this.jsonParserType = jsonParserType;
     }
 
@@ -31,24 +29,9 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
         NewsApiResponse newsApiResponse = null;
 
         switch (jsonParserType) {
-            case JSON_READER:
-                try {
-                    newsApiResponse =
-                            jsonParserUtil.parseJSONFileWithJsonReader(NEWS_API_TEST_JSON_FILE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case JSON_OBJECT_ARRAY:
-                try {
-                    newsApiResponse = jsonParserUtil.parseJSONFileWithJSONObjectArray(NEWS_API_TEST_JSON_FILE);
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
             case GSON:
                 try {
-                    newsApiResponse = jsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
+                    newsApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

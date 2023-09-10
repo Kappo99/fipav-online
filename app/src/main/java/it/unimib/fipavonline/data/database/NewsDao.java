@@ -9,7 +9,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 
 /**
  * Data Access Object (DAO) that provides methods that can be used to query,
@@ -18,36 +18,36 @@ import it.unimib.fipavonline.model.News;
  */
 @Dao
 public interface NewsDao {
-    @Query("SELECT * FROM news ORDER BY published_at DESC")
-    List<News> getAll();
+    @Query("SELECT * FROM Campionato ORDER BY nome")
+    List<Campionato> getAll();
 
-    @Query("SELECT * FROM news WHERE id = :id")
-    News getNews(long id);
+    @Query("SELECT * FROM Campionato WHERE id = :id")
+    Campionato getNews(long id);
 
-    @Query("SELECT * FROM news WHERE is_favorite = 1 ORDER BY published_at DESC")
-    List<News> getFavoriteNews();
+    @Query("SELECT * FROM Campionato WHERE is_favorite = 1 ORDER BY nome DESC")
+    List<Campionato> getFavoriteNews();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insertNewsList(List<News> newsList);
+    List<Long> insertNewsList(List<Campionato> campionatoList);
 
     @Insert
-    void insertAll(News... news);
+    void insertAll(Campionato... campionatoes);
 
     @Update
-    int updateSingleFavoriteNews(News news);
+    int updateSingleFavoriteNews(Campionato campionato);
 
     @Update
-    int updateListFavoriteNews(List<News> news);
+    int updateListFavoriteNews(List<Campionato> campionatoes);
 
     @Delete
-    void delete(News news);
+    void delete(Campionato campionato);
 
     @Delete
-    void deleteAllWithoutQuery(News... news);
+    void deleteAllWithoutQuery(Campionato... campionatoes);
 
-    @Query("DELETE FROM news")
+    @Query("DELETE FROM Campionato")
     int deleteAll();
 
-    @Query("DELETE FROM news WHERE is_favorite = 0")
+    @Query("DELETE FROM Campionato WHERE is_favorite = 0")
     void deleteNotFavoriteNews();
 }

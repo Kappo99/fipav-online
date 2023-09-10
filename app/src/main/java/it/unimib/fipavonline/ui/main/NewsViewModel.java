@@ -3,12 +3,12 @@ package it.unimib.fipavonline.ui.main;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
 
 /**
- * ViewModel to manage the list of News and the list of favorite News.
+ * ViewModel to manage the list of Campionato and the list of favorite Campionato.
  */
 public class NewsViewModel extends ViewModel {
 
@@ -55,11 +55,11 @@ public class NewsViewModel extends ViewModel {
     }
 
     /**
-     * Updates the news status.
-     * @param news The news to be updated.
+     * Updates the campionato status.
+     * @param campionato The campionato to be updated.
      */
-    public void updateNews(News news) {
-        newsRepositoryWithLiveData.updateNews(news);
+    public void updateNews(Campionato campionato) {
+        newsRepositoryWithLiveData.updateNews(campionato);
     }
 
     public void fetchNews(String country) {
@@ -83,11 +83,11 @@ public class NewsViewModel extends ViewModel {
     }
 
     /**
-     * Removes the news from the list of favorite news.
-     * @param news The news to be removed from the list of favorite news.
+     * Removes the campionato from the list of favorite campionato.
+     * @param campionato The campionato to be removed from the list of favorite campionato.
      */
-    public void removeFromFavorite(News news) {
-        newsRepositoryWithLiveData.updateNews(news);
+    public void removeFromFavorite(Campionato campionato) {
+        newsRepositoryWithLiveData.updateNews(campionato);
     }
 
     /**

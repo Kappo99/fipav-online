@@ -35,7 +35,7 @@ import java.util.List;
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.adapter.CampionatoRecyclerViewAdapter;
 import it.unimib.fipavonline.databinding.FragmentCampionatoListBinding;
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.model.NewsResponse;
 import it.unimib.fipavonline.model.Result;
@@ -53,7 +53,7 @@ public class CampionatoListFragment extends Fragment {
 
     private FragmentCampionatoListBinding fragmentCampionatoListBinding;
 
-    private List<News> newsList;
+    private List<Campionato> campionatoList;
     private CampionatoRecyclerViewAdapter campionatoRecyclerViewAdapter;
     private NewsViewModel newsViewModel;
     private SharedPreferencesUtil sharedPreferencesUtil;
@@ -102,7 +102,7 @@ public class CampionatoListFragment extends Fragment {
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
                     getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
         }
-        newsList = new ArrayList<>();
+        campionatoList = new ArrayList<>();
     }
 
     @Override
@@ -138,20 +138,13 @@ public class CampionatoListFragment extends Fragment {
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false);
 
-        campionatoRecyclerViewAdapter = new CampionatoRecyclerViewAdapter(newsList,
+        campionatoRecyclerViewAdapter = new CampionatoRecyclerViewAdapter(campionatoList,
                 requireActivity().getApplication(),
                 new CampionatoRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onNewsItemClick(News news) {
-                CampionatoListFragmentDirections.ActionCountryNewsFragmentToNewsDetailFragment action =
-                        CampionatoListFragmentDirections.actionCountryNewsFragmentToNewsDetailFragment(news);
-                Navigation.findNavController(view).navigate(action);
-            }
-
-            @Override
             public void onFavoriteButtonPressed(int position) {
-                newsList.get(position).setFavorite(!newsList.get(position).isFavorite());
-                newsViewModel.updateNews(newsList.get(position));
+                campionatoList.get(position).setFavorite(!campionatoList.get(position).isFavorite());
+                newsViewModel.updateNews(campionatoList.get(position));
             }
         });
         recyclerViewCountryNews.setLayoutManager(layoutManager);
@@ -178,39 +171,39 @@ public class CampionatoListFragment extends Fragment {
                 if (result.isSuccess()) {
 
                     NewsResponse newsResponse = ((Result.NewsResponseSuccess) result).getData();
-                    List<News> fetchedNews = newsResponse.getNewsList();
+                    List<Campionato> fetchedNews = newsResponse.getNewsList();
 
                     if (!newsViewModel.isLoading()) {
                         if (newsViewModel.isFirstLoading()) {
                             newsViewModel.setTotalResults(((NewsApiResponse) newsResponse).getTotalResults());
                             newsViewModel.setFirstLoading(false);
-                            this.newsList.addAll(fetchedNews);
+                            this.campionatoList.addAll(fetchedNews);
                             campionatoRecyclerViewAdapter.notifyItemRangeInserted(0,
-                                    this.newsList.size());
+                                    this.campionatoList.size());
                         } else {
                             // Updates related to the favorite status of the news
-                            newsList.clear();
-                            newsList.addAll(fetchedNews);
+                            campionatoList.clear();
+                            campionatoList.addAll(fetchedNews);
                             campionatoRecyclerViewAdapter.notifyItemChanged(0, fetchedNews.size());
                         }
                         fragmentCampionatoListBinding.progressBar.setVisibility(View.GONE);
                     } else {
                         newsViewModel.setLoading(false);
-                        newsViewModel.setCurrentResults(newsList.size());
+                        newsViewModel.setCurrentResults(campionatoList.size());
 
-                        int initialSize = newsList.size();
+                        int initialSize = campionatoList.size();
 
-                        for (int i = 0; i < newsList.size(); i++) {
-                            if (newsList.get(i) == null) {
-                                newsList.remove(newsList.get(i));
+                        for (int i = 0; i < campionatoList.size(); i++) {
+                            if (campionatoList.get(i) == null) {
+                                campionatoList.remove(campionatoList.get(i));
                             }
                         }
                         int startIndex = (newsViewModel.getPage()*TOP_HEADLINES_PAGE_SIZE_VALUE) -
                                                                     TOP_HEADLINES_PAGE_SIZE_VALUE;
                         for (int i = startIndex; i < fetchedNews.size(); i++) {
-                            newsList.add(fetchedNews.get(i));
+                            campionatoList.add(fetchedNews.get(i));
                         }
-                        campionatoRecyclerViewAdapter.notifyItemRangeInserted(initialSize, newsList.size());
+                        campionatoRecyclerViewAdapter.notifyItemRangeInserted(initialSize, campionatoList.size());
                     }
                 } else {
                     ErrorMessagesUtil errorMessagesUtil =
@@ -249,9 +242,9 @@ public class CampionatoListFragment extends Fragment {
                                 newsListMutableLiveData.getValue().isSuccess()) {
 
                             newsViewModel.setLoading(true);
-                            newsList.add(null);
-                            campionatoRecyclerViewAdapter.notifyItemRangeInserted(newsList.size(),
-                                    newsList.size() + 1);
+                            campionatoList.add(null);
+                            campionatoRecyclerViewAdapter.notifyItemRangeInserted(campionatoList.size(),
+                                    campionatoList.size() + 1);
 
                             int page = newsViewModel.getPage() + 1;
                             newsViewModel.setPage(page);

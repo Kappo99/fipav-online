@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.User;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
@@ -90,13 +90,13 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                 else {
                     Log.d(TAG, "Successful read: " + task.getResult().getValue());
 
-                    List<News> newsList = new ArrayList<>();
+                    List<Campionato> campionatoList = new ArrayList<>();
                     for(DataSnapshot ds : task.getResult().getChildren()) {
-                        News news = ds.getValue(News.class);
-                        newsList.add(news);
+                        Campionato campionato = ds.getValue(Campionato.class);
+                        campionatoList.add(campionato);
                     }
 
-                    userResponseCallback.onSuccessFromRemoteDatabase(newsList);
+                    userResponseCallback.onSuccessFromRemoteDatabase(campionatoList);
                 }
             });
     }

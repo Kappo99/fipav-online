@@ -12,13 +12,13 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 
 /**
  * Main access point for the underlying connection to the local database.
  * https://developer.android.com/reference/kotlin/androidx/room/Database
  */
-@Database(entities = {News.class}, version = DATABASE_VERSION)
+@Database(entities = {Campionato.class}, version = DATABASE_VERSION)
 public abstract class NewsRoomDatabase extends RoomDatabase {
 
     public abstract NewsDao newsDao();

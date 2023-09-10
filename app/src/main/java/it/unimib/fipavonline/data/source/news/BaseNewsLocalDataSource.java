@@ -2,7 +2,7 @@ package it.unimib.fipavonline.data.source.news;
 
 import java.util.List;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 
 /**
@@ -18,9 +18,9 @@ public abstract class BaseNewsLocalDataSource {
 
     public abstract void getNews();
     public abstract void getFavoriteNews();
-    public abstract void updateNews(News news);
+    public abstract void updateNews(Campionato campionato);
     public abstract void deleteFavoriteNews();
     public abstract void insertNews(NewsApiResponse newsApiResponse);
-    public abstract void insertNews(List<News> newsList);
+    public abstract void insertNews(List<Campionato> campionatoList);
     public abstract void deleteAll();
 }

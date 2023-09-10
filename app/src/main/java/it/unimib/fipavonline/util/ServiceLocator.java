@@ -87,9 +87,9 @@ public class ServiceLocator {
         DataEncryptionUtil dataEncryptionUtil = new DataEncryptionUtil(application);
 
         if (debugMode) {
-            JSONParserUtil jsonParserUtil = new JSONParserUtil(application);
+            CampionatoJSONParserUtil campionatoJsonParserUtil = new CampionatoJSONParserUtil(application);
             newsRemoteDataSource =
-                    new NewsMockRemoteDataSource(jsonParserUtil, JSONParserUtil.JsonParserType.GSON);
+                    new NewsMockRemoteDataSource(campionatoJsonParserUtil, CampionatoJSONParserUtil.JsonParserType.GSON);
         } else {
             newsRemoteDataSource =
                     new NewsRemoteDataSource(application.getString(R.string.api_key));

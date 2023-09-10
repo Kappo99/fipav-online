@@ -12,16 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import it.unimib.fipavonline.R;
-import it.unimib.fipavonline.model.News;
-import it.unimib.fipavonline.util.DateTimeUtil;
+import it.unimib.fipavonline.model.Campionato;
 
 /**
- * Custom adapter that extends RecyclerView.Adapter to show an ArrayList of News
+ * Custom adapter that extends RecyclerView.Adapter to show an ArrayList of Campionato
  * with a RecyclerView.
  */
 public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -34,24 +31,23 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
      * a RecyclerView item.
      */
     public interface OnItemClickListener {
-        void onNewsItemClick(News news);
         void onFavoriteButtonPressed(int position);
     }
 
-    private final List<News> newsList;
+    private final List<Campionato> campionatoList;
     private final Application application;
     private final OnItemClickListener onItemClickListener;
 
-    public CampionatoRecyclerViewAdapter(List<News> newsList, Application application,
+    public CampionatoRecyclerViewAdapter(List<Campionato> campionatoList, Application application,
                                          OnItemClickListener onItemClickListener) {
-        this.newsList = newsList;
+        this.campionatoList = campionatoList;
         this.application = application;
         this.onItemClickListener = onItemClickListener;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (newsList.get(position) == null) {
+        if (campionatoList.get(position) == null) {
             return LOADING_VIEW_TYPE;
         } else {
             return NEWS_VIEW_TYPE;
@@ -78,7 +74,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof NewsViewHolder) {
-            ((NewsViewHolder) holder).bind(newsList.get(position));
+            ((NewsViewHolder) holder).bind(campionatoList.get(position));
         } else if (holder instanceof LoadingNewsViewHolder) {
             ((LoadingNewsViewHolder) holder).activate();
         }
@@ -86,8 +82,8 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
-        if (newsList != null) {
-            return newsList.size();
+        if (campionatoList != null) {
+            return campionatoList.size();
         }
         return 0;
     }
@@ -110,19 +106,17 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             imageViewFavoriteNews.setOnClickListener(this);
         }
 
-        public void bind(News news) {
-            textViewTitle.setText(news.getNome());
-            setImageViewSesso(news.getSesso());
-            setImageViewFavoriteNews(news.isFavorite());
+        public void bind(Campionato campionato) {
+            textViewTitle.setText(campionato.getNome());
+            setImageViewSesso(campionato.getSesso());
+            setImageViewFavoriteNews(campionato.isFavorite());
         }
 
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imageview_favorite_news) {
-                setImageViewFavoriteNews(!newsList.get(getAdapterPosition()).isFavorite());
+                setImageViewFavoriteNews(!campionatoList.get(getAdapterPosition()).isFavorite());
                 onItemClickListener.onFavoriteButtonPressed(getAdapterPosition());
-            } else {
-                onItemClickListener.onNewsItemClick(newsList.get(getAdapterPosition()));
             }
         }
 

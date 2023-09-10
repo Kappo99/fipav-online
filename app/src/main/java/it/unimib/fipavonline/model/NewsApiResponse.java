@@ -16,7 +16,7 @@ public class NewsApiResponse extends NewsResponse {
         super();
     }
 
-    public NewsApiResponse(String status, int totalResults, List<News> articles) {
+    public NewsApiResponse(String status, int totalResults, List<Campionato> articles) {
         super(articles);
         this.status = status;
         this.totalResults = totalResults;

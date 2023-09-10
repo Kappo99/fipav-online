@@ -55,12 +55,12 @@
     <string name="settings">Settings</string>
     <string name="news_details">News</string>
     <string name="delete">Delete</string>
-    <string name="news">News</string>
+    <string name="campionato">News</string>
     <string name="personal_area">Personal area</string>
 
-    <string name="nav_drawer_subtitle">Stay tuned for news from the world</string>
+    <string name="nav_drawer_subtitle">Stay tuned for campionato from the world</string>
 
-    <string name="error_retrieving_news">Error in retrieving the news</string>
+    <string name="error_retrieving_news">Error in retrieving the campionato</string>
     <string name="api_key_error">API Key not valid or maximum number of requests reached</string>
     <string name="unexpected_error">Unexpected error</string>
 
@@ -68,8 +68,8 @@
     <string name="news_removed_from_favorite_list_message">News removed from the favorite list</string>
 
     <!-- Content Description Strings -->
-    <string name="content_description_fav_addition">Add the news to the favorite list</string>
-    <string name="content_description_fav_delete">Remove the news from the favorite list</string>
+    <string name="content_description_fav_addition">Add the campionato to the favorite list</string>
+    <string name="content_description_fav_delete">Remove the campionato from the favorite list</string>
     <string name="content_description_news_cover_image">News cover image</string>
     <string name="campionato_list_item_nome">Serie X</string>
 

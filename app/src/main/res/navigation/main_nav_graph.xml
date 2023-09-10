@@ -10,14 +10,6 @@
         android:name="it.unimib.fipavonline.ui.main.CampionatoListFragment"
         android:label="@string/country_news"
         tools:layout="@layout/fragment_campionato_list" >
-        <action
-            android:id="@+id/action_countryNewsFragment_to_newsDetailFragment"
-            app:destination="@id/fragment_news_details"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/fragment_country_news" />
     </fragment>
     <fragment
         android:id="@+id/fragment_topic_news"
@@ -29,14 +21,6 @@
         android:name="it.unimib.fipavonline.ui.main.FavoriteNewsFragment"
         android:label="@string/favorite_news"
         tools:layout="@layout/fragment_favorite_news" >
-        <action
-            android:id="@+id/action_favoriteNewsFragment_to_newsDetailFragment"
-            app:destination="@id/fragment_news_details"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/fragment_favorite_news" />
     </fragment>
     <fragment
         android:id="@+id/fragment_settings"
@@ -49,15 +33,6 @@
             app:launchSingleTop="true" />
     </fragment>
     <include app:graph="@navigation/welcome_nav_graph" />
-    <fragment
-        android:id="@+id/fragment_news_details"
-        android:name="it.unimib.fipavonline.ui.main.NewsDetailFragment"
-        android:label="@string/news_details"
-        tools:layout="@layout/fragment_news_detail" >
-        <argument
-            android:name="news"
-            app:argType="it.unimib.fipavonline.model.News" />
-    </fragment>
     <activity
         android:id="@+id/welcomeActivity"
         android:name="it.unimib.fipavonline.ui.welcome.WelcomeActivity"

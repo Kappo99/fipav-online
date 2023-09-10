@@ -1,15 +1,15 @@
 package it.unimib.fipavonline.data.repository.news;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 
 /**
- * Interface for Repositories that manage News objects.
+ * Interface for Repositories that manage Campionato objects.
  */
 public interface INewsRepository {
 
     void fetchNews(String country, int page, long lastUpdate);
 
-    void updateNews(News news);
+    void updateNews(Campionato campionato);
 
     void getFavoriteNews();
 

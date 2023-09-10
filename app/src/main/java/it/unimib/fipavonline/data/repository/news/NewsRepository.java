@@ -13,7 +13,7 @@ import java.util.List;
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.NewsDao;
 import it.unimib.fipavonline.data.database.NewsRoomDatabase;
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.data.service.NewsApiService;
 import it.unimib.fipavonline.util.ServiceLocator;
@@ -60,8 +60,8 @@ public class NewsRepository implements INewsRepository {
 
                     if (response.body() != null && response.isSuccessful() &&
                             !response.body().getStatus().equals("error")) {
-                        List<News> newsList = response.body().getNewsList();
-                        saveDataInDatabase(newsList);
+                        List<Campionato> campionatoList = response.body().getNewsList();
+                        saveDataInDatabase(campionatoList);
                     } else {
                         newsResponseCallback.onFailure(application.getString(R.string.error_retrieving_news));
                     }
@@ -84,9 +84,9 @@ public class NewsRepository implements INewsRepository {
     @Override
     public void deleteFavoriteNews() {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<News> favoriteNews = newsDao.getFavoriteNews();
-            for (News news : favoriteNews) {
-                news.setFavorite(false);
+            List<Campionato> favoriteNews = newsDao.getFavoriteNews();
+            for (Campionato campionato : favoriteNews) {
+                campionato.setFavorite(false);
             }
             newsDao.updateListFavoriteNews(favoriteNews);
             newsResponseCallback.onSuccess(newsDao.getFavoriteNews(), System.currentTimeMillis());
@@ -94,15 +94,15 @@ public class NewsRepository implements INewsRepository {
     }
 
     /**
-     * Update the news changing the status of "favorite"
+     * Update the campionato changing the status of "favorite"
      * in the local database.
-     * @param news The news to be updated.
+     * @param campionato The campionato to be updated.
      */
     @Override
-    public void updateNews(News news) {
+    public void updateNews(Campionato campionato) {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsDao.updateSingleFavoriteNews(news);
-            newsResponseCallback.onNewsFavoriteStatusChanged(news);
+            newsDao.updateSingleFavoriteNews(campionato);
+            newsResponseCallback.onNewsFavoriteStatusChanged(campionato);
         });
     }
 
@@ -120,39 +120,39 @@ public class NewsRepository implements INewsRepository {
      * Saves the news in the local database.
      * The method is executed with an ExecutorService defined in NewsRoomDatabase class
      * because the database access cannot been executed in the main thread.
-     * @param newsList the list of news to be written in the local database.
+     * @param campionatoList the list of news to be written in the local database.
      */
-    private void saveDataInDatabase(List<News> newsList) {
+    private void saveDataInDatabase(List<Campionato> campionatoList) {
         NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
-            List<News> allNews = newsDao.getAll();
+            List<Campionato> allNews = newsDao.getAll();
 
             // Checks if the news just downloaded has already been downloaded earlier
             // in order to preserve the news status (marked as favorite or not)
-            for (News news : allNews) {
-                // This check works because News and NewsSource classes have their own
+            for (Campionato campionato : allNews) {
+                // This check works because Campionato and NewsSource classes have their own
                 // implementation of equals(Object) and hashCode() methods
-                if (newsList.contains(news)) {
-                    // The primary key and the favorite status is contained only in the News objects
-                    // retrieved from the database, and not in the News objects downloaded from the
-                    // Web Service. If the same news was already downloaded earlier, the following
-                    // line of code replaces the the News object in newsList with the corresponding
-                    // News object saved in the database, so that it has the primary key and the
+                if (campionatoList.contains(campionato)) {
+                    // The primary key and the favorite status is contained only in the Campionato objects
+                    // retrieved from the database, and not in the Campionato objects downloaded from the
+                    // Web Service. If the same campionato was already downloaded earlier, the following
+                    // line of code replaces the the Campionato object in campionatoList with the corresponding
+                    // Campionato object saved in the database, so that it has the primary key and the
                     // favorite status.
-                    newsList.set(newsList.indexOf(news), news);
+                    campionatoList.set(campionatoList.indexOf(campionato), campionato);
                 }
             }
 
             // Writes the news in the database and gets the associated primary keys
-            List<Long> insertedNewsIds = newsDao.insertNewsList(newsList);
-            for (int i = 0; i < newsList.size(); i++) {
-                // Adds the primary key to the corresponding object News just downloaded so that
+            List<Long> insertedNewsIds = newsDao.insertNewsList(campionatoList);
+            for (int i = 0; i < campionatoList.size(); i++) {
+                // Adds the primary key to the corresponding object Campionato just downloaded so that
                 // if the user marks the news as favorite (and vice-versa), we can use its id
                 // to know which news in the database must be marked as favorite/not favorite
-                newsList.get(i).setId(insertedNewsIds.get(i));
+                campionatoList.get(i).setId(insertedNewsIds.get(i));
             }
 
-            newsResponseCallback.onSuccess(newsList, System.currentTimeMillis());
+            newsResponseCallback.onSuccess(campionatoList, System.currentTimeMillis());
         });
     }
 

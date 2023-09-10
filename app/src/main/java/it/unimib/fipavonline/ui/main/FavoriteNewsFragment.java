@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.fipavonline.R;
-import it.unimib.fipavonline.adapter.NewsListAdapter;
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.adapter.CampionatoListAdapter;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.util.Constants;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
@@ -39,8 +39,8 @@ public class FavoriteNewsFragment extends Fragment {
 
     private static final String TAG = FavoriteNewsFragment.class.getSimpleName();
 
-    private List<News> newsList;
-    private NewsListAdapter newsListAdapter;
+    private List<Campionato> campionatoList;
+    private CampionatoListAdapter campionatoListAdapter;
     private ProgressBar progressBar;
     private NewsViewModel newsViewModel;
 
@@ -61,7 +61,7 @@ public class FavoriteNewsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        newsList = new ArrayList<>();
+        campionatoList = new ArrayList<>();
         newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
     }
 
@@ -98,13 +98,14 @@ public class FavoriteNewsFragment extends Fragment {
 
         ListView listViewFavNews = view.findViewById(R.id.listview_fav_news);
 
-        newsListAdapter =
-                new NewsListAdapter(requireContext(), R.layout.favorite_news_list_item, newsList,
+        campionatoListAdapter =
+                new CampionatoListAdapter(requireContext(), requireActivity().getApplication(),
+                        R.layout.favorite_news_list_item, campionatoList,
                         news -> {
                             news.setFavorite(false);
                             newsViewModel.removeFromFavorite(news);
                         });
-        listViewFavNews.setAdapter(newsListAdapter);
+        listViewFavNews.setAdapter(campionatoListAdapter);
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -124,9 +125,9 @@ public class FavoriteNewsFragment extends Fragment {
         newsViewModel.getFavoriteNewsLiveData(isFirstLoading).observe(getViewLifecycleOwner(), result -> {
             if (result != null) {
                 if (result.isSuccess()) {
-                    newsList.clear();
-                    newsList.addAll(((Result.NewsResponseSuccess)result).getData().getNewsList());
-                    newsListAdapter.notifyDataSetChanged();
+                    campionatoList.clear();
+                    campionatoList.addAll(((Result.NewsResponseSuccess)result).getData().getNewsList());
+                    campionatoListAdapter.notifyDataSetChanged();
                     if (isFirstLoading) {
                         sharedPreferencesUtil.writeBooleanData(Constants.SHARED_PREFERENCES_FILE_NAME,
                                 Constants.SHARED_PREFERENCES_FIRST_LOADING, false);
@@ -140,13 +141,6 @@ public class FavoriteNewsFragment extends Fragment {
                 }
                 progressBar.setVisibility(View.GONE);
             }
-        });
-
-        listViewFavNews.setOnItemClickListener((parent, view1, position, id) -> {
-            FavoriteNewsFragmentDirections.ActionFavoriteNewsFragmentToNewsDetailFragment action =
-                    FavoriteNewsFragmentDirections.
-                            actionFavoriteNewsFragmentToNewsDetailFragment(newsList.get(position));
-            Navigation.findNavController(view).navigate(action);
         });
     }
 }

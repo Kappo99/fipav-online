@@ -2,7 +2,7 @@ package it.unimib.fipavonline.data.repository.news;
 
 import androidx.lifecycle.MutableLiveData;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.Result;
 
 public interface INewsRepositoryWithLiveData {
@@ -13,7 +13,7 @@ public interface INewsRepositoryWithLiveData {
 
     MutableLiveData<Result> getFavoriteNews(boolean firstLoading);
 
-    void updateNews(News news);
+    void updateNews(Campionato campionato);
 
     void deleteFavoriteNews();
 }

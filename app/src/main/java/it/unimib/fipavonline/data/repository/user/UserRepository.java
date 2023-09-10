@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import java.util.Set;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.model.User;
@@ -121,8 +121,8 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
     }
 
     @Override
-    public void onSuccessFromRemoteDatabase(List<News> newsList) {
-        newsLocalDataSource.insertNews(newsList);
+    public void onSuccessFromRemoteDatabase(List<Campionato> campionatoList) {
+        newsLocalDataSource.insertNews(campionatoList);
     }
 
     @Override
@@ -174,27 +174,27 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
     }
 
     @Override
-    public void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews) {
+    public void onNewsFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews) {
 
     }
 
     @Override
-    public void onNewsFavoriteStatusChanged(List<News> news) {
+    public void onNewsFavoriteStatusChanged(List<Campionato> campionatoes) {
 
     }
 
     @Override
-    public void onDeleteFavoriteNewsSuccess(List<News> favoriteNews) {
+    public void onDeleteFavoriteNewsSuccess(List<Campionato> favoriteNews) {
 
     }
 
     @Override
-    public void onSuccessFromCloudReading(List<News> newsList) {
+    public void onSuccessFromCloudReading(List<Campionato> campionatoList) {
 
     }
 
     @Override
-    public void onSuccessFromCloudWriting(News news) {
+    public void onSuccessFromCloudWriting(Campionato campionato) {
 
     }
 

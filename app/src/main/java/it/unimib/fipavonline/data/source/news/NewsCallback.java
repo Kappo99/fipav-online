@@ -2,7 +2,7 @@ package it.unimib.fipavonline.data.source.news;
 
 import java.util.List;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 
 /**
@@ -14,11 +14,11 @@ public interface NewsCallback {
     void onFailureFromRemote(Exception exception);
     void onSuccessFromLocal(NewsApiResponse newsApiResponse);
     void onFailureFromLocal(Exception exception);
-    void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews);
-    void onNewsFavoriteStatusChanged(List<News> news);
-    void onDeleteFavoriteNewsSuccess(List<News> favoriteNews);
-    void onSuccessFromCloudReading(List<News> newsList);
-    void onSuccessFromCloudWriting(News news);
+    void onNewsFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews);
+    void onNewsFavoriteStatusChanged(List<Campionato> campionatoes);
+    void onDeleteFavoriteNewsSuccess(List<Campionato> favoriteNews);
+    void onSuccessFromCloudReading(List<Campionato> campionatoList);
+    void onSuccessFromCloudWriting(Campionato campionato);
     void onFailureFromCloud(Exception exception);
     void onSuccessSynchronization();
     void onSuccessDeletion();

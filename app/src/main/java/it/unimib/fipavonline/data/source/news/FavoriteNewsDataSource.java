@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.fipavonline.model.News;
+import it.unimib.fipavonline.model.Campionato;
 
 /**
  * Class to get the user favorite news using Firebase Realtime Database.
@@ -45,27 +45,27 @@ public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
                 else {
                     Log.d(TAG, "Successful read: " + task.getResult().getValue());
 
-                    List<News> newsList = new ArrayList<>();
+                    List<Campionato> campionatoList = new ArrayList<>();
                     for(DataSnapshot ds : task.getResult().getChildren()) {
-                        News news = ds.getValue(News.class);
-                        news.setSynchronized(true);
-                        newsList.add(news);
+                        Campionato campionato = ds.getValue(Campionato.class);
+                        campionato.setSynchronized(true);
+                        campionatoList.add(campionato);
                     }
 
-                    newsCallback.onSuccessFromCloudReading(newsList);
+                    newsCallback.onSuccessFromCloudReading(campionatoList);
                 }
             });
     }
 
     @Override
-    public void addFavoriteNews(News news) {
+    public void addFavoriteNews(Campionato campionato) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).child(String.valueOf(news.hashCode())).setValue(news)
+            child(FIREBASE_FAVORITE_NEWS_COLLECTION).child(String.valueOf(campionato.hashCode())).setValue(campionato)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    news.setSynchronized(true);
-                    newsCallback.onSuccessFromCloudWriting(news);
+                    campionato.setSynchronized(true);
+                    newsCallback.onSuccessFromCloudWriting(campionato);
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
@@ -77,27 +77,27 @@ public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
     }
 
     @Override
-    public void synchronizeFavoriteNews(List<News> notSynchronizedNewsList) {
+    public void synchronizeFavoriteNews(List<Campionato> notSynchronizedCampionatoList) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
             child(FIREBASE_FAVORITE_NEWS_COLLECTION).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    List<News> newsList = new ArrayList<>();
+                    List<Campionato> campionatoList = new ArrayList<>();
                     for (DataSnapshot ds : task.getResult().getChildren()) {
-                        News news = ds.getValue(News.class);
-                        news.setSynchronized(true);
-                        newsList.add(news);
+                        Campionato campionato = ds.getValue(Campionato.class);
+                        campionato.setSynchronized(true);
+                        campionatoList.add(campionato);
                     }
 
-                    newsList.addAll(notSynchronizedNewsList);
+                    campionatoList.addAll(notSynchronizedCampionatoList);
 
-                    for (News news : newsList) {
+                    for (Campionato campionato : campionatoList) {
                         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
                             child(FIREBASE_FAVORITE_NEWS_COLLECTION).
-                            child(String.valueOf(news.hashCode())).setValue(news).addOnSuccessListener(
+                            child(String.valueOf(campionato.hashCode())).setValue(campionato).addOnSuccessListener(
                                     new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            news.setSynchronized(true);
+                                            campionato.setSynchronized(true);
                                         }
                                     }
                             );
@@ -107,12 +107,12 @@ public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
     }
 
     @Override
-    public void deleteFavoriteNews(News news) {
+    public void deleteFavoriteNews(Campionato campionato) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).child(String.valueOf(news.hashCode())).
+            child(FIREBASE_FAVORITE_NEWS_COLLECTION).child(String.valueOf(campionato.hashCode())).
             removeValue().addOnSuccessListener(aVoid -> {
-                news.setSynchronized(false);
-                newsCallback.onSuccessFromCloudWriting(news);
+                campionato.setSynchronized(false);
+                newsCallback.onSuccessFromCloudWriting(campionato);
             }).addOnFailureListener(e -> {
                 newsCallback.onFailureFromCloud(e);
             });
