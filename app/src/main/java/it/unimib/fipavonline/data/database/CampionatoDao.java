@@ -49,5 +49,5 @@ public interface CampionatoDao {
     int deleteAll();
 
     @Query("DELETE FROM Campionato WHERE is_favorite = 0")
-    void deleteNotFavoriteNews();
+    void deleteNotFavoriteCampionato();
 }
