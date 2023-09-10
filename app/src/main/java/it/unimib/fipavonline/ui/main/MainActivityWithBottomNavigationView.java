@@ -1,8 +1,5 @@
 package it.unimib.fipavonline.ui.main;
 
-import static it.unimib.fipavonline.ui.preferences.NewsPreferencesActivity.EXTRA_BUTTON_PRESSED_COUNTER_KEY;
-import static it.unimib.fipavonline.ui.preferences.NewsPreferencesActivity.EXTRA_NEWS_KEY;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -55,7 +52,5 @@ public class MainActivityWithBottomNavigationView extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNav, navController);
 
         Intent intent = getIntent();
-        Log.d(TAG, "Times: " + intent.getIntExtra(EXTRA_BUTTON_PRESSED_COUNTER_KEY, 0));
-        Log.d(TAG, "News: " + intent.getParcelableExtra(EXTRA_NEWS_KEY));
     }
 }

@@ -17,9 +17,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"></action>
         <action
-            android:id="@+id/navigate_to_newsPreferencesActivity"
-            app:destination="@id/newsPreferencesActivity" />
-        <action
             android:id="@+id/navigate_to_mainActivityWithNavigationDrawer"
             app:destination="@id/mainActivityWithNavigationDrawer" />
         <action
@@ -37,11 +34,6 @@
         tools:layout="@layout/activity_main_with_bottom_navigation_view" >
     </activity>
     <activity
-        android:id="@+id/newsPreferencesActivity"
-        android:name="it.unimib.fipavonline.ui.preferences.NewsPreferencesActivity"
-        android:label="activity_news_preferences_linear_layout"
-        tools:layout="@layout/activity_news_preferences_constraint_layout" />
-    <activity
         android:id="@+id/mainActivityWithNavigationDrawer"
         android:name="it.unimib.fipavonline.ui.main.MainActivityWithNavigationDrawer"
         android:label="MainActivityWithNavigationDrawer" />
@@ -49,9 +41,5 @@
         android:id="@+id/registrationFragment"
         android:name="it.unimib.fipavonline.ui.welcome.RegistrationFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_registration" >
-        <action
-            android:id="@+id/navigation_to_newsPreferencesActivity"
-            app:destination="@id/newsPreferencesActivity" />
-    </fragment>
+        tools:layout="@layout/fragment_registration" />
 </navigation>

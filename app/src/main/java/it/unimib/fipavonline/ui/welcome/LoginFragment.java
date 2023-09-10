@@ -52,7 +52,6 @@ import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.model.User;
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.ui.main.MainActivityWithBottomNavigationView;
-import it.unimib.fipavonline.ui.preferences.NewsPreferencesActivity;
 import it.unimib.fipavonline.util.DataEncryptionUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
@@ -134,7 +133,7 @@ public class LoginFragment extends Fragment {
                                 User user = ((Result.UserResponseSuccess) authenticationResult).getData();
                                 saveLoginData(user.getEmail(), null, user.getIdToken());
                                 userViewModel.setAuthenticationError(false);
-                                retrieveUserInformationAndStartActivity(user, R.id.navigate_to_newsPreferencesActivity);
+                                retrieveUserInformationAndStartActivity(user, R.id.navigate_to_mainActivityWithBottomNavigationView);
                             } else {
                                 userViewModel.setAuthenticationError(true);
                                 progressIndicator.setVisibility(View.GONE);
@@ -159,7 +158,7 @@ public class LoginFragment extends Fragment {
         userViewModel.getUserFavoriteNewsMutableLiveData(user.getIdToken()).observe(
             getViewLifecycleOwner(), userFavoriteNewsRetrievalResult -> {
                 progressIndicator.setVisibility(View.GONE);
-                startActivityBasedOnCondition(NewsPreferencesActivity.class, destination);
+                startActivityBasedOnCondition(MainActivityWithBottomNavigationView.class, destination);
             }
         );
     }
@@ -176,20 +175,8 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (userViewModel.getLoggedUser() != null) {
-            SharedPreferencesUtil sharedPreferencesUtil =
-                    new SharedPreferencesUtil(requireActivity().getApplication());
-
-            if (sharedPreferencesUtil.readStringData(SHARED_PREFERENCES_FILE_NAME,
-                    SHARED_PREFERENCES_COUNTRY_OF_INTEREST) != null &&
-                    sharedPreferencesUtil.readStringSetData(SHARED_PREFERENCES_FILE_NAME,
-                            SHARED_PREFERENCES_TOPICS_OF_INTEREST) != null) {
-
-                startActivityBasedOnCondition(MainActivityWithBottomNavigationView.class,
-                        R.id.navigate_to_mainActivityWithBottomNavigationView);
-            } else {
-                startActivityBasedOnCondition(NewsPreferencesActivity.class,
-                        R.id.navigate_to_newsPreferencesActivity);
-            }
+            startActivityBasedOnCondition(MainActivityWithBottomNavigationView.class,
+                    R.id.navigate_to_mainActivityWithBottomNavigationView);
         }
 
         textInputLayoutEmail = view.findViewById(R.id.text_input_layout_email);
@@ -232,7 +219,7 @@ public class LoginFragment extends Fragment {
                                 User user = ((Result.UserResponseSuccess) result).getData();
                                 saveLoginData(email, password, user.getIdToken());
                                 userViewModel.setAuthenticationError(false);
-                                retrieveUserInformationAndStartActivity(user, R.id.navigate_to_newsPreferencesActivity);
+                                retrieveUserInformationAndStartActivity(user, R.id.navigate_to_mainActivityWithBottomNavigationView);
                             } else {
                                 userViewModel.setAuthenticationError(true);
                                 progressIndicator.setVisibility(View.GONE);
