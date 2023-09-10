@@ -5,14 +5,14 @@ plugins {
 }
 
 android {
-    namespace 'it.unimib.worldnews'
+    namespace 'it.unimib.fipavonline'
     compileSdk 33
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
     defaultConfig {
-        applicationId "it.unimib.worldnews"
+        applicationId "it.unimib.fipavonline"
         minSdk 22
         targetSdk 33
         versionCode 8

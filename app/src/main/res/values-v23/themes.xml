@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.WorldNews" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.FipavOnline" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -20,7 +20,7 @@
     </style>
 
     <!-- Style for NavigationView (NavigationDrawer) -->
-    <style name="Widget.App.NavigationView" parent="Theme.WorldNews">
+    <style name="Widget.App.NavigationView" parent="Theme.FipavOnline">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>

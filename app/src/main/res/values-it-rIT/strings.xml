@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">World News</string>
+    <string name="app_name">Fipav Online</string>
     <string name="logo">Logo Applicazione</string>
     <string name="forgot_password">Password dimenticata?</string>
     <string name="txt_or">O</string>

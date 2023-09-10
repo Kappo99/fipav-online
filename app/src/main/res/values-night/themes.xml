@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.WorldNews" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.FipavOnline" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_grey</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -39,7 +39,7 @@
     </style>
 
     <!-- Style for NavigationView (NavigationDrawer) -->
-    <style name="Widget.App.NavigationView" parent="Theme.WorldNews">
+    <style name="Widget.App.NavigationView" parent="Theme.FipavOnline">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 

@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="it.unimib.worldnews.ui.welcome.LoginFragment"
+        android:name="it.unimib.fipavonline.ui.welcome.LoginFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_login" >
         <action
@@ -32,22 +32,22 @@
     </fragment>
     <activity
         android:id="@+id/mainActivityWithBottomNavigationView"
-        android:name="it.unimib.worldnews.ui.main.MainActivityWithBottomNavigationView"
+        android:name="it.unimib.fipavonline.ui.main.MainActivityWithBottomNavigationView"
         android:label="activity_main_with_bottom_navigation_view"
         tools:layout="@layout/activity_main_with_bottom_navigation_view" >
     </activity>
     <activity
         android:id="@+id/newsPreferencesActivity"
-        android:name="it.unimib.worldnews.ui.preferences.NewsPreferencesActivity"
+        android:name="it.unimib.fipavonline.ui.preferences.NewsPreferencesActivity"
         android:label="activity_news_preferences_linear_layout"
         tools:layout="@layout/activity_news_preferences_constraint_layout" />
     <activity
         android:id="@+id/mainActivityWithNavigationDrawer"
-        android:name="it.unimib.worldnews.ui.main.MainActivityWithNavigationDrawer"
+        android:name="it.unimib.fipavonline.ui.main.MainActivityWithNavigationDrawer"
         android:label="MainActivityWithNavigationDrawer" />
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="it.unimib.worldnews.ui.welcome.RegistrationFragment"
+        android:name="it.unimib.fipavonline.ui.welcome.RegistrationFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_registration" >
         <action

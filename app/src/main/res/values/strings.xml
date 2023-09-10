@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">World News</string>
+    <string name="app_name">Fipav Online</string>
     <string name="logo">Logo Application</string>
     <string name="login" translatable="false">Login</string>
     <string name="logout" translatable="false">Logout</string>
@@ -8,7 +8,7 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="txt_or">OR</string>
     <string name="google_login">Login with Google</string>
-    <string name="new_account">New to World News?</string>
+    <string name="new_account">New to Fipav Online?</string>
     <string name="register">Register</string>
 
     <string name="country">Country of interest</string>
