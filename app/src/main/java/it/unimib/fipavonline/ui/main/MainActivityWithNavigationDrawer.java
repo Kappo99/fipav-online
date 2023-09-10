@@ -17,7 +17,7 @@ import it.unimib.fipavonline.R;
 
 /**
  * Activity that contains Fragments, managed by a NavigationView (NavigationDrawer),
- * that show the news and user preferences.
+ * that show the campionato.
  */
 public class MainActivityWithNavigationDrawer extends AppCompatActivity {
 

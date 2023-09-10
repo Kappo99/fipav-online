@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import it.unimib.fipavonline.R;
 
 /**
- * Fragment that shows the news associated with topics of interest of the user.
+ * Fragment that shows the campionato associated with topics of interest of the user.
  */
 public class PartitaListFragment extends Fragment {
 

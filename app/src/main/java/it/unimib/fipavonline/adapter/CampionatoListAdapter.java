@@ -17,7 +17,6 @@ import java.util.List;
 
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.util.DateTimeUtil;
 
 /**
  * Custom adapter that extends ArrayAdapter to show an ArrayList of Campionato.

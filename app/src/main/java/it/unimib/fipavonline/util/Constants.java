@@ -5,21 +5,6 @@ package it.unimib.fipavonline.util;
  */
 public class Constants {
 
-    // Constants for NewsAPI.org
-    public static final String FRANCE = "fr";
-    public static final String ITALY = "it";
-    public static final String GERMANY = "de";
-    public static final String UNITED_KINGDOM = "gb";
-    public static final String UNITED_STATES = "us";
-
-    public static final String BUSINESS = "business";
-    public static final String ENTERTAINMENT = "entertainment";
-    public static final String GENERAL = "general";
-    public static final String HEALTH = "health";
-    public static final String SCIENCE = "science";
-    public static final String SPORTS = "sports";
-    public static final String TECHNOLOGY = "technology";
-
     // Constants for SharedPreferences
     public static final String SHARED_PREFERENCES_FILE_NAME = "it.unimib.fipavonline.preferences";
     public static final String SHARED_PREFERENCES_COUNTRY_OF_INTEREST = "country_of_interest";
@@ -43,7 +28,7 @@ public class Constants {
     public static final String FIPAV_ONLINE_API_BASE_URL = "https://unimib.kmsolution.it/api/";
     public static final String CAMPIONATO_ENDPOINT = "campionato.php";
 
-    // Constants for refresh rate of news
+    // Constants for refresh rate of campionato
     public static final String LAST_UPDATE = "last_update";
     public static final int FRESH_TIMEOUT = 1000; // *60*5; // 5 minuti in millisecondi
 
