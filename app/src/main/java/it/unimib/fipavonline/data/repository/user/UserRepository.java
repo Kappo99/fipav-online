@@ -23,23 +23,23 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
 
     private final BaseUserAuthenticationRemoteDataSource userRemoteDataSource;
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
-    private final BaseCampionatoLocalDataSource newsLocalDataSource;
+    private final BaseCampionatoLocalDataSource campionatoLocalDataSource;
     private final MutableLiveData<Result> userMutableLiveData;
     private final MutableLiveData<Result> userFavoriteNewsMutableLiveData;
     private final MutableLiveData<Result> userPreferencesMutableLiveData;
 
     public UserRepository(BaseUserAuthenticationRemoteDataSource userRemoteDataSource,
                           BaseUserDataRemoteDataSource userDataRemoteDataSource,
-                          BaseCampionatoLocalDataSource newsLocalDataSource) {
+                          BaseCampionatoLocalDataSource campionatoLocalDataSource) {
         this.userRemoteDataSource = userRemoteDataSource;
         this.userDataRemoteDataSource = userDataRemoteDataSource;
-        this.newsLocalDataSource = newsLocalDataSource;
+        this.campionatoLocalDataSource = campionatoLocalDataSource;
         this.userMutableLiveData = new MutableLiveData<>();
         this.userPreferencesMutableLiveData = new MutableLiveData<>();
         this.userFavoriteNewsMutableLiveData = new MutableLiveData<>();
         this.userRemoteDataSource.setUserResponseCallback(this);
         this.userDataRemoteDataSource.setUserResponseCallback(this);
-        this.newsLocalDataSource.setCampionatoCallback(this);
+        this.campionatoLocalDataSource.setCampionatoCallback(this);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
 
     @Override
     public void onSuccessFromRemoteDatabase(List<Campionato> campionatoList) {
-        newsLocalDataSource.insertCampionato(campionatoList);
+        campionatoLocalDataSource.insertCampionato(campionatoList);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
 
     @Override
     public void onSuccessLogout() {
-        newsLocalDataSource.deleteAll();
+        campionatoLocalDataSource.deleteAll();
     }
 
     @Override
