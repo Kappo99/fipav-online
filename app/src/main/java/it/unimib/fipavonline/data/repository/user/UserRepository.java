@@ -9,28 +9,28 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.model.User;
-import it.unimib.fipavonline.data.source.campionato.BaseNewsLocalDataSource;
-import it.unimib.fipavonline.data.source.campionato.NewsCallback;
+import it.unimib.fipavonline.data.source.campionato.BaseCampionatoLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.CampionatoCallback;
 import it.unimib.fipavonline.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserDataRemoteDataSource;
 
 /**
  * Repository class to get the user information.
  */
-public class UserRepository implements IUserRepository, UserResponseCallback, NewsCallback {
+public class UserRepository implements IUserRepository, UserResponseCallback, CampionatoCallback {
 
     private static final String TAG = UserRepository.class.getSimpleName();
 
     private final BaseUserAuthenticationRemoteDataSource userRemoteDataSource;
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
-    private final BaseNewsLocalDataSource newsLocalDataSource;
+    private final BaseCampionatoLocalDataSource newsLocalDataSource;
     private final MutableLiveData<Result> userMutableLiveData;
     private final MutableLiveData<Result> userFavoriteNewsMutableLiveData;
     private final MutableLiveData<Result> userPreferencesMutableLiveData;
 
     public UserRepository(BaseUserAuthenticationRemoteDataSource userRemoteDataSource,
                           BaseUserDataRemoteDataSource userDataRemoteDataSource,
-                          BaseNewsLocalDataSource newsLocalDataSource) {
+                          BaseCampionatoLocalDataSource newsLocalDataSource) {
         this.userRemoteDataSource = userRemoteDataSource;
         this.userDataRemoteDataSource = userDataRemoteDataSource;
         this.newsLocalDataSource = newsLocalDataSource;
@@ -39,7 +39,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
         this.userFavoriteNewsMutableLiveData = new MutableLiveData<>();
         this.userRemoteDataSource.setUserResponseCallback(this);
         this.userDataRemoteDataSource.setUserResponseCallback(this);
-        this.newsLocalDataSource.setNewsCallback(this);
+        this.newsLocalDataSource.setCampionatoCallback(this);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
 
     @Override
     public void onSuccessFromRemoteDatabase(List<Campionato> campionatoList) {
-        newsLocalDataSource.insertNews(campionatoList);
+        newsLocalDataSource.insertCampionato(campionatoList);
     }
 
     @Override
@@ -174,17 +174,17 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ne
     }
 
     @Override
-    public void onNewsFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews) {
+    public void onCampionatoFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews) {
 
     }
 
     @Override
-    public void onNewsFavoriteStatusChanged(List<Campionato> campionatoes) {
+    public void onCampionatoFavoriteStatusChanged(List<Campionato> campionatoes) {
 
     }
 
     @Override
-    public void onDeleteFavoriteNewsSuccess(List<Campionato> favoriteNews) {
+    public void onDeleteFavoriteCampionatoSuccess(List<Campionato> favoriteNews) {
 
     }
 

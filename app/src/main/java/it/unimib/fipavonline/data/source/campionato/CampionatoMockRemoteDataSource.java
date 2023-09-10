@@ -12,20 +12,20 @@ import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 /**
  * Class to get the news from a local JSON file to simulate the Web Service response.
  */
-public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
+public class CampionatoMockRemoteDataSource extends BaseCampionatoRemoteDataSource {
 
     private final CampionatoJSONParserUtil campionatoJsonParserUtil;
     private final CampionatoJSONParserUtil.JsonParserType jsonParserType;
 
-    public NewsMockRemoteDataSource(CampionatoJSONParserUtil campionatoJsonParserUtil,
-                                    CampionatoJSONParserUtil.JsonParserType jsonParserType) {
+    public CampionatoMockRemoteDataSource(CampionatoJSONParserUtil campionatoJsonParserUtil,
+                                          CampionatoJSONParserUtil.JsonParserType jsonParserType) {
 
         this.campionatoJsonParserUtil = campionatoJsonParserUtil;
         this.jsonParserType = jsonParserType;
     }
 
     @Override
-    public void getNews() {
+    public void getCampionato() {
         CampionatoApiResponse campionatoApiResponse = null;
 
         switch (jsonParserType) {
@@ -37,14 +37,14 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
                 }
                 break;
             case JSON_ERROR:
-                newsCallback.onFailureFromRemote(new Exception(UNEXPECTED_ERROR));
+                campionatoCallback.onFailureFromRemote(new Exception(UNEXPECTED_ERROR));
                 break;
         }
 
         if (campionatoApiResponse != null) {
-            newsCallback.onSuccessFromRemote(campionatoApiResponse, System.currentTimeMillis());
+            campionatoCallback.onSuccessFromRemote(campionatoApiResponse, System.currentTimeMillis());
         } else {
-            newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
+            campionatoCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
         }
     }
 }

@@ -8,7 +8,6 @@ import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -126,7 +125,7 @@ public class FavoriteNewsFragment extends Fragment {
             if (result != null) {
                 if (result.isSuccess()) {
                     campionatoList.clear();
-                    campionatoList.addAll(((Result.NewsResponseSuccess)result).getData().getNewsList());
+                    campionatoList.addAll(((Result.NewsResponseSuccess)result).getData().getCampionatoList());
                     campionatoListAdapter.notifyDataSetChanged();
                     if (isFirstLoading) {
                         sharedPreferencesUtil.writeBooleanData(Constants.SHARED_PREFERENCES_FILE_NAME,

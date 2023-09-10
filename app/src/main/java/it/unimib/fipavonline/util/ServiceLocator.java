@@ -11,17 +11,17 @@ import java.security.GeneralSecurityException;
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
-import it.unimib.fipavonline.data.repository.campionato.NewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.CampionatoRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.data.repository.user.UserRepository;
 import it.unimib.fipavonline.data.service.CampionatoApiService;
-import it.unimib.fipavonline.data.source.campionato.BaseFavoriteNewsDataSource;
-import it.unimib.fipavonline.data.source.campionato.BaseNewsLocalDataSource;
-import it.unimib.fipavonline.data.source.campionato.BaseNewsRemoteDataSource;
-import it.unimib.fipavonline.data.source.campionato.FavoriteNewsDataSource;
-import it.unimib.fipavonline.data.source.campionato.NewsLocalDataSource;
-import it.unimib.fipavonline.data.source.campionato.NewsMockRemoteDataSource;
-import it.unimib.fipavonline.data.source.campionato.NewsRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseFavoriteCampionatoDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseCampionatoLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseCampionatoRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.FavoriteCampionatoDataSource;
+import it.unimib.fipavonline.data.source.campionato.CampionatoLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.CampionatoMockRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.CampionatoRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserDataRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.UserAuthenticationRemoteDataSource;
@@ -58,8 +58,8 @@ public class ServiceLocator {
      * Returns an instance of CampionatoApiService class using Retrofit.
      * @return an instance of CampionatoApiService.
      */
-    public CampionatoApiService getNewsApiService() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.NEWS_API_BASE_URL).
+    public CampionatoApiService getCampionatoApiService() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.FIPAV_ONLINE_API_BASE_URL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         return retrofit.create(CampionatoApiService.class);
     }
@@ -69,7 +69,7 @@ public class ServiceLocator {
      * @param application Param for accessing the global application state.
      * @return An instance of FipavOnlineRoomDatabase.
      */
-    public FipavOnlineRoomDatabase getNewsDao(Application application) {
+    public FipavOnlineRoomDatabase getFipavOnlineDao(Application application) {
         return FipavOnlineRoomDatabase.getDatabase(application);
     }
 
@@ -80,26 +80,26 @@ public class ServiceLocator {
      * @return An instance of INewsRepositoryWithLiveData.
      */
     public INewsRepositoryWithLiveData getNewsRepository(Application application, boolean debugMode) {
-        BaseNewsRemoteDataSource newsRemoteDataSource;
-        BaseNewsLocalDataSource newsLocalDataSource;
-        BaseFavoriteNewsDataSource favoriteNewsDataSource;
+        BaseCampionatoRemoteDataSource newsRemoteDataSource;
+        BaseCampionatoLocalDataSource newsLocalDataSource;
+        BaseFavoriteCampionatoDataSource favoriteNewsDataSource;
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
         DataEncryptionUtil dataEncryptionUtil = new DataEncryptionUtil(application);
 
         if (debugMode) {
             CampionatoJSONParserUtil campionatoJsonParserUtil = new CampionatoJSONParserUtil(application);
             newsRemoteDataSource =
-                    new NewsMockRemoteDataSource(campionatoJsonParserUtil, CampionatoJSONParserUtil.JsonParserType.GSON);
+                    new CampionatoMockRemoteDataSource(campionatoJsonParserUtil, CampionatoJSONParserUtil.JsonParserType.GSON);
         } else {
             newsRemoteDataSource =
-                    new NewsRemoteDataSource(application.getString(R.string.api_key));
+                    new CampionatoRemoteDataSource(application.getString(R.string.api_key));
         }
 
-        newsLocalDataSource = new NewsLocalDataSource(getNewsDao(application),
+        newsLocalDataSource = new CampionatoLocalDataSource(getFipavOnlineDao(application),
                 sharedPreferencesUtil, dataEncryptionUtil);
 
         try {
-            favoriteNewsDataSource = new FavoriteNewsDataSource(dataEncryptionUtil.
+            favoriteNewsDataSource = new FavoriteCampionatoDataSource(dataEncryptionUtil.
                     readSecretDataWithEncryptedSharedPreferences(
                             ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN
                     )
@@ -108,7 +108,7 @@ public class ServiceLocator {
             return null;
         }
 
-        return new NewsRepositoryWithLiveData(newsRemoteDataSource,
+        return new CampionatoRepositoryWithLiveData(newsRemoteDataSource,
                 newsLocalDataSource, favoriteNewsDataSource);
     }
 
@@ -127,8 +127,8 @@ public class ServiceLocator {
 
         DataEncryptionUtil dataEncryptionUtil = new DataEncryptionUtil(application);
 
-        BaseNewsLocalDataSource newsLocalDataSource =
-                new NewsLocalDataSource(getNewsDao(application), sharedPreferencesUtil,
+        BaseCampionatoLocalDataSource newsLocalDataSource =
+                new CampionatoLocalDataSource(getFipavOnlineDao(application), sharedPreferencesUtil,
                         dataEncryptionUtil);
 
         return new UserRepository(userRemoteAuthenticationDataSource,

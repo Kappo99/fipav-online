@@ -16,108 +16,108 @@ import it.unimib.fipavonline.util.DataEncryptionUtil;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
 /**
- * Class to get news from local database using Room.
+ * Class to get campionato from local database using Room.
  */
-public class NewsLocalDataSource extends BaseNewsLocalDataSource {
+public class CampionatoLocalDataSource extends BaseCampionatoLocalDataSource {
 
     private final CampionatoDao campionatoDao;
     private final SharedPreferencesUtil sharedPreferencesUtil;
     private final DataEncryptionUtil dataEncryptionUtil;
 
-    public NewsLocalDataSource(FipavOnlineRoomDatabase fipavOnlineRoomDatabase,
-                               SharedPreferencesUtil sharedPreferencesUtil,
-                               DataEncryptionUtil dataEncryptionUtil
+    public CampionatoLocalDataSource(FipavOnlineRoomDatabase fipavOnlineRoomDatabase,
+                                     SharedPreferencesUtil sharedPreferencesUtil,
+                                     DataEncryptionUtil dataEncryptionUtil
                                ) {
-        this.campionatoDao = fipavOnlineRoomDatabase.newsDao();
+        this.campionatoDao = fipavOnlineRoomDatabase.campionatoDao();
         this.sharedPreferencesUtil = sharedPreferencesUtil;
         this.dataEncryptionUtil = dataEncryptionUtil;
     }
 
     /**
-     * Gets the news from the local database.
+     * Gets the campionato from the local database.
      * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
      */
     @Override
-    public void getNews() {
+    public void getCampionato() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             //TODO Fix this instruction
             CampionatoApiResponse campionatoApiResponse = new CampionatoApiResponse();
-            campionatoApiResponse.setNewsList(campionatoDao.getAll());
-            newsCallback.onSuccessFromLocal(campionatoApiResponse);
+            campionatoApiResponse.setCampionatoList(campionatoDao.getAll());
+            campionatoCallback.onSuccessFromLocal(campionatoApiResponse);
         });
     }
 
     @Override
-    public void getFavoriteNews() {
+    public void getFavoriteCampionato() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
-            newsCallback.onNewsFavoriteStatusChanged(favoriteNews);
+            List<Campionato> favoriteCampionato = campionatoDao.getFavoriteCampionato();
+            campionatoCallback.onCampionatoFavoriteStatusChanged(favoriteCampionato);
         });
     }
 
     @Override
-    public void updateNews(Campionato campionato) {
+    public void updateCampionato(Campionato campionato) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (campionato != null) {
-                int rowUpdatedCounter = campionatoDao.updateSingleFavoriteNews(campionato);
+                int rowUpdatedCounter = campionatoDao.updateSingleFavoritecAMPIONATO(campionato);
                 // It means that the update succeeded because only one row had to be updated
                 if (rowUpdatedCounter == 1) {
-                    Campionato updatedCampionato = campionatoDao.getNews(campionato.getId());
-                    newsCallback.onNewsFavoriteStatusChanged(updatedCampionato, campionatoDao.getFavoriteNews());
+                    Campionato updatedCampionato = campionatoDao.getCampionato(campionato.getId());
+                    campionatoCallback.onCampionatoFavoriteStatusChanged(updatedCampionato, campionatoDao.getFavoriteCampionato());
                 } else {
-                    newsCallback.onFailureFromLocal(new Exception(UNEXPECTED_ERROR));
+                    campionatoCallback.onFailureFromLocal(new Exception(UNEXPECTED_ERROR));
                 }
             } else {
                 // When the user deleted all favorite campionato from remote
                 //TODO Check if it works fine and there are not drawbacks
-                List<Campionato> allNews = campionatoDao.getAll();
-                for (Campionato n : allNews) {
+                List<Campionato> allCampionato = campionatoDao.getAll();
+                for (Campionato n : allCampionato) {
                     n.setSynchronized(false);
-                    campionatoDao.updateSingleFavoriteNews(n);
+                    campionatoDao.updateSingleFavoritecAMPIONATO(n);
                 }
             }
         });
     }
 
     @Override
-    public void deleteFavoriteNews() {
+    public void deleteFavoriteCampionato() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
-            for (Campionato campionato : favoriteNews) {
+            List<Campionato> favoriteCampionato = campionatoDao.getFavoriteCampionato();
+            for (Campionato campionato : favoriteCampionato) {
                 campionato.setFavorite(false);
             }
-            int updatedRowsNumber = campionatoDao.updateListFavoriteNews(favoriteNews);
+            int updatedRowsNumber = campionatoDao.updateListFavoriteCampionato(favoriteCampionato);
 
             // It means that the update succeeded because the number of updated rows is
-            // equal to the number of the original favorite news
-            if (updatedRowsNumber == favoriteNews.size()) {
-                newsCallback.onDeleteFavoriteNewsSuccess(favoriteNews);
+            // equal to the number of the original favorite campionato
+            if (updatedRowsNumber == favoriteCampionato.size()) {
+                campionatoCallback.onDeleteFavoriteCampionatoSuccess(favoriteCampionato);
             } else {
-                newsCallback.onFailureFromLocal(new Exception(UNEXPECTED_ERROR));
+                campionatoCallback.onFailureFromLocal(new Exception(UNEXPECTED_ERROR));
             }
         });
     }
 
     /**
-     * Saves the news in the local database.
+     * Saves the campionato in the local database.
      * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
-     * @param campionatoApiResponse the list of news to be written in the local database.
+     * @param campionatoApiResponse the list of campionato to be written in the local database.
      */
     @Override
-    public void insertNews(CampionatoApiResponse campionatoApiResponse) {
+    public void insertCampionato(CampionatoApiResponse campionatoApiResponse) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            // Reads the news from the database
-            List<Campionato> allNews = campionatoDao.getAll();
-            List<Campionato> campionatoList = campionatoApiResponse.getNewsList();
+            // Reads the campionato from the database
+            List<Campionato> allCampionato = campionatoDao.getAll();
+            List<Campionato> campionatoList = campionatoApiResponse.getCampionatoList();
 
             if (campionatoList != null) {
 
-                // Checks if the news just downloaded has already been downloaded earlier
-                // in order to preserve the news status (marked as favorite or not)
-                for (Campionato campionato : allNews) {
-                    // This check works because Campionato and NewsSource classes have their own
+                // Checks if the campionato just downloaded has already been downloaded earlier
+                // in order to preserve the campionato status (marked as favorite or not)
+                for (Campionato campionato : allCampionato) {
+                    // This check works because Campionato classes have their own
                     // implementation of equals(Object) and hashCode() methods
                     if (campionatoList.contains(campionato)) {
                         // The primary key and the favorite status is contained only in the Campionato objects
@@ -130,41 +130,32 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                     }
                 }
 
-                // Writes the news in the database and gets the associated primary keys
-                List<Long> insertedNewsIds = campionatoDao.insertNewsList(campionatoList);
-                for (int i = 0; i < campionatoList.size(); i++) {
-                    // Adds the primary key to the corresponding object Campionato just downloaded so that
-                    // if the user marks the news as favorite (and vice-versa), we can use its id
-                    // to know which news in the database must be marked as favorite/not favorite
-                    campionatoList.get(i).setId(insertedNewsIds.get(i));
-                }
-
                 sharedPreferencesUtil.writeStringData(SHARED_PREFERENCES_FILE_NAME,
                         LAST_UPDATE, String.valueOf(System.currentTimeMillis()));
 
-                newsCallback.onSuccessFromLocal(campionatoApiResponse);
+                campionatoCallback.onSuccessFromLocal(campionatoApiResponse);
             }
         });
     }
 
     /**
-     * Saves the news in the local database.
+     * Saves the campionato in the local database.
      * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
-     * @param campionatoList the list of news to be written in the local database.
+     * @param campionatoList the list of campionato to be written in the local database.
      */
     @Override
-    public void insertNews(List<Campionato> campionatoList) {
+    public void insertCampionato(List<Campionato> campionatoList) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (campionatoList != null) {
 
-                // Reads the news from the database
-                List<Campionato> allNews = campionatoDao.getAll();
+                // Reads the campionato from the database
+                List<Campionato> allCampionato = campionatoDao.getAll();
 
-                // Checks if the news just downloaded has already been downloaded earlier
-                // in order to preserve the news status (marked as favorite or not)
-                for (Campionato campionato : allNews) {
-                    // This check works because Campionato and NewsSource classes have their own
+                // Checks if the campionato just downloaded has already been downloaded earlier
+                // in order to preserve the campionato status (marked as favorite or not)
+                for (Campionato campionato : allCampionato) {
+                    // This check works because Campionato classes have their own
                     // implementation of equals(Object) and hashCode() methods
                     if (campionatoList.contains(campionato)) {
                         // The primary key and the favorite status is contained only in the Campionato objects
@@ -178,18 +169,9 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
                     }
                 }
 
-                // Writes the news in the database and gets the associated primary keys
-                List<Long> insertedNewsIds = campionatoDao.insertNewsList(campionatoList);
-                for (int i = 0; i < campionatoList.size(); i++) {
-                    // Adds the primary key to the corresponding object Campionato just downloaded so that
-                    // if the user marks the news as favorite (and vice-versa), we can use its id
-                    // to know which news in the database must be marked as favorite/not favorite
-                    campionatoList.get(i).setId(insertedNewsIds.get(i));
-                }
-
                 CampionatoApiResponse campionatoApiResponse = new CampionatoApiResponse();
-                campionatoApiResponse.setNewsList(campionatoList);
-                newsCallback.onSuccessSynchronization();
+                campionatoApiResponse.setCampionatoList(campionatoList);
+                campionatoCallback.onSuccessSynchronization();
             }
         });
     }
@@ -197,14 +179,14 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     @Override
     public void deleteAll() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            int newsCounter = campionatoDao.getAll().size();
-            int newsDeletedNews = campionatoDao.deleteAll();
+            int campionatoCounter = campionatoDao.getAll().size();
+            int campionatoDeleted = campionatoDao.deleteAll();
 
             // It means that everything has been deleted
-            if (newsCounter == newsDeletedNews) {
+            if (campionatoCounter == campionatoDeleted) {
                 sharedPreferencesUtil.deleteAll(SHARED_PREFERENCES_FILE_NAME);
                 dataEncryptionUtil.deleteAll(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ENCRYPTED_DATA_FILE_NAME);
-                newsCallback.onSuccessDeletion();
+                campionatoCallback.onSuccessDeletion();
             }
         });
     }

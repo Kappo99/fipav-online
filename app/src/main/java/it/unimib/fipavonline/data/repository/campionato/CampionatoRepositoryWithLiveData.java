@@ -13,27 +13,27 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
-import it.unimib.fipavonline.data.source.campionato.BaseFavoriteNewsDataSource;
-import it.unimib.fipavonline.data.source.campionato.BaseNewsLocalDataSource;
-import it.unimib.fipavonline.data.source.campionato.BaseNewsRemoteDataSource;
-import it.unimib.fipavonline.data.source.campionato.NewsCallback;
+import it.unimib.fipavonline.data.source.campionato.BaseFavoriteCampionatoDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseCampionatoLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseCampionatoRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.CampionatoCallback;
 
 /**
  * Repository class to get the news from local or from a remote source.
  */
-public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, NewsCallback {
+public class CampionatoRepositoryWithLiveData implements INewsRepositoryWithLiveData, CampionatoCallback {
 
-    private static final String TAG = NewsRepositoryWithLiveData.class.getSimpleName();
+    private static final String TAG = CampionatoRepositoryWithLiveData.class.getSimpleName();
 
     private final MutableLiveData<Result> allNewsMutableLiveData;
     private final MutableLiveData<Result> favoriteNewsMutableLiveData;
-    private final BaseNewsRemoteDataSource newsRemoteDataSource;
-    private final BaseNewsLocalDataSource newsLocalDataSource;
-    private final BaseFavoriteNewsDataSource backupDataSource;
+    private final BaseCampionatoRemoteDataSource newsRemoteDataSource;
+    private final BaseCampionatoLocalDataSource newsLocalDataSource;
+    private final BaseFavoriteCampionatoDataSource backupDataSource;
 
-    public NewsRepositoryWithLiveData(BaseNewsRemoteDataSource newsRemoteDataSource,
-                                      BaseNewsLocalDataSource newsLocalDataSource,
-                                      BaseFavoriteNewsDataSource favoriteNewsDataSource) {
+    public CampionatoRepositoryWithLiveData(BaseCampionatoRemoteDataSource newsRemoteDataSource,
+                                            BaseCampionatoLocalDataSource newsLocalDataSource,
+                                            BaseFavoriteCampionatoDataSource favoriteNewsDataSource) {
 
         allNewsMutableLiveData = new MutableLiveData<>();
         favoriteNewsMutableLiveData = new MutableLiveData<>();
@@ -41,8 +41,8 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         this.newsLocalDataSource = newsLocalDataSource;
         this.backupDataSource = favoriteNewsDataSource;
         this.newsRemoteDataSource.setNewsCallback(this);
-        this.newsLocalDataSource.setNewsCallback(this);
-        this.backupDataSource.setNewsCallback(this);
+        this.newsLocalDataSource.setCampionatoCallback(this);
+        this.backupDataSource.setCampionatoCallback(this);
     }
 
     @Override
@@ -52,15 +52,15 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         // It gets the news from the Web Service if the last download
         // of the news has been performed more than FRESH_TIMEOUT value ago
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
-            newsRemoteDataSource.getNews();
+            newsRemoteDataSource.getCampionato();
         } else {
-            newsLocalDataSource.getNews();
+            newsLocalDataSource.getCampionato();
         }
         return allNewsMutableLiveData;
     }
 
     public void fetchNews() {
-        newsRemoteDataSource.getNews();
+        newsRemoteDataSource.getCampionato();
     }
 
     @Override
@@ -68,31 +68,31 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         // The first time the user launches the app, check if she
         // has previously saved favorite news on the cloud
         if (isFirstLoading) {
-            backupDataSource.getFavoriteNews();
+            backupDataSource.getFavoriteCampionato();
         } else {
-            newsLocalDataSource.getFavoriteNews();
+            newsLocalDataSource.getFavoriteCampionato();
         }
         return favoriteNewsMutableLiveData;
     }
 
     @Override
     public void updateNews(Campionato campionato) {
-        newsLocalDataSource.updateNews(campionato);
+        newsLocalDataSource.updateCampionato(campionato);
         if (campionato.isFavorite()) {
-            backupDataSource.addFavoriteNews(campionato);
+            backupDataSource.addFavoriteCampionato(campionato);
         } else {
-            backupDataSource.deleteFavoriteNews(campionato);
+            backupDataSource.deleteFavoriteCampionato(campionato);
         }
     }
 
     @Override
     public void deleteFavoriteNews() {
-        newsLocalDataSource.deleteFavoriteNews();
+        newsLocalDataSource.deleteFavoriteCampionato();
     }
 
     @Override
     public void onSuccessFromRemote(CampionatoApiResponse campionatoApiResponse, long lastUpdate) {
-        newsLocalDataSource.insertNews(campionatoApiResponse);
+        newsLocalDataSource.insertCampionato(campionatoApiResponse);
     }
 
     @Override
@@ -104,9 +104,9 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public void onSuccessFromLocal(CampionatoApiResponse campionatoApiResponse) {
         if (allNewsMutableLiveData.getValue() != null && allNewsMutableLiveData.getValue().isSuccess()) {
-            List<Campionato> campionatoList = ((Result.NewsResponseSuccess)allNewsMutableLiveData.getValue()).getData().getNewsList();
-            campionatoList.addAll(campionatoApiResponse.getNewsList());
-            campionatoApiResponse.setNewsList(campionatoList);
+            List<Campionato> campionatoList = ((Result.NewsResponseSuccess)allNewsMutableLiveData.getValue()).getData().getCampionatoList();
+            campionatoList.addAll(campionatoApiResponse.getCampionatoList());
+            campionatoApiResponse.setCampionatoList(campionatoList);
             Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(campionatoApiResponse);
             allNewsMutableLiveData.postValue(result);
         } else {
@@ -123,11 +123,11 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public void onNewsFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews) {
+    public void onCampionatoFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews) {
         Result allNewsResult = allNewsMutableLiveData.getValue();
 
         if (allNewsResult != null && allNewsResult.isSuccess()) {
-            List<Campionato> oldAllNews = ((Result.NewsResponseSuccess)allNewsResult).getData().getNewsList();
+            List<Campionato> oldAllNews = ((Result.NewsResponseSuccess)allNewsResult).getData().getCampionatoList();
             if (oldAllNews.contains(campionato)) {
                 oldAllNews.set(oldAllNews.indexOf(campionato), campionato);
                 allNewsMutableLiveData.postValue(allNewsResult);
@@ -137,7 +137,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public void onNewsFavoriteStatusChanged(List<Campionato> campionatoList) {
+    public void onCampionatoFavoriteStatusChanged(List<Campionato> campionatoList) {
 
         List<Campionato> notSynchronizedCampionatoList = new ArrayList<>();
 
@@ -148,18 +148,18 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         }
 
         if (!notSynchronizedCampionatoList.isEmpty()) {
-            backupDataSource.synchronizeFavoriteNews(notSynchronizedCampionatoList);
+            backupDataSource.synchronizeFavoriteCampionato(notSynchronizedCampionatoList);
         }
 
         favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new CampionatoResponse(campionatoList)));
     }
 
     @Override
-    public void onDeleteFavoriteNewsSuccess(List<Campionato> favoriteNews) {
+    public void onDeleteFavoriteCampionatoSuccess(List<Campionato> favoriteNews) {
         Result allNewsResult = allNewsMutableLiveData.getValue();
 
         if (allNewsResult != null && allNewsResult.isSuccess()) {
-            List<Campionato> oldAllNews = ((Result.NewsResponseSuccess)allNewsResult).getData().getNewsList();
+            List<Campionato> oldAllNews = ((Result.NewsResponseSuccess)allNewsResult).getData().getCampionatoList();
             for (Campionato campionato : favoriteNews) {
                 if (oldAllNews.contains(campionato)) {
                     oldAllNews.set(oldAllNews.indexOf(campionato), campionato);
@@ -175,7 +175,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
             favoriteNewsMutableLiveData.postValue(result);
         }
 
-        backupDataSource.deleteAllFavoriteNews();
+        backupDataSource.deleteAllFavoriteCampionato();
     }
 
     @Override
@@ -185,7 +185,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
             for (Campionato campionato : campionatoList) {
                 campionato.setSynchronized(true);
             }
-            newsLocalDataSource.insertNews(campionatoList);
+            newsLocalDataSource.insertCampionato(campionatoList);
             favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new CampionatoResponse(campionatoList)));
         }
     }
@@ -195,8 +195,8 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         if (campionato != null && !campionato.isFavorite()) {
             campionato.setSynchronized(false);
         }
-        newsLocalDataSource.updateNews(campionato);
-        backupDataSource.getFavoriteNews();
+        newsLocalDataSource.updateCampionato(campionato);
+        backupDataSource.getFavoriteCampionato();
     }
 
     @Override

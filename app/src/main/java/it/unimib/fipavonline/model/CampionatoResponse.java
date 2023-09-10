@@ -20,11 +20,11 @@ public class CampionatoResponse implements Parcelable {
         this.campionatoList = campionatoList;
     }
 
-    public List<Campionato> getNewsList() {
+    public List<Campionato> getCampionatoList() {
         return campionatoList;
     }
 
-    public void setNewsList(List<Campionato> campionatoList) {
+    public void setCampionatoList(List<Campionato> campionatoList) {
         this.campionatoList = campionatoList;
     }
 

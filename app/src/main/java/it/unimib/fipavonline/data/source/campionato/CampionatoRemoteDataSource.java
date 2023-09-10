@@ -2,7 +2,6 @@ package it.unimib.fipavonline.data.source.campionato;
 
 import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;
-import static it.unimib.fipavonline.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE;
 
 import androidx.annotation.NonNull;
 
@@ -14,40 +13,40 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Class to get news from a remote source using Retrofit.
+ * Class to get campionato from a remote source using Retrofit.
  */
-public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
+public class CampionatoRemoteDataSource extends BaseCampionatoRemoteDataSource {
 
     private final CampionatoApiService campionatoApiService;
     private final String apiKey;
 
-    public NewsRemoteDataSource(String apiKey) {
+    public CampionatoRemoteDataSource(String apiKey) {
         this.apiKey = apiKey;
-        this.campionatoApiService = ServiceLocator.getInstance().getNewsApiService();
+        this.campionatoApiService = ServiceLocator.getInstance().getCampionatoApiService();
     }
 
     @Override
-    public void getNews() {
-        Call<CampionatoApiResponse> newsResponseCall =
+    public void getCampionato() {
+        Call<CampionatoApiResponse> campionatoResponseCall =
                 campionatoApiService.getCampionatoWithSort("nome", apiKey);
 
-        newsResponseCall.enqueue(new Callback<CampionatoApiResponse>() {
+        campionatoResponseCall.enqueue(new Callback<CampionatoApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<CampionatoApiResponse> call,
                                    @NonNull Response<CampionatoApiResponse> response) {
 
                 if (response.body() != null && response.isSuccessful() &&
                         response.body().getStatus() == 200) {
-                    newsCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
+                    campionatoCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
 
                 } else {
-                    newsCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
+                    campionatoCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<CampionatoApiResponse> call, @NonNull Throwable t) {
-                newsCallback.onFailureFromRemote(new Exception(RETROFIT_ERROR));
+                campionatoCallback.onFailureFromRemote(new Exception(RETROFIT_ERROR));
             }
         });
     }

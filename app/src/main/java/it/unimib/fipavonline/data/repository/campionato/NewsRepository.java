@@ -1,7 +1,6 @@
 package it.unimib.fipavonline.data.repository.campionato;
 
 import static it.unimib.fipavonline.util.Constants.FRESH_TIMEOUT;
-import static it.unimib.fipavonline.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE;
 
 import android.app.Application;
 import android.util.Log;
@@ -36,9 +35,9 @@ public class NewsRepository implements INewsRepository {
 
     public NewsRepository(Application application, NewsResponseCallback newsResponseCallback) {
         this.application = application;
-        this.campionatoApiService = ServiceLocator.getInstance().getNewsApiService();
-        FipavOnlineRoomDatabase fipavOnlineRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
-        this.campionatoDao = fipavOnlineRoomDatabase.newsDao();
+        this.campionatoApiService = ServiceLocator.getInstance().getCampionatoApiService();
+        FipavOnlineRoomDatabase fipavOnlineRoomDatabase = ServiceLocator.getInstance().getFipavOnlineDao(application);
+        this.campionatoDao = fipavOnlineRoomDatabase.campionatoDao();
         this.newsResponseCallback = newsResponseCallback;
     }
 
@@ -60,7 +59,7 @@ public class NewsRepository implements INewsRepository {
 
                     if (response.body() != null && response.isSuccessful() &&
                             response.body().getStatus() == 200) {
-                        List<Campionato> campionatoList = response.body().getNewsList();
+                        List<Campionato> campionatoList = response.body().getCampionatoList();
                         saveDataInDatabase(campionatoList);
                     } else {
                         newsResponseCallback.onFailure(application.getString(R.string.error_retrieving_news));
@@ -84,12 +83,12 @@ public class NewsRepository implements INewsRepository {
     @Override
     public void deleteFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
+            List<Campionato> favoriteNews = campionatoDao.getFavoriteCampionato();
             for (Campionato campionato : favoriteNews) {
                 campionato.setFavorite(false);
             }
-            campionatoDao.updateListFavoriteNews(favoriteNews);
-            newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
+            campionatoDao.updateListFavoriteCampionato(favoriteNews);
+            newsResponseCallback.onSuccess(campionatoDao.getFavoriteCampionato(), System.currentTimeMillis());
         });
     }
 
@@ -101,7 +100,7 @@ public class NewsRepository implements INewsRepository {
     @Override
     public void updateNews(Campionato campionato) {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            campionatoDao.updateSingleFavoriteNews(campionato);
+            campionatoDao.updateSingleFavoritecAMPIONATO(campionato);
             newsResponseCallback.onNewsFavoriteStatusChanged(campionato);
         });
     }
@@ -112,7 +111,7 @@ public class NewsRepository implements INewsRepository {
     @Override
     public void getFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
+            newsResponseCallback.onSuccess(campionatoDao.getFavoriteCampionato(), System.currentTimeMillis());
         });
     }
 
@@ -144,7 +143,7 @@ public class NewsRepository implements INewsRepository {
             }
 
             // Writes the news in the database and gets the associated primary keys
-            List<Long> insertedNewsIds = campionatoDao.insertNewsList(campionatoList);
+            List<Long> insertedNewsIds = campionatoDao.insertCampionatoList(campionatoList);
             for (int i = 0; i < campionatoList.size(); i++) {
                 // Adds the primary key to the corresponding object Campionato just downloaded so that
                 // if the user marks the news as favorite (and vice-versa), we can use its id

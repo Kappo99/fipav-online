@@ -170,7 +170,7 @@ public class CampionatoListFragment extends Fragment {
                 if (result.isSuccess()) {
 
                     CampionatoResponse campionatoResponse = ((Result.NewsResponseSuccess) result).getData();
-                    List<Campionato> fetchedNews = campionatoResponse.getNewsList();
+                    List<Campionato> fetchedNews = campionatoResponse.getCampionatoList();
 
                     if (!newsViewModel.isLoading()) {
                         if (newsViewModel.isFirstLoading()) {

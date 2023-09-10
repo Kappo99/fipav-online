@@ -39,7 +39,7 @@ public class Constants {
     public static final String NEWS_API_TEST_JSON_FILE = "newsapi-test.json";
 
     // Constants for NewsApi (https://newsapi.org)
-    public static final String NEWS_API_BASE_URL = "https://unimib.kmsolution.it/api/";
+    public static final String FIPAV_ONLINE_API_BASE_URL = "https://unimib.kmsolution.it/api/";
     public static final String CAMPIONATO_ENDPOINT = "campionato.php";
     public static final int TOP_HEADLINES_PAGE_SIZE_VALUE = 10;
 
@@ -65,5 +65,5 @@ public class Constants {
     // Constants for Firebase Realtime Database
     public static final String FIREBASE_REALTIME_DATABASE = "https://fipav-online-default-rtdb.europe-west1.firebasedatabase.app/";
     public static final String FIREBASE_USERS_COLLECTION = "users";
-    public static final String FIREBASE_FAVORITE_NEWS_COLLECTION = "favorite_news";
+    public static final String FIREBASE_FAVORITE_CAMPIONATO_COLLECTION = "favorite_campionato";
 }

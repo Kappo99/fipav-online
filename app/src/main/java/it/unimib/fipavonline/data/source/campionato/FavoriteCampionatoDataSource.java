@@ -1,6 +1,6 @@
 package it.unimib.fipavonline.data.source.campionato;
 
-import static it.unimib.fipavonline.util.Constants.FIREBASE_FAVORITE_NEWS_COLLECTION;
+import static it.unimib.fipavonline.util.Constants.FIREBASE_FAVORITE_CAMPIONATO_COLLECTION;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_REALTIME_DATABASE;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_USERS_COLLECTION;
 
@@ -20,25 +20,25 @@ import java.util.List;
 import it.unimib.fipavonline.model.Campionato;
 
 /**
- * Class to get the user favorite news using Firebase Realtime Database.
+ * Class to get the user favorite campionato using Firebase Realtime Database.
  */
-public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
+public class FavoriteCampionatoDataSource extends BaseFavoriteCampionatoDataSource {
 
-    private static final String TAG = FavoriteNewsDataSource.class.getSimpleName();
+    private static final String TAG = FavoriteCampionatoDataSource.class.getSimpleName();
 
     private final DatabaseReference databaseReference;
     private final String idToken;
 
-    public FavoriteNewsDataSource(String idToken) {
+    public FavoriteCampionatoDataSource(String idToken) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
         databaseReference = firebaseDatabase.getReference().getRef();
         this.idToken = idToken;
     }
 
     @Override
-    public void getFavoriteNews() {
+    public void getFavoriteCampionato() {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).get().addOnCompleteListener(task -> {
+            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
                     Log.d(TAG, "Error getting data", task.getException());
                 }
@@ -52,34 +52,34 @@ public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
                         campionatoList.add(campionato);
                     }
 
-                    newsCallback.onSuccessFromCloudReading(campionatoList);
+                    campionatoCallback.onSuccessFromCloudReading(campionatoList);
                 }
             });
     }
 
     @Override
-    public void addFavoriteNews(Campionato campionato) {
+    public void addFavoriteCampionato(Campionato campionato) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).child(String.valueOf(campionato.hashCode())).setValue(campionato)
+            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).child(String.valueOf(campionato.hashCode())).setValue(campionato)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     campionato.setSynchronized(true);
-                    newsCallback.onSuccessFromCloudWriting(campionato);
+                    campionatoCallback.onSuccessFromCloudWriting(campionato);
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    newsCallback.onFailureFromCloud(e);
+                    campionatoCallback.onFailureFromCloud(e);
                 }
             });
     }
 
     @Override
-    public void synchronizeFavoriteNews(List<Campionato> notSynchronizedCampionatoList) {
+    public void synchronizeFavoriteCampionato(List<Campionato> notSynchronizedCampionatoList) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).get().addOnCompleteListener(task -> {
+            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     List<Campionato> campionatoList = new ArrayList<>();
                     for (DataSnapshot ds : task.getResult().getChildren()) {
@@ -92,7 +92,7 @@ public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
 
                     for (Campionato campionato : campionatoList) {
                         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-                            child(FIREBASE_FAVORITE_NEWS_COLLECTION).
+                            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).
                             child(String.valueOf(campionato.hashCode())).setValue(campionato).addOnSuccessListener(
                                     new OnSuccessListener<Void>() {
                                         @Override
@@ -107,24 +107,24 @@ public class FavoriteNewsDataSource extends BaseFavoriteNewsDataSource {
     }
 
     @Override
-    public void deleteFavoriteNews(Campionato campionato) {
+    public void deleteFavoriteCampionato(Campionato campionato) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).child(String.valueOf(campionato.hashCode())).
+            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).child(String.valueOf(campionato.hashCode())).
             removeValue().addOnSuccessListener(aVoid -> {
                 campionato.setSynchronized(false);
-                newsCallback.onSuccessFromCloudWriting(campionato);
+                campionatoCallback.onSuccessFromCloudWriting(campionato);
             }).addOnFailureListener(e -> {
-                newsCallback.onFailureFromCloud(e);
+                campionatoCallback.onFailureFromCloud(e);
             });
     }
 
     @Override
-    public void deleteAllFavoriteNews() {
+    public void deleteAllFavoriteCampionato() {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).removeValue().addOnSuccessListener(aVoid -> {
-                newsCallback.onSuccessFromCloudWriting(null);
+            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).removeValue().addOnSuccessListener(aVoid -> {
+                campionatoCallback.onSuccessFromCloudWriting(null);
             }).addOnFailureListener(e -> {
-                newsCallback.onFailureFromCloud(e);
+                campionatoCallback.onFailureFromCloud(e);
             });
     }
 }

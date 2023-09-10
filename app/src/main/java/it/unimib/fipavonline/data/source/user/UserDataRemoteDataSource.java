@@ -1,6 +1,6 @@
 package it.unimib.fipavonline.data.source.user;
 
-import static it.unimib.fipavonline.util.Constants.FIREBASE_FAVORITE_NEWS_COLLECTION;
+import static it.unimib.fipavonline.util.Constants.FIREBASE_FAVORITE_CAMPIONATO_COLLECTION;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_REALTIME_DATABASE;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_USERS_COLLECTION;
 import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
@@ -82,7 +82,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
     @Override
     public void getUserFavoriteNews(String idToken) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-            child(FIREBASE_FAVORITE_NEWS_COLLECTION).get().addOnCompleteListener(task -> {
+            child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
                     Log.d(TAG, "Error getting data", task.getException());
                     userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());

@@ -22,22 +22,22 @@ public interface CampionatoDao {
     List<Campionato> getAll();
 
     @Query("SELECT * FROM Campionato WHERE id = :id")
-    Campionato getNews(long id);
+    Campionato getCampionato(long id);
 
     @Query("SELECT * FROM Campionato WHERE is_favorite = 1 ORDER BY nome")
-    List<Campionato> getFavoriteNews();
+    List<Campionato> getFavoriteCampionato();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insertNewsList(List<Campionato> campionatoList);
+    List<Long> insertCampionatoList(List<Campionato> campionatoList);
 
     @Insert
     void insertAll(Campionato... campionatoes);
 
     @Update
-    int updateSingleFavoriteNews(Campionato campionato);
+    int updateSingleFavoritecAMPIONATO(Campionato campionato);
 
     @Update
-    int updateListFavoriteNews(List<Campionato> campionatoes);
+    int updateListFavoriteCampionato(List<Campionato> campionatoes);
 
     @Delete
     void delete(Campionato campionato);
