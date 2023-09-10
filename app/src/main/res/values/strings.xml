@@ -42,5 +42,6 @@
     <string name="content_description_fav_delete">Remove the campionato from the favorite list</string>
 
     <string name="campionato_list_item_nome">Serie X</string>
+    <string name="api_data_not_found_error">No data found</string>
 
 </resources>

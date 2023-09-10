@@ -41,7 +41,7 @@ public class CampionatoMockRemoteDataSource extends BaseCampionatoRemoteDataSour
         if (campionatoApiResponse != null) {
             campionatoCallback.onSuccessFromRemote(campionatoApiResponse, System.currentTimeMillis());
         } else {
-            campionatoCallback.onFailureFromRemote(new Exception(Constants.API_DATA_NOT_FOUND_ERROR));
+            campionatoCallback.onFailureFromRemote(new Exception(Constants.API_KEY_ERROR));
         }
     }
 }

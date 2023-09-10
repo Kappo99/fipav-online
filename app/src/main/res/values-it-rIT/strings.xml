@@ -39,5 +39,6 @@
     <string name="content_description_fav_delete">Rimuovi il campionato dalla lista dei preferiti</string>
 
     <string name="campionato_list_item_nome">Serie X</string>
+    <string name="api_data_not_found_error">Nessun dato trovato</string>
 
 </resources>

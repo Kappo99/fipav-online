@@ -1,6 +1,6 @@
 package it.unimib.fipavonline.data.source.campionato;
 
-import static it.unimib.fipavonline.util.Constants.API_DATA_NOT_FOUND_ERROR;
+import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;
 
 import androidx.annotation.NonNull;
@@ -40,7 +40,7 @@ public class CampionatoRemoteDataSource extends BaseCampionatoRemoteDataSource {
                     campionatoCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
 
                 } else {
-                    campionatoCallback.onFailureFromRemote(new Exception(API_DATA_NOT_FOUND_ERROR));
+                    campionatoCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }
             }
 

@@ -1,6 +1,6 @@
 package it.unimib.fipavonline.util;
 
-import static it.unimib.fipavonline.util.Constants.API_DATA_NOT_FOUND_ERROR;
+import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;
 
 import android.app.Application;
@@ -28,7 +28,7 @@ public class ErrorMessagesUtil {
         switch(errorType) {
             case RETROFIT_ERROR:
                 return application.getString(R.string.error_retrieving_api);
-            case API_DATA_NOT_FOUND_ERROR:
+            case API_KEY_ERROR:
                 return application.getString(R.string.api_key_error);
             default:
                 return application.getString(R.string.unexpected_error);

@@ -64,7 +64,7 @@ public class PartitaMockRemoteDataSource extends BasePartitaRemoteDataSource {
             partitaCallback.onSuccessFromRemote(partitaApiResponse, System.currentTimeMillis());
         } else {
             Log.d(TAG,"partitaApiResponse ERROR from local JSON File");
-            partitaCallback.onFailureFromRemote(new Exception(Constants.API_DATA_NOT_FOUND_ERROR));
+            partitaCallback.onFailureFromRemote(new Exception(Constants.API_KEY_ERROR));
         }
     }
 }
