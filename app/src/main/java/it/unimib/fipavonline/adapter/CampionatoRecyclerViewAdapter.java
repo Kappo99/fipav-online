@@ -66,7 +66,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             return new NewsViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.news_loading_item, parent, false);
+                    inflate(R.layout.loading_item, parent, false);
             return new LoadingNewsViewHolder(view);
         }
     }
