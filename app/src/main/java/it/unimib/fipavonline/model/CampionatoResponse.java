@@ -7,16 +7,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NewsResponse implements Parcelable {
+public class CampionatoResponse implements Parcelable {
 
     private boolean isLoading;
 
     @SerializedName("articles")
     private List<Campionato> campionatoList;
 
-    public NewsResponse() {}
+    public CampionatoResponse() {}
 
-    public NewsResponse(List<Campionato> campionatoList) {
+    public CampionatoResponse(List<Campionato> campionatoList) {
         this.campionatoList = campionatoList;
     }
 
@@ -38,7 +38,7 @@ public class NewsResponse implements Parcelable {
 
     @Override
     public String toString() {
-        return "NewsResponse{" +
+        return "CampionatoResponse{" +
                 "campionatoList=" + campionatoList +
                 '}';
     }
@@ -59,20 +59,20 @@ public class NewsResponse implements Parcelable {
         this.campionatoList = source.createTypedArrayList(Campionato.CREATOR);
     }
 
-    protected NewsResponse(Parcel in) {
+    protected CampionatoResponse(Parcel in) {
         this.isLoading = in.readByte() != 0;
         this.campionatoList = in.createTypedArrayList(Campionato.CREATOR);
     }
 
-    public static final Parcelable.Creator<NewsResponse> CREATOR = new Parcelable.Creator<NewsResponse>() {
+    public static final Parcelable.Creator<CampionatoResponse> CREATOR = new Parcelable.Creator<CampionatoResponse>() {
         @Override
-        public NewsResponse createFromParcel(Parcel source) {
-            return new NewsResponse(source);
+        public CampionatoResponse createFromParcel(Parcel source) {
+            return new CampionatoResponse(source);
         }
 
         @Override
-        public NewsResponse[] newArray(int size) {
-            return new NewsResponse[size];
+        public CampionatoResponse[] newArray(int size) {
+            return new CampionatoResponse[size];
         }
     };
 }

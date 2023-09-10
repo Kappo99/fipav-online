@@ -8,7 +8,7 @@ import java.util.List;
  * Class to represent the API response of NewsAPI.org (https://newsapi.org)
  * associated with the endpoint "Top headlines" - /v2/top-headlines.
  */
-public class CampionatoApiResponse extends NewsResponse {
+public class CampionatoApiResponse extends CampionatoResponse {
     private String status;
     private int totalResults;
 

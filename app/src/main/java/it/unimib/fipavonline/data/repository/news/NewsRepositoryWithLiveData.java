@@ -11,7 +11,7 @@ import java.util.List;
 
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
-import it.unimib.fipavonline.model.NewsResponse;
+import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.data.source.news.BaseFavoriteNewsDataSource;
 import it.unimib.fipavonline.data.source.news.BaseNewsLocalDataSource;
@@ -133,7 +133,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
                 allNewsMutableLiveData.postValue(allNewsResult);
             }
         }
-        favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new NewsResponse(favoriteNews)));
+        favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new CampionatoResponse(favoriteNews)));
     }
 
     @Override
@@ -151,7 +151,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
             backupDataSource.synchronizeFavoriteNews(notSynchronizedCampionatoList);
         }
 
-        favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new NewsResponse(campionatoList)));
+        favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new CampionatoResponse(campionatoList)));
     }
 
     @Override
@@ -171,7 +171,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         if (favoriteNewsMutableLiveData.getValue() != null &&
                 favoriteNewsMutableLiveData.getValue().isSuccess()) {
             favoriteNews.clear();
-            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(new NewsResponse(favoriteNews));
+            Result.NewsResponseSuccess result = new Result.NewsResponseSuccess(new CampionatoResponse(favoriteNews));
             favoriteNewsMutableLiveData.postValue(result);
         }
 
@@ -186,7 +186,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
                 campionato.setSynchronized(true);
             }
             newsLocalDataSource.insertNews(campionatoList);
-            favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new NewsResponse(campionatoList)));
+            favoriteNewsMutableLiveData.postValue(new Result.NewsResponseSuccess(new CampionatoResponse(campionatoList)));
         }
     }
 

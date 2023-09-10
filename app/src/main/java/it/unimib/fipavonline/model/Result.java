@@ -20,12 +20,12 @@ public abstract class Result {
      * with a Web Service or a local database.
      */
     public static final class NewsResponseSuccess extends Result {
-        private final NewsResponse newsResponse;
-        public NewsResponseSuccess(NewsResponse newsResponse) {
-            this.newsResponse = newsResponse;
+        private final CampionatoResponse campionatoResponse;
+        public NewsResponseSuccess(CampionatoResponse campionatoResponse) {
+            this.campionatoResponse = campionatoResponse;
         }
-        public NewsResponse getData() {
-            return newsResponse;
+        public CampionatoResponse getData() {
+            return campionatoResponse;
         }
     }
 

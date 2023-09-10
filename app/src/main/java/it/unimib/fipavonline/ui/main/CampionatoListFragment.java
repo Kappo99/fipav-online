@@ -36,7 +36,7 @@ import it.unimib.fipavonline.adapter.CampionatoRecyclerViewAdapter;
 import it.unimib.fipavonline.databinding.FragmentCampionatoListBinding;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
-import it.unimib.fipavonline.model.NewsResponse;
+import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
@@ -169,12 +169,12 @@ public class CampionatoListFragment extends Fragment {
             result -> {
                 if (result.isSuccess()) {
 
-                    NewsResponse newsResponse = ((Result.NewsResponseSuccess) result).getData();
-                    List<Campionato> fetchedNews = newsResponse.getNewsList();
+                    CampionatoResponse campionatoResponse = ((Result.NewsResponseSuccess) result).getData();
+                    List<Campionato> fetchedNews = campionatoResponse.getNewsList();
 
                     if (!newsViewModel.isLoading()) {
                         if (newsViewModel.isFirstLoading()) {
-                            newsViewModel.setTotalResults(((CampionatoApiResponse) newsResponse).getTotalResults());
+                            newsViewModel.setTotalResults(((CampionatoApiResponse) campionatoResponse).getTotalResults());
                             newsViewModel.setFirstLoading(false);
                             this.campionatoList.addAll(fetchedNews);
                             campionatoRecyclerViewAdapter.notifyItemRangeInserted(0,
