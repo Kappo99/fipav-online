@@ -6,12 +6,12 @@
         <menu>
             <item
                 android:id="@+id/fragment_campionato_list"
-                android:icon="@drawable/ic_globe"
+                android:icon="@drawable/ic_baseline_ballot_24"
                 android:checkable="true"
                 android:title="@string/campionato_list" />
             <item
                 android:id="@+id/fragment_partita_list"
-                android:icon="@drawable/ic_baseline_topic_24"
+                android:icon="@drawable/ic_baseline_sports_volleyball_24"
                 android:checkable="true"
                 android:title="@string/partita_list"/>
             <item
