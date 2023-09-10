@@ -32,7 +32,7 @@ import it.unimib.fipavonline.util.ErrorMessagesUtil;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
 /**
- * Fragment that shows the favorite news of the user.
+ * Fragment that shows the favorite campionato of the user.
  */
 public class FavoriteCampionatoFragment extends Fragment {
 
@@ -95,16 +95,16 @@ public class FavoriteCampionatoFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progress_bar);
 
-        ListView listViewFavNews = view.findViewById(R.id.listview_fav_news);
+        ListView listViewFavCampionato = view.findViewById(R.id.listview_fav_campionato);
 
         campionatoListAdapter =
                 new CampionatoListAdapter(requireContext(), requireActivity().getApplication(),
                         R.layout.favorite_campionato_list_item, campionatoList,
-                        news -> {
-                            news.setFavorite(false);
-                            campionatoViewModel.removeFromFavorite(news);
+                        campionato -> {
+                            campionato.setFavorite(false);
+                            campionatoViewModel.removeFromFavorite(campionato);
                         });
-        listViewFavNews.setAdapter(campionatoListAdapter);
+        listViewFavCampionato.setAdapter(campionatoListAdapter);
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -114,8 +114,8 @@ public class FavoriteCampionatoFragment extends Fragment {
         boolean isFirstLoading = sharedPreferencesUtil.readBooleanData(Constants.SHARED_PREFERENCES_FILE_NAME,
                 Constants.SHARED_PREFERENCES_FIRST_LOADING);
 
-        // Observe the LiveData associated with the MutableLiveData containing the favorite news
-        // returned by the method getFavoriteNewsLiveData() of CampionatoViewModel class.
+        // Observe the LiveData associated with the MutableLiveData containing the favorite campionato
+        // returned by the method getFavoriteCampionatoLiveData() of CampionatoViewModel class.
         // Pay attention to which LifecycleOwner you give as value to
         // the method observe(LifecycleOwner, Observer).
         // In this case, getViewLifecycleOwner() refers to
