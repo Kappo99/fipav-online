@@ -23,7 +23,7 @@ import it.unimib.fipavonline.model.Campionato;
  */
 public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int NEWS_VIEW_TYPE = 0;
+    private static final int CAMPIONATO_VIEW_TYPE = 0;
     private static final int LOADING_VIEW_TYPE = 1;
 
     /**
@@ -50,7 +50,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         if (campionatoList.get(position) == null) {
             return LOADING_VIEW_TYPE;
         } else {
-            return NEWS_VIEW_TYPE;
+            return CAMPIONATO_VIEW_TYPE;
         }
     }
 
@@ -60,7 +60,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         // Create a new view, which defines the UI of the list item
         View view = null;
 
-        if (viewType == NEWS_VIEW_TYPE) {
+        if (viewType == CAMPIONATO_VIEW_TYPE) {
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.campionato_list_item, parent, false);
             return new NewsViewHolder(view);
