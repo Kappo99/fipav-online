@@ -23,7 +23,7 @@ public class Constants {
     public static final String PARTITA_API_TEST_JSON_FILE = "partita-test.json";
 
     // Constants for API
-    public static final String FIPAV_ONLINE_API_BASE_URL = "https://unimib.kmsolution.it/api/";
+    public static final String FIPAV_ONLINE_API_BASE_URL = "https://unimib.kmsolution.link/api/";
     public static final String CAMPIONATO_ENDPOINT = "campionato.php";
 
     // Constants for refresh rate of campionato
