@@ -36,12 +36,12 @@ public class Constants {
     public static final String ENCRYPTED_DATA_FILE_NAME = "it.unimib.fipavonline.encrypted_file.txt";
 
     // Constants for files contained in assets folder
-    public static final String NEWS_API_TEST_JSON_FILE = "newsapi-test.json";
+    public static final String CAMPIONATO_API_TEST_JSON_FILE = "campionato-test.json";
+    public static final String PARTITA_API_TEST_JSON_FILE = "partita-test.json";
 
-    // Constants for NewsApi (https://newsapi.org)
+    // Constants for API
     public static final String FIPAV_ONLINE_API_BASE_URL = "https://unimib.kmsolution.it/api/";
     public static final String CAMPIONATO_ENDPOINT = "campionato.php";
-    public static final int TOP_HEADLINES_PAGE_SIZE_VALUE = 10;
 
     // Constants for refresh rate of news
     public static final String LAST_UPDATE = "last_update";

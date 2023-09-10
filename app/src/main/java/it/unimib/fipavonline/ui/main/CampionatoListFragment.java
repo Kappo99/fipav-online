@@ -3,7 +3,6 @@ package it.unimib.fipavonline.ui.main;
 import static it.unimib.fipavonline.util.Constants.LAST_UPDATE;
 import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
 import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_FILE_NAME;
-import static it.unimib.fipavonline.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -180,20 +179,7 @@ public class CampionatoListFragment extends Fragment {
                     } else {
                         campionatoViewModel.setLoading(false);
                         campionatoViewModel.setCurrentResults(campionatoList.size());
-
-                        int initialSize = campionatoList.size();
-
-                        for (int i = 0; i < campionatoList.size(); i++) {
-                            if (campionatoList.get(i) == null) {
-                                campionatoList.remove(campionatoList.get(i));
-                            }
-                        }
-                        int startIndex = (campionatoViewModel.getPage()*TOP_HEADLINES_PAGE_SIZE_VALUE) -
-                                                                    TOP_HEADLINES_PAGE_SIZE_VALUE;
-                        for (int i = startIndex; i < fetchedCampionato.size(); i++) {
-                            campionatoList.add(fetchedCampionato.get(i));
-                        }
-                        campionatoRecyclerViewAdapter.notifyItemRangeInserted(initialSize, campionatoList.size());
+                        campionatoRecyclerViewAdapter.notifyDataSetChanged();
                     }
                 } else {
                     ErrorMessagesUtil errorMessagesUtil =

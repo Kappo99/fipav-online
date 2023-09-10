@@ -1,0 +1,127 @@
+{
+    "status": 200,
+    "info": "Operazione eseguita con successo",
+    "results": 24,
+    "body": [
+        {
+            "id": "1118",
+            "nome": "_1^ Divisione",
+            "sesso": "F"
+        },
+        {
+            "id": "117",
+            "nome": "_1^ Divisione",
+            "sesso": "M"
+        },
+        {
+            "id": "1119",
+            "nome": "_2^ Divisione",
+            "sesso": "F"
+        },
+        {
+            "id": "1120",
+            "nome": "_3^ Divisione",
+            "sesso": "F"
+        },
+        {
+            "id": "111",
+            "nome": "_Serie A1",
+            "sesso": "M"
+        },
+        {
+            "id": "1112",
+            "nome": "_Serie A1",
+            "sesso": "F"
+        },
+        {
+            "id": "1113",
+            "nome": "_Serie A2",
+            "sesso": "F"
+        },
+        {
+            "id": "112",
+            "nome": "_Serie A2",
+            "sesso": "M"
+        },
+        {
+            "id": "113",
+            "nome": "_Serie A3",
+            "sesso": "M"
+        },
+        {
+            "id": "114",
+            "nome": "_Serie B",
+            "sesso": "M"
+        },
+        {
+            "id": "1114",
+            "nome": "_Serie B1",
+            "sesso": "F"
+        },
+        {
+            "id": "1115",
+            "nome": "_Serie B2",
+            "sesso": "F"
+        },
+        {
+            "id": "1116",
+            "nome": "_Serie C",
+            "sesso": "F"
+        },
+        {
+            "id": "115",
+            "nome": "_Serie C",
+            "sesso": "M"
+        },
+        {
+            "id": "116",
+            "nome": "_Serie D",
+            "sesso": "M"
+        },
+        {
+            "id": "1117",
+            "nome": "_Serie D",
+            "sesso": "F"
+        },
+        {
+            "id": "1124",
+            "nome": "_Under 12",
+            "sesso": "F"
+        },
+        {
+            "id": "1111",
+            "nome": "_Under 13",
+            "sesso": "M"
+        },
+        {
+            "id": "1123",
+            "nome": "_Under 14",
+            "sesso": "F"
+        },
+        {
+            "id": "1110",
+            "nome": "_Under 15",
+            "sesso": "M"
+        },
+        {
+            "id": "1122",
+            "nome": "_Under 16",
+            "sesso": "F"
+        },
+        {
+            "id": "119",
+            "nome": "_Under 17",
+            "sesso": "M"
+        },
+        {
+            "id": "1121",
+            "nome": "_Under 18",
+            "sesso": "F"
+        },
+        {
+            "id": "118",
+            "nome": "_Under 19",
+            "sesso": "M"
+        }
+    ]
+}

@@ -1,0 +1,127 @@
+{
+    "status": 200,
+    "info": "Operazione eseguita con successo",
+    "results": 24,
+    "body": [
+        {
+            "id": "101",
+            "nome": "_Serie A1",
+            "sesso": "M"
+        },
+        {
+            "id": "102",
+            "nome": "_Serie A2",
+            "sesso": "M"
+        },
+        {
+            "id": "103",
+            "nome": "_Serie A3",
+            "sesso": "M"
+        },
+        {
+            "id": "104",
+            "nome": "_Serie B",
+            "sesso": "M"
+        },
+        {
+            "id": "105",
+            "nome": "_Serie C",
+            "sesso": "M"
+        },
+        {
+            "id": "106",
+            "nome": "_Serie D",
+            "sesso": "M"
+        },
+        {
+            "id": "107",
+            "nome": "_1^ Divisione",
+            "sesso": "M"
+        },
+        {
+            "id": "108",
+            "nome": "_Under 19",
+            "sesso": "M"
+        },
+        {
+            "id": "109",
+            "nome": "_Under 17",
+            "sesso": "M"
+        },
+        {
+            "id": "1010",
+            "nome": "_Under 15",
+            "sesso": "M"
+        },
+        {
+            "id": "1011",
+            "nome": "_Under 13",
+            "sesso": "M"
+        },
+        {
+            "id": "1012",
+            "nome": "_Serie A1",
+            "sesso": "F"
+        },
+        {
+            "id": "1013",
+            "nome": "_Serie A2",
+            "sesso": "F"
+        },
+        {
+            "id": "1014",
+            "nome": "_Serie B1",
+            "sesso": "F"
+        },
+        {
+            "id": "1015",
+            "nome": "_Serie B2",
+            "sesso": "F"
+        },
+        {
+            "id": "1016",
+            "nome": "_Serie C",
+            "sesso": "F"
+        },
+        {
+            "id": "1017",
+            "nome": "_Serie D",
+            "sesso": "F"
+        },
+        {
+            "id": "1018",
+            "nome": "_1^ Divisione",
+            "sesso": "F"
+        },
+        {
+            "id": "1019",
+            "nome": "_2^ Divisione",
+            "sesso": "F"
+        },
+        {
+            "id": "1020",
+            "nome": "_3^ Divisione",
+            "sesso": "F"
+        },
+        {
+            "id": "1021",
+            "nome": "_Under 18",
+            "sesso": "F"
+        },
+        {
+            "id": "1022",
+            "nome": "_Under 16",
+            "sesso": "F"
+        },
+        {
+            "id": "1023",
+            "nome": "_Under 14",
+            "sesso": "F"
+        },
+        {
+            "id": "1024",
+            "nome": "_Under 12",
+            "sesso": "F"
+        }
+    ]
+}

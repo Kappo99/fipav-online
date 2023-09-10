@@ -1,0 +1,67 @@
+{
+    "status": 200,
+    "info": "Operazione eseguita con successo",
+    "results": 6,
+    "body": [
+        {
+            "id": "101",
+            "campionato": "Serie C",
+            "data": "2023-09-15",
+            "locali": "Gallarate",
+            "ospiti": "Mornago",
+            "set_locali": "3",
+            "set_ospiti": "1",
+            "parziali": "25-22 20-25 25-18 25-23"
+        },
+        {
+            "id": "102",
+            "campionato": "Serie C",
+            "data": "2023-09-15",
+            "locali": "Panta Rei",
+            "ospiti": "Pro Patria",
+            "set_locali": "0",
+            "set_ospiti": "3",
+            "parziali": "20-25 22-25 19-25"
+        },
+        {
+            "id": "103",
+            "campionato": "Serie C",
+            "data": "2023-09-15",
+            "locali": "R&S Volley",
+            "ospiti": "Yaka Volley",
+            "set_locali": "3",
+            "set_ospiti": "2",
+            "parziali": "25-20 21-25 19-25 25-17 15-11"
+        },
+        {
+            "id": "104",
+            "campionato": "Serie C",
+            "data": "2023-09-22",
+            "locali": "Gallarate",
+            "ospiti": "R&S Volley",
+            "set_locali": "0",
+            "set_ospiti": "0",
+            "parziali": "Da giocare"
+        },
+        {
+            "id": "105",
+            "campionato": "Serie C",
+            "data": "2023-09-22",
+            "locali": "Pro Patria",
+            "ospiti": "Yaka Volley",
+            "set_locali": "0",
+            "set_ospiti": "0",
+            "parziali": "Da giocare"
+        },
+        {
+            "id": "106",
+            "campionato": "Serie C",
+            "data": "2023-09-22",
+            "locali": "Mornago",
+            "ospiti": "Panta Rei",
+            "set_locali": "0",
+            "set_ospiti": "0",
+            "parziali": "Da giocare"
+        }
+    ]
+}

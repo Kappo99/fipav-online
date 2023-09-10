@@ -1,7 +1,7 @@
 package it.unimib.fipavonline.data.source.campionato;
 
 import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
-import static it.unimib.fipavonline.util.Constants.NEWS_API_TEST_JSON_FILE;
+import static it.unimib.fipavonline.util.Constants.CAMPIONATO_API_TEST_JSON_FILE;
 import static it.unimib.fipavonline.util.Constants.UNEXPECTED_ERROR;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class CampionatoMockRemoteDataSource extends BaseCampionatoRemoteDataSour
         switch (jsonParserType) {
             case GSON:
                 try {
-                    campionatoApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
+                    campionatoApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(CAMPIONATO_API_TEST_JSON_FILE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
