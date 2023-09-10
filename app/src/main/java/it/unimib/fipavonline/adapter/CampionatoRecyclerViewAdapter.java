@@ -63,7 +63,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         if (viewType == CAMPIONATO_VIEW_TYPE) {
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.campionato_list_item, parent, false);
-            return new NewsViewHolder(view);
+            return new CampionatoViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.loading_item, parent, false);
@@ -73,8 +73,8 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof NewsViewHolder) {
-            ((NewsViewHolder) holder).bind(campionatoList.get(position));
+        if (holder instanceof CampionatoViewHolder) {
+            ((CampionatoViewHolder) holder).bind(campionatoList.get(position));
         } else if (holder instanceof LoadingCampionatoViewHolder) {
             ((LoadingCampionatoViewHolder) holder).activate();
         }
@@ -91,31 +91,31 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     /**
      * Custom ViewHolder to bind data to the RecyclerView items.
      */
-    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class CampionatoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView imageViewSesso;
         private final TextView textViewTitle;
-        private final ImageView imageViewFavoriteNews;
+        private final ImageView imageViewFavoriteCampionato;
 
-        public NewsViewHolder(@NonNull View itemView) {
+        public CampionatoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSesso = itemView.findViewById(R.id.imageview_sex);
             textViewTitle = itemView.findViewById(R.id.textview_nome);
-            imageViewFavoriteNews = itemView.findViewById(R.id.imageview_favorite);
+            imageViewFavoriteCampionato = itemView.findViewById(R.id.imageview_favorite);
             itemView.setOnClickListener(this);
-            imageViewFavoriteNews.setOnClickListener(this);
+            imageViewFavoriteCampionato.setOnClickListener(this);
         }
 
         public void bind(Campionato campionato) {
             textViewTitle.setText(campionato.getNome());
             setImageViewSesso(campionato.getSesso());
-            setImageViewFavoriteNews(campionato.isFavorite());
+            setImageViewFavoriteCampionato(campionato.isFavorite());
         }
 
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imageview_favorite) {
-                setImageViewFavoriteNews(!campionatoList.get(getAdapterPosition()).isFavorite());
+                setImageViewFavoriteCampionato(!campionatoList.get(getAdapterPosition()).isFavorite());
                 onItemClickListener.onFavoriteButtonPressed(getAdapterPosition());
             }
         }
@@ -132,13 +132,13 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             }
         }
 
-        private void setImageViewFavoriteNews(boolean isFavorite) {
+        private void setImageViewFavoriteCampionato(boolean isFavorite) {
             if (isFavorite) {
-                imageViewFavoriteNews.setImageDrawable(
+                imageViewFavoriteCampionato.setImageDrawable(
                         AppCompatResources.getDrawable(application,
                                 R.drawable.ic_baseline_favorite_24));
             } else {
-                imageViewFavoriteNews.setImageDrawable(
+                imageViewFavoriteCampionato.setImageDrawable(
                         AppCompatResources.getDrawable(application,
                                 R.drawable.ic_baseline_favorite_border_24));
             }
