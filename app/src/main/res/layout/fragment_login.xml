@@ -28,23 +28,24 @@
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
                 android:contentDescription="@string/logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_android_200" />
+                app:srcCompat="@drawable/ic_baseline_sports_volleyball_24" />
 
             <TextView
                 android:id="@+id/textview_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:text="@string/login"
                 android:textColor="?android:textColorPrimary"
                 android:textSize="34sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logo" />
 
@@ -52,15 +53,16 @@
                 android:id="@+id/text_input_layout_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
 
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/textview_login"
-                app:startIconDrawable="@drawable/ic_baseline_email_24"
-                app:endIconMode="clear_text"
-                app:errorEnabled="true">
+                app:passwordToggleEnabled="false"
+                app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_input_edit_text_email"
@@ -92,90 +94,40 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button_forgot_password"
-                style="@style/Widget.App.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="24dp"
-                android:text="@string/forgot_password"
-                android:textSize="14sp"
-                app:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_password" />
-
-            <Button
                 android:id="@+id/button_login"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
-                android:backgroundTint="@color/purple_500"
-                app:rippleColor="@color/purple_200"
+                android:backgroundTint="@color/teal_500"
                 android:text="@string/login"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                style="@style/Widget.Material3.Button.ElevatedButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_forgot_password" />
-
-            <RelativeLayout
-                android:id="@+id/relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_login">
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="24dp"
-                    android:layout_toStartOf="@id/textview_or"
-                    android:background="@color/grey_separator" />
-
-                <TextView
-                    android:id="@+id/textview_or"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/txt_or" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="24dp"
-                    android:layout_toEndOf="@id/textview_or"
-                    android:background="@color/grey_separator" />
-
-            </RelativeLayout>
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_password"
+                app:rippleColor="@color/teal_200" />
 
             <Button
                 android:id="@+id/button_google_login"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:text="@string/google_login"
-                android:textSize="14sp"
                 android:textColor="@color/google_login_text"
+                android:textSize="14sp"
                 app:backgroundTint="@color/google_login_button"
                 app:icon="@drawable/googleg_standard_color_18"
                 app:iconGravity="textStart"
                 app:iconTint="@null"
-                style="@style/Widget.Material3.Button.ElevatedButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relative_layout" />
+                app:layout_constraintTop_toBottomOf="@+id/button_login" />
 
             <TextView
                 android:id="@+id/textview_new_account"
@@ -204,18 +156,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
-        app:indicatorColor="@color/purple_700"
-        app:trackColor="@color/purple_200"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

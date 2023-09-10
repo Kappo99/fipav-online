@@ -28,23 +28,24 @@
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
                 android:contentDescription="@string/logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_android_200" />
+                app:srcCompat="@drawable/ic_baseline_sports_volleyball_24" />
 
             <TextView
                 android:id="@+id/textview_registration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:text="@string/register"
                 android:textColor="?android:textColorPrimary"
                 android:textSize="34sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logo" />
 
@@ -52,7 +53,7 @@
                 android:id="@+id/text_input_layout_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,9 +98,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
-                android:backgroundTint="@color/purple_500"
+                android:backgroundTint="@color/teal_500"
                 android:text="@string/register"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -107,7 +108,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_password"
-                app:rippleColor="@color/purple_200" />
+                app:rippleColor="@color/teal_200" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
