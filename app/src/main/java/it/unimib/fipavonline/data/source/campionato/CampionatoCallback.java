@@ -14,9 +14,9 @@ public interface CampionatoCallback {
     void onFailureFromRemote(Exception exception);
     void onSuccessFromLocal(CampionatoApiResponse campionatoApiResponse);
     void onFailureFromLocal(Exception exception);
-    void onCampionatoFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews);
+    void onCampionatoFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteCampionato);
     void onCampionatoFavoriteStatusChanged(List<Campionato> campionatoes);
-    void onDeleteFavoriteCampionatoSuccess(List<Campionato> favoriteNews);
+    void onDeleteFavoriteCampionatoSuccess(List<Campionato> favoriteCampionato);
     void onSuccessFromCloudReading(List<Campionato> campionatoList);
     void onSuccessFromCloudWriting(Campionato campionato);
     void onFailureFromCloud(Exception exception);
