@@ -10,9 +10,6 @@
     <string name="register">Register</string>
     <string name="next">Next</string>
 
-    <string name="alert_text_country_of_interest">Choose at least one country of interest</string>
-    <string name="alert_text_topic_of_interest">Choose at least one topic of interest</string>
-
     <string name="error_email">Insert a valid email address</string>
     <string name="error_password">Password should be at least 6 characters</string>
     <string name="check_login_data_message">Check the data you inserted</string>
