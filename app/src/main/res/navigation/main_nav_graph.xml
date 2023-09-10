@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_country_news">
+    app:startDestination="@id/fragment_campionato_list">
 
     <fragment
-        android:id="@+id/fragment_country_news"
+        android:id="@+id/fragment_campionato_list"
         android:name="it.unimib.fipavonline.ui.main.CampionatoListFragment"
         android:label="@string/campionato_list"
         tools:layout="@layout/fragment_campionato_list" >
     </fragment>
     <fragment
-        android:id="@+id/fragment_topic_news"
+        android:id="@+id/fragment_partita_list"
         android:name="it.unimib.fipavonline.ui.main.PartitaListFragment"
         android:label="@string/partita_list"
         tools:layout="@layout/fragment_partita_list" />
     <fragment
-        android:id="@+id/fragment_favorite_news"
+        android:id="@+id/fragment_favorite_campionato"
         android:name="it.unimib.fipavonline.ui.main.FavoriteCampionatoFragment"
         android:label="@string/favorite_campionato"
         tools:layout="@layout/fragment_favorite_campionato" >

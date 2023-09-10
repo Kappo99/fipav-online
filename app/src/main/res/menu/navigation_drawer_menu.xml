@@ -5,17 +5,17 @@
         android:title="@string/campionato">
         <menu>
             <item
-                android:id="@+id/fragment_country_news"
+                android:id="@+id/fragment_campionato_list"
                 android:icon="@drawable/ic_globe"
                 android:checkable="true"
                 android:title="@string/campionato_list" />
             <item
-                android:id="@+id/fragment_topic_news"
+                android:id="@+id/fragment_partita_list"
                 android:icon="@drawable/ic_baseline_topic_24"
                 android:checkable="true"
                 android:title="@string/partita_list"/>
             <item
-                android:id="@+id/fragment_favorite_news"
+                android:id="@+id/fragment_favorite_campionato"
                 android:icon="@drawable/ic_baseline_favorite_24"
                 android:checkable="true"
                 android:title="@string/favorite_campionato"/>

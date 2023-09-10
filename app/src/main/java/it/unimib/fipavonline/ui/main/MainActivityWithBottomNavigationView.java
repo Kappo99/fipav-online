@@ -8,7 +8,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,7 +17,7 @@ import it.unimib.fipavonline.databinding.ActivityMainWithBottomNavigationViewBin
 
 /**
  * Activity that contains Fragments, managed by a BottomNavigationView, that
- * show the news and user preferences.
+ * show the campionato.
  */
 public class MainActivityWithBottomNavigationView extends AppCompatActivity {
 
@@ -42,8 +41,8 @@ public class MainActivityWithBottomNavigationView extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.fragment_country_news, R.id.fragment_topic_news,
-                R.id.fragment_favorite_news, R.id.fragment_settings).build();
+                R.id.fragment_campionato_list, R.id.fragment_partita_list,
+                R.id.fragment_favorite_campionato, R.id.fragment_settings).build();
 
         // For the Toolbar
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

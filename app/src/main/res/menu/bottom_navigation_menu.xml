@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/fragment_country_news"
+        android:id="@+id/fragment_campionato_list"
         android:enabled="true"
         android:icon="@drawable/ic_globe"
         android:title="@string/campionato_list" />
     <item
-        android:id="@+id/fragment_topic_news"
+        android:id="@+id/fragment_partita_list"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_topic_24"
         android:title="@string/partita_list"/>
     <item
-        android:id="@+id/fragment_favorite_news"
+        android:id="@+id/fragment_favorite_campionato"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/favorite_campionato"/>

@@ -43,11 +43,11 @@ public class MainActivityWithNavigationDrawer extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.fragment_country_news, R.id.fragment_topic_news,
-                R.id.fragment_favorite_news, R.id.fragment_settings).setOpenableLayout(drawerLayout)
+                R.id.fragment_campionato_list, R.id.fragment_partita_list,
+                R.id.fragment_favorite_campionato, R.id.fragment_settings).setOpenableLayout(drawerLayout)
                 .build();
 
-        navView.setCheckedItem(R.id.fragment_country_news);
+        navView.setCheckedItem(R.id.fragment_campionato_list);
 
         // For the Toolbar
         NavigationUI.setupActionBarWithNavController(this, navController,
@@ -69,12 +69,12 @@ public class MainActivityWithNavigationDrawer extends AppCompatActivity {
         NavDestination navDestination = navController.getCurrentDestination();
         if (navDestination != null) {
             int currentDestination = navController.getCurrentDestination().getId();
-            if(currentDestination == R.id.fragment_country_news ){
-                navView.setCheckedItem(R.id.fragment_country_news);
-            } else if(currentDestination == R.id.fragment_topic_news ){
-                navView.setCheckedItem(R.id.fragment_topic_news);
-            } else if(currentDestination == R.id.fragment_favorite_news){
-                navView.setCheckedItem(R.id.fragment_favorite_news);
+            if(currentDestination == R.id.fragment_campionato_list){
+                navView.setCheckedItem(R.id.fragment_campionato_list);
+            } else if(currentDestination == R.id.fragment_partita_list){
+                navView.setCheckedItem(R.id.fragment_partita_list);
+            } else if(currentDestination == R.id.fragment_favorite_campionato){
+                navView.setCheckedItem(R.id.fragment_favorite_campionato);
             } else if (currentDestination == R.id.fragment_settings) {
                 navView.setCheckedItem(R.id.fragment_settings);
             }
