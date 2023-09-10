@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Fipav Online</string>
     <string name="logo">Logo Applicazione</string>
-    <string name="forgot_password">Password dimenticata?</string>
     <string name="txt_or">O</string>
     <string name="google_login">Google Login</string>
     <string name="new_account">Non possiedi un account?</string>
