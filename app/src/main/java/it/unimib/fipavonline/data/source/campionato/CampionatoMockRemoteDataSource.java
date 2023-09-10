@@ -10,7 +10,7 @@ import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 
 /**
- * Class to get the news from a local JSON file to simulate the Web Service response.
+ * Class to get the campionato from a local JSON file to simulate the Web Service response.
  */
 public class CampionatoMockRemoteDataSource extends BaseCampionatoRemoteDataSource {
 
