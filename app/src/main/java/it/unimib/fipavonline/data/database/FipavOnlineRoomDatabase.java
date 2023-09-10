@@ -1,7 +1,7 @@
 package it.unimib.fipavonline.data.database;
 
 import static it.unimib.fipavonline.util.Constants.DATABASE_VERSION;
-import static it.unimib.fipavonline.util.Constants.NEWS_DATABASE_NAME;
+import static it.unimib.fipavonline.util.Constants.FIPAV_ONLINE_DATABASE_NAME;
 
 import android.content.Context;
 
@@ -19,21 +19,22 @@ import it.unimib.fipavonline.model.Campionato;
  * https://developer.android.com/reference/kotlin/androidx/room/Database
  */
 @Database(entities = {Campionato.class}, version = DATABASE_VERSION)
-public abstract class NewsRoomDatabase extends RoomDatabase {
+public abstract class FipavOnlineRoomDatabase extends RoomDatabase {
 
     public abstract NewsDao newsDao();
 
-    private static volatile NewsRoomDatabase INSTANCE;
+    private static volatile FipavOnlineRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static NewsRoomDatabase getDatabase(final Context context) {
+    public static FipavOnlineRoomDatabase getDatabase(final Context context) {
+//        context.deleteDatabase(Constants.CAMPIONATO_DATABASE_NAME); // ELIMINA Database
         if (INSTANCE == null) {
-            synchronized (NewsRoomDatabase.class) {
+            synchronized (FipavOnlineRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            NewsRoomDatabase.class, NEWS_DATABASE_NAME).build();
+                            FipavOnlineRoomDatabase.class, FIPAV_ONLINE_DATABASE_NAME).build();
                 }
             }
         }

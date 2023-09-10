@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import it.unimib.fipavonline.R;
-import it.unimib.fipavonline.data.database.NewsRoomDatabase;
+import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.news.NewsRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
@@ -65,12 +65,12 @@ public class ServiceLocator {
     }
 
     /**
-     * Returns an instance of NewsRoomDatabase class to manage Room database.
+     * Returns an instance of FipavOnlineRoomDatabase class to manage Room database.
      * @param application Param for accessing the global application state.
-     * @return An instance of NewsRoomDatabase.
+     * @return An instance of FipavOnlineRoomDatabase.
      */
-    public NewsRoomDatabase getNewsDao(Application application) {
-        return NewsRoomDatabase.getDatabase(application);
+    public FipavOnlineRoomDatabase getNewsDao(Application application) {
+        return FipavOnlineRoomDatabase.getDatabase(application);
     }
 
     /**

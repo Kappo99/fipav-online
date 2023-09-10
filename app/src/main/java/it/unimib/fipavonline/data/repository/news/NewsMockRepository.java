@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.List;
 
 import it.unimib.fipavonline.R;
+import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.database.NewsDao;
-import it.unimib.fipavonline.data.database.NewsRoomDatabase;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
@@ -30,8 +30,8 @@ public class NewsMockRepository implements INewsRepository {
                               CampionatoJSONParserUtil.JsonParserType jsonParserType) {
         this.application = application;
         this.newsResponseCallback = newsResponseCallback;
-        NewsRoomDatabase newsRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
-        this.newsDao = newsRoomDatabase.newsDao();
+        FipavOnlineRoomDatabase fipavOnlineRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
+        this.newsDao = fipavOnlineRoomDatabase.newsDao();
         this.jsonParserType = jsonParserType;
     }
 
@@ -68,7 +68,7 @@ public class NewsMockRepository implements INewsRepository {
      */
     @Override
     public void updateNews(Campionato campionato) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             newsDao.updateSingleFavoriteNews(campionato);
             newsResponseCallback.onNewsFavoriteStatusChanged(campionato);
         });
@@ -79,7 +79,7 @@ public class NewsMockRepository implements INewsRepository {
      */
     @Override
     public void getFavoriteNews() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             newsResponseCallback.onSuccess(newsDao.getFavoriteNews(), System.currentTimeMillis());
         });
     }
@@ -89,7 +89,7 @@ public class NewsMockRepository implements INewsRepository {
      */
     @Override
     public void deleteFavoriteNews() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             List<Campionato> favoriteNews = newsDao.getFavoriteNews();
             for (Campionato campionato : favoriteNews) {
                 campionato.setFavorite(false);
@@ -101,12 +101,12 @@ public class NewsMockRepository implements INewsRepository {
 
     /**
      * Saves the news in the local database.
-     * The method is executed with an ExecutorService defined in NewsRoomDatabase class
+     * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
      * @param campionatoList the list of news to be written in the local database.
      */
     private void saveDataInDatabase(List<Campionato> campionatoList) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
             List<Campionato> allNews = newsDao.getAll();
 
@@ -141,11 +141,11 @@ public class NewsMockRepository implements INewsRepository {
 
     /**
      * Gets the news from the local database.
-     * The method is executed with an ExecutorService defined in NewsRoomDatabase class
+     * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
      */
     private void readDataFromDatabase(long lastUpdate) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             newsResponseCallback.onSuccess(newsDao.getAll(), lastUpdate);
         });
     }

@@ -8,8 +8,8 @@ import static it.unimib.fipavonline.util.Constants.UNEXPECTED_ERROR;
 
 import java.util.List;
 
+import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.database.NewsDao;
-import it.unimib.fipavonline.data.database.NewsRoomDatabase;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.NewsApiResponse;
 import it.unimib.fipavonline.util.DataEncryptionUtil;
@@ -24,23 +24,23 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
     private final SharedPreferencesUtil sharedPreferencesUtil;
     private final DataEncryptionUtil dataEncryptionUtil;
 
-    public NewsLocalDataSource(NewsRoomDatabase newsRoomDatabase,
+    public NewsLocalDataSource(FipavOnlineRoomDatabase fipavOnlineRoomDatabase,
                                SharedPreferencesUtil sharedPreferencesUtil,
                                DataEncryptionUtil dataEncryptionUtil
                                ) {
-        this.newsDao = newsRoomDatabase.newsDao();
+        this.newsDao = fipavOnlineRoomDatabase.newsDao();
         this.sharedPreferencesUtil = sharedPreferencesUtil;
         this.dataEncryptionUtil = dataEncryptionUtil;
     }
 
     /**
      * Gets the news from the local database.
-     * The method is executed with an ExecutorService defined in NewsRoomDatabase class
+     * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
      */
     @Override
     public void getNews() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             //TODO Fix this instruction
             NewsApiResponse newsApiResponse = new NewsApiResponse();
             newsApiResponse.setNewsList(newsDao.getAll());
@@ -50,7 +50,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
     @Override
     public void getFavoriteNews() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             List<Campionato> favoriteNews = newsDao.getFavoriteNews();
             newsCallback.onNewsFavoriteStatusChanged(favoriteNews);
         });
@@ -58,7 +58,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
     @Override
     public void updateNews(Campionato campionato) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (campionato != null) {
                 int rowUpdatedCounter = newsDao.updateSingleFavoriteNews(campionato);
                 // It means that the update succeeded because only one row had to be updated
@@ -82,7 +82,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
     @Override
     public void deleteFavoriteNews() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             List<Campionato> favoriteNews = newsDao.getFavoriteNews();
             for (Campionato campionato : favoriteNews) {
                 campionato.setFavorite(false);
@@ -101,13 +101,13 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
     /**
      * Saves the news in the local database.
-     * The method is executed with an ExecutorService defined in NewsRoomDatabase class
+     * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
      * @param newsApiResponse the list of news to be written in the local database.
      */
     @Override
     public void insertNews(NewsApiResponse newsApiResponse) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
             List<Campionato> allNews = newsDao.getAll();
             List<Campionato> campionatoList = newsApiResponse.getNewsList();
@@ -149,13 +149,13 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
     /**
      * Saves the news in the local database.
-     * The method is executed with an ExecutorService defined in NewsRoomDatabase class
+     * The method is executed with an ExecutorService defined in FipavOnlineRoomDatabase class
      * because the database access cannot been executed in the main thread.
      * @param campionatoList the list of news to be written in the local database.
      */
     @Override
     public void insertNews(List<Campionato> campionatoList) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (campionatoList != null) {
 
                 // Reads the news from the database
@@ -196,7 +196,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource {
 
     @Override
     public void deleteAll() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
             int newsCounter = newsDao.getAll().size();
             int newsDeletedNews = newsDao.deleteAll();
 
