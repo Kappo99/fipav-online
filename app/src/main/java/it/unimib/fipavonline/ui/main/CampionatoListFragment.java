@@ -33,6 +33,7 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
+import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 import it.unimib.fipavonline.util.Constants;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
@@ -128,6 +129,14 @@ public class CampionatoListFragment extends Fragment {
             public void onFavoriteButtonPressed(int position) {
                 campionatoList.get(position).setFavorite(!campionatoList.get(position).isFavorite());
                 campionatoViewModel.updateCampionato(campionatoList.get(position));
+
+                List<Campionato> favoriteList = new ArrayList<>();
+                for (Campionato c : campionatoList) {
+                    if (c.isFavorite())
+                        favoriteList.add(c);
+                }
+                sharedPreferencesUtil.writeStringData(Constants.SHARED_PREFERENCES_FILE_NAME,
+                        Constants.FAVORITE_CAMPIONATO_LIST, CampionatoJSONParserUtil.convertListToJSON(favoriteList));
             }
         });
         recyclerViewCampionatoList.setLayoutManager(layoutManager);

@@ -8,7 +8,9 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof CampionatoResponseSuccess || this instanceof UserResponseSuccess) {
+        if (this instanceof CampionatoResponseSuccess ||
+                this instanceof PartitaResponseSuccess ||
+                this instanceof UserResponseSuccess) {
             return true;
         } else {
             return false;
@@ -26,6 +28,20 @@ public abstract class Result {
         }
         public CampionatoResponse getData() {
             return campionatoResponse;
+        }
+    }
+
+    /**
+     * Class that represents a successful action during the interaction
+     * with a Web Service or a local database.
+     */
+    public static final class PartitaResponseSuccess extends Result {
+        private final PartitaResponse partitaResponse;
+        public PartitaResponseSuccess(PartitaResponse partitaResponse) {
+            this.partitaResponse = partitaResponse;
+        }
+        public PartitaResponse getData() {
+            return partitaResponse;
         }
     }
 

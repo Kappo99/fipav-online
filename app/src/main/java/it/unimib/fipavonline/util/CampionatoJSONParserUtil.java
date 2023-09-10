@@ -3,12 +3,16 @@ package it.unimib.fipavonline.util;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.List;
 
+import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 
 /**
@@ -41,5 +45,24 @@ public class CampionatoJSONParserUtil {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
         return new Gson().fromJson(bufferedReader, CampionatoApiResponse.class);
+    }
+
+    // Metodo per convertire una lista di oggetti CustomClass in JSON
+    public static String convertListToJSON(List<Campionato> campionatoList) {
+        Gson gson = new Gson();
+        return gson.toJson(campionatoList);
+    }
+
+    // Metodo per convertire una lista di Long in JSON
+    public static String convertLongListToJSON(List<Long> longList) {
+        Gson gson = new Gson();
+        return gson.toJson(longList);
+    }
+
+    // Metodo per convertire una stringa JSON in una lista di oggetti CustomClass
+    public static List<Campionato> parseJSONToList(String jsonString) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Campionato>>() {}.getType();
+        return gson.fromJson(jsonString, type);
     }
 }

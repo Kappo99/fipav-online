@@ -4,6 +4,7 @@ import static it.unimib.fipavonline.util.Constants.ENCRYPTED_SHARED_PREFERENCES_
 import static it.unimib.fipavonline.util.Constants.ID_TOKEN;
 
 import android.app.Application;
+import android.util.Log;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -12,9 +13,12 @@ import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.repository.campionato.ICampionatoRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.campionato.CampionatoRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.partita.IPartitaRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.partita.PartitaRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.data.repository.user.UserRepository;
 import it.unimib.fipavonline.data.service.CampionatoApiService;
+import it.unimib.fipavonline.data.service.PartitaApiService;
 import it.unimib.fipavonline.data.source.campionato.BaseFavoriteCampionatoDataSource;
 import it.unimib.fipavonline.data.source.campionato.BaseCampionatoLocalDataSource;
 import it.unimib.fipavonline.data.source.campionato.BaseCampionatoRemoteDataSource;
@@ -22,6 +26,11 @@ import it.unimib.fipavonline.data.source.campionato.FavoriteCampionatoDataSource
 import it.unimib.fipavonline.data.source.campionato.CampionatoLocalDataSource;
 import it.unimib.fipavonline.data.source.campionato.CampionatoMockRemoteDataSource;
 import it.unimib.fipavonline.data.source.campionato.CampionatoRemoteDataSource;
+import it.unimib.fipavonline.data.source.partita.BasePartitaLocalDataSource;
+import it.unimib.fipavonline.data.source.partita.BasePartitaRemoteDataSource;
+import it.unimib.fipavonline.data.source.partita.PartitaLocalDataSource;
+import it.unimib.fipavonline.data.source.partita.PartitaMockRemoteDataSource;
+import it.unimib.fipavonline.data.source.partita.PartitaRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserDataRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.UserAuthenticationRemoteDataSource;
@@ -62,6 +71,16 @@ public class ServiceLocator {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.FIPAV_ONLINE_API_BASE_URL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         return retrofit.create(CampionatoApiService.class);
+    }
+
+    /**
+     * Returns an instance of CampionatoApiService class using Retrofit.
+     * @return an instance of CampionatoApiService.
+     */
+    public PartitaApiService getPartitaApiService() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.FIPAV_ONLINE_API_BASE_URL).
+                addConverterFactory(GsonConverterFactory.create()).build();
+        return retrofit.create(PartitaApiService.class);
     }
 
     /**
@@ -110,6 +129,33 @@ public class ServiceLocator {
 
         return new CampionatoRepositoryWithLiveData(campionatoRemoteDataSource,
                 campionatoLocalDataSource, favoriteCampionatoDataSource);
+    }
+
+    /**
+     * Returns an instance of IPartitaRepositoryWithLiveData.
+     * @param application Param for accessing the global application state.
+     * @param debugMode Param to establish if the application is run in debug mode.
+     * @return An instance of IPartitaRepositoryWithLiveData.
+     */
+    public IPartitaRepositoryWithLiveData getPartitaRepository(Application application, boolean debugMode) {
+        BasePartitaRemoteDataSource partitaRemoteDataSource;
+        BasePartitaLocalDataSource partitaLocalDataSource;
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
+
+        Log.i("ServiceLocator", "debugMode = " + debugMode);
+
+        if (debugMode) {
+            PartitaJSONParserUtil partitaJsonParserUtil = new PartitaJSONParserUtil(application);
+            partitaRemoteDataSource =
+                    new PartitaMockRemoteDataSource(partitaJsonParserUtil, PartitaJSONParserUtil.JsonParserType.GSON);
+        } else {
+            partitaRemoteDataSource =
+                    new PartitaRemoteDataSource(application, application.getString(R.string.api_key));
+        }
+
+        partitaLocalDataSource = new PartitaLocalDataSource(getFipavOnlineDao(application), sharedPreferencesUtil);
+
+        return new PartitaRepositoryWithLiveData(partitaRemoteDataSource, partitaLocalDataSource);
     }
 
     /**

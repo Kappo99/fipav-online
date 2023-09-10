@@ -8,6 +8,7 @@ public class Constants {
     // Constants for SharedPreferences
     public static final String SHARED_PREFERENCES_FILE_NAME = "it.unimib.fipavonline.preferences";
     public static final String  SHARED_PREFERENCES_FIRST_LOADING = "first_loading";
+    public static final String FAVORITE_CAMPIONATO_LIST = "favorite_campionato_list";
 
     // Constants for EncryptedSharedPreferences
     public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "it.unimib.fipavonline.encrypted_preferences";
@@ -25,6 +26,7 @@ public class Constants {
     // Constants for API
     public static final String FIPAV_ONLINE_API_BASE_URL = "https://unimib.kmsolution.link/api/";
     public static final String CAMPIONATO_ENDPOINT = "campionato.php";
+    public static final String PARTITA_ENDPOINT = "partita.php";
 
     // Constants for refresh rate of campionato
     public static final String LAST_UPDATE = "last_update";
@@ -36,6 +38,7 @@ public class Constants {
 
     // Constants for managing errors
     public static final String RETROFIT_ERROR = "retrofit_error";
+    public static final String API_DATA_NOT_FOUND_ERROR = "api_data_not_found_error";
     public static final String API_KEY_ERROR = "api_key_error";
     public static final String UNEXPECTED_ERROR = "unexpected_error";
     public static final String INVALID_USER_ERROR = "invalidUserError";

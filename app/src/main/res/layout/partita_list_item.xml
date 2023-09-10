@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+    style="?attr/materialCardViewElevatedStyle">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:descendantFocusability="blocksDescendants"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textview_campionato"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="textStart"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:layout_constraintBottom_toTopOf="@id/textview_set_locali"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_sex"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.875"
+            tools:text="@string/partita_list_item_campionato" />
+
+        <ImageView
+            android:id="@+id/imageview_sex"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:focusable="false"
+            android:src="@drawable/ic_baseline_man_24"
+            app:layout_constraintStart_toEndOf="@id/textview_campionato"
+            app:layout_constraintEnd_toStartOf="@id/textview_data"
+            app:layout_constraintTop_toTopOf="@id/textview_campionato" />
+
+        <TextView
+            android:id="@+id/textview_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
+            app:layout_constraintBottom_toBottomOf="@id/textview_campionato"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageview_sex"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/partita_list_item_data" />
+
+        <TextView
+            android:id="@+id/textview_set_locali"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline3"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_campionato"
+            tools:text="@string/partita_list_item_set_locali" />
+
+        <TextView
+            android:id="@+id/textview_locali"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:layout_constraintBottom_toTopOf="@+id/textview_set"
+            app:layout_constraintEnd_toStartOf="@+id/textview_ospiti"
+            app:layout_constraintStart_toEndOf="@id/textview_set_locali"
+            app:layout_constraintTop_toBottomOf="@+id/textview_campionato"
+            tools:text="@string/partita_list_item_nome_locali" />
+
+        <TextView
+            android:id="@+id/textview_set"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/textview_set_ospiti"
+            app:layout_constraintStart_toEndOf="@id/textview_set_locali"
+            app:layout_constraintTop_toBottomOf="@id/textview_locali"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/partita_list_item_set" />
+
+        <TextView
+            android:id="@+id/textview_ospiti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:textAlignment="textEnd"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:layout_constraintBottom_toTopOf="@+id/textview_set"
+            app:layout_constraintEnd_toStartOf="@+id/textview_set_ospiti"
+            app:layout_constraintStart_toEndOf="@id/textview_locali"
+            app:layout_constraintTop_toBottomOf="@+id/textview_data"
+            tools:text="@string/partita_list_item_nome_ospiti" />
+
+        <TextView
+            android:id="@+id/textview_set_ospiti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline3"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_campionato"
+            tools:text="@string/partita_list_item_set_ospiti" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -27,6 +27,7 @@ import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.adapter.CampionatoListAdapter;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.Result;
+import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
 import it.unimib.fipavonline.util.Constants;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
@@ -42,6 +43,7 @@ public class FavoriteCampionatoFragment extends Fragment {
     private CampionatoListAdapter campionatoListAdapter;
     private ProgressBar progressBar;
     private CampionatoViewModel campionatoViewModel;
+    private SharedPreferencesUtil sharedPreferencesUtil;
 
     public FavoriteCampionatoFragment() {
         // Required empty public constructor
@@ -60,6 +62,7 @@ public class FavoriteCampionatoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferencesUtil = new SharedPreferencesUtil(requireActivity().getApplication());
         campionatoList = new ArrayList<>();
         campionatoViewModel = new ViewModelProvider(requireActivity()).get(CampionatoViewModel.class);
     }
@@ -103,6 +106,14 @@ public class FavoriteCampionatoFragment extends Fragment {
                         campionato -> {
                             campionato.setFavorite(false);
                             campionatoViewModel.removeFromFavorite(campionato);
+
+                            List<Campionato> favoriteList = new ArrayList<>();
+                            for (Campionato c : campionatoList) {
+                                if (c.isFavorite())
+                                    favoriteList.add(c);
+                            }
+                            sharedPreferencesUtil.writeStringData(Constants.SHARED_PREFERENCES_FILE_NAME,
+                                    Constants.FAVORITE_CAMPIONATO_LIST, CampionatoJSONParserUtil.convertListToJSON(favoriteList));
                         });
         listViewFavCampionato.setAdapter(campionatoListAdapter);
 
