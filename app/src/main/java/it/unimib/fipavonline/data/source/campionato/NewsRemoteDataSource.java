@@ -7,7 +7,7 @@ import static it.unimib.fipavonline.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE
 import androidx.annotation.NonNull;
 
 import it.unimib.fipavonline.model.CampionatoApiResponse;
-import it.unimib.fipavonline.data.service.NewsApiService;
+import it.unimib.fipavonline.data.service.CampionatoApiService;
 import it.unimib.fipavonline.util.ServiceLocator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,18 +18,18 @@ import retrofit2.Response;
  */
 public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
 
-    private final NewsApiService newsApiService;
+    private final CampionatoApiService campionatoApiService;
     private final String apiKey;
 
     public NewsRemoteDataSource(String apiKey) {
         this.apiKey = apiKey;
-        this.newsApiService = ServiceLocator.getInstance().getNewsApiService();
+        this.campionatoApiService = ServiceLocator.getInstance().getNewsApiService();
     }
 
     @Override
-    public void getNews(String country, int page) {
-        Call<CampionatoApiResponse> newsResponseCall = newsApiService.getNews(country,
-                TOP_HEADLINES_PAGE_SIZE_VALUE, page, apiKey);
+    public void getNews() {
+        Call<CampionatoApiResponse> newsResponseCall =
+                campionatoApiService.getCampionatoWithSort("nome", apiKey);
 
         newsResponseCall.enqueue(new Callback<CampionatoApiResponse>() {
             @Override
@@ -37,7 +37,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                                    @NonNull Response<CampionatoApiResponse> response) {
 
                 if (response.body() != null && response.isSuccessful() &&
-                        !response.body().getStatus().equals("error")) {
+                        response.body().getStatus() == 200) {
                     newsCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
 
                 } else {

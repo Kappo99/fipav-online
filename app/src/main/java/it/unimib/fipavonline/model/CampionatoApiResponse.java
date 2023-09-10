@@ -5,44 +5,54 @@ import android.os.Parcel;
 import java.util.List;
 
 /**
- * Class to represent the API response of NewsAPI.org (https://newsapi.org)
- * associated with the endpoint "Top headlines" - /v2/top-headlines.
+ * Class to represent the API response
  */
 public class CampionatoApiResponse extends CampionatoResponse {
-    private String status;
-    private int totalResults;
+    private int status;
+    private String info;
+    private int results;
 
     public CampionatoApiResponse() {
         super();
     }
 
-    public CampionatoApiResponse(String status, int totalResults, List<Campionato> articles) {
-        super(articles);
+    public CampionatoApiResponse(int status, String info, int results, List<Campionato> campionatoList) {
+        super(campionatoList);
         this.status = status;
-        this.totalResults = totalResults;
+        this.info = info;
+        this.results = results;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public int getTotalResults() {
-        return totalResults;
+    public String getInfo() {
+        return info;
     }
 
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public int getResults() {
+        return results;
+    }
+
+    public void setResults(int results) {
+        this.results = results;
     }
 
     @Override
     public String toString() {
         return "CampionatoApiResponse{" +
-                "status='" + status + '\'' +
-                ", totalResults=" + totalResults +
+                "status=" + status +
+                ", info='" + info + '\'' +
+                ", results=" + results +
                 '}';
     }
 
@@ -54,20 +64,23 @@ public class CampionatoApiResponse extends CampionatoResponse {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.status);
-        dest.writeInt(this.totalResults);
+        dest.writeInt(this.status);
+        dest.writeString(this.info);
+        dest.writeInt(this.results);
     }
 
     public void readFromParcel(Parcel source) {
         super.readFromParcel(source);
-        this.status = source.readString();
-        this.totalResults = source.readInt();
+        this.status = source.readInt();
+        this.info = source.readString();
+        this.results = source.readInt();
     }
 
     protected CampionatoApiResponse(Parcel in) {
         super(in);
-        this.status = in.readString();
-        this.totalResults = in.readInt();
+        this.status = in.readInt();
+        this.info = in.readString();
+        this.results = in.readInt();
     }
 
     public static final Creator<CampionatoApiResponse> CREATOR = new Creator<CampionatoApiResponse>() {

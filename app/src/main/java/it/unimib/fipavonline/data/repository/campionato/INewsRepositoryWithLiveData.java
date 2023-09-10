@@ -7,9 +7,9 @@ import it.unimib.fipavonline.model.Result;
 
 public interface INewsRepositoryWithLiveData {
 
-    MutableLiveData<Result> fetchNews(String country, int page, long lastUpdate);
+    MutableLiveData<Result> fetchNews(long lastUpdate);
 
-    void fetchNews(String country, int page);
+    void fetchNews();
 
     MutableLiveData<Result> getFavoriteNews(boolean firstLoading);
 

@@ -9,8 +9,8 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.Result;
 import it.unimib.fipavonline.model.User;
-import it.unimib.fipavonline.data.source.news.BaseNewsLocalDataSource;
-import it.unimib.fipavonline.data.source.news.NewsCallback;
+import it.unimib.fipavonline.data.source.campionato.BaseNewsLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.NewsCallback;
 import it.unimib.fipavonline.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserDataRemoteDataSource;
 

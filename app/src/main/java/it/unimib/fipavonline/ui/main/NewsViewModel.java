@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.Result;
-import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
 
 /**
  * ViewModel to manage the list of Campionato and the list of favorite Campionato.
@@ -35,9 +35,9 @@ public class NewsViewModel extends ViewModel {
      * news list to the Fragment/Activity.
      * @return The LiveData object associated with the news list.
      */
-    public MutableLiveData<Result> getNews(String country, long lastUpdate) {
+    public MutableLiveData<Result> getNews(long lastUpdate) {
         if (newsListLiveData == null) {
-            fetchNews(country, lastUpdate);
+            fetchNews(lastUpdate);
         }
         return newsListLiveData;
     }
@@ -62,16 +62,16 @@ public class NewsViewModel extends ViewModel {
         newsRepositoryWithLiveData.updateNews(campionato);
     }
 
-    public void fetchNews(String country) {
-        newsRepositoryWithLiveData.fetchNews(country, page);
+    public void fetchNews() {
+        newsRepositoryWithLiveData.fetchNews();
     }
 
     /**
      * It uses the Repository to download the news list
      * and to associate it with the LiveData object.
      */
-    private void fetchNews(String country, long lastUpdate) {
-        newsListLiveData = newsRepositoryWithLiveData.fetchNews(country, page, lastUpdate);
+    private void fetchNews(long lastUpdate) {
+        newsListLiveData = newsRepositoryWithLiveData.fetchNews(lastUpdate);
     }
 
     /**

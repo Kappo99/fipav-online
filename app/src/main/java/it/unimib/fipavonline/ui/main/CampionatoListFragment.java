@@ -38,7 +38,7 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
-import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
 import it.unimib.fipavonline.util.ErrorMessagesUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
 import it.unimib.fipavonline.util.SharedPreferencesUtil;
@@ -165,7 +165,7 @@ public class CampionatoListFragment extends Fragment {
         // In this case, getViewLifecycleOwner() refers to
         // androidx.fragment.app.FragmentViewLifecycleOwner and not to the Fragment itself.
         // You can read more details here: https://stackoverflow.com/a/58663143/4255576
-        newsViewModel.getNews(country, Long.parseLong(lastUpdate)).observe(getViewLifecycleOwner(),
+        newsViewModel.getNews(Long.parseLong(lastUpdate)).observe(getViewLifecycleOwner(),
             result -> {
                 if (result.isSuccess()) {
 
@@ -174,7 +174,7 @@ public class CampionatoListFragment extends Fragment {
 
                     if (!newsViewModel.isLoading()) {
                         if (newsViewModel.isFirstLoading()) {
-                            newsViewModel.setTotalResults(((CampionatoApiResponse) campionatoResponse).getTotalResults());
+                            newsViewModel.setTotalResults(((CampionatoApiResponse) campionatoResponse).getResults());
                             newsViewModel.setFirstLoading(false);
                             this.campionatoList.addAll(fetchedNews);
                             campionatoRecyclerViewAdapter.notifyItemRangeInserted(0,
@@ -247,7 +247,7 @@ public class CampionatoListFragment extends Fragment {
 
                             int page = newsViewModel.getPage() + 1;
                             newsViewModel.setPage(page);
-                            newsViewModel.fetchNews(country);
+                            newsViewModel.fetchNews();
                         }
                     }
                 }

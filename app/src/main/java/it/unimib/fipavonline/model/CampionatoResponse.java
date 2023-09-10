@@ -11,7 +11,7 @@ public class CampionatoResponse implements Parcelable {
 
     private boolean isLoading;
 
-    @SerializedName("articles")
+    @SerializedName("body")
     private List<Campionato> campionatoList;
 
     public CampionatoResponse() {}

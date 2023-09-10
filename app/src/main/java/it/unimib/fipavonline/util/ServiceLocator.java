@@ -10,18 +10,18 @@ import java.security.GeneralSecurityException;
 
 import it.unimib.fipavonline.R;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
-import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
-import it.unimib.fipavonline.data.repository.news.NewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.NewsRepositoryWithLiveData;
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.data.repository.user.UserRepository;
-import it.unimib.fipavonline.data.service.NewsApiService;
-import it.unimib.fipavonline.data.source.news.BaseFavoriteNewsDataSource;
-import it.unimib.fipavonline.data.source.news.BaseNewsLocalDataSource;
-import it.unimib.fipavonline.data.source.news.BaseNewsRemoteDataSource;
-import it.unimib.fipavonline.data.source.news.FavoriteNewsDataSource;
-import it.unimib.fipavonline.data.source.news.NewsLocalDataSource;
-import it.unimib.fipavonline.data.source.news.NewsMockRemoteDataSource;
-import it.unimib.fipavonline.data.source.news.NewsRemoteDataSource;
+import it.unimib.fipavonline.data.service.CampionatoApiService;
+import it.unimib.fipavonline.data.source.campionato.BaseFavoriteNewsDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseNewsLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseNewsRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.FavoriteNewsDataSource;
+import it.unimib.fipavonline.data.source.campionato.NewsLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.NewsMockRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.NewsRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.BaseUserDataRemoteDataSource;
 import it.unimib.fipavonline.data.source.user.UserAuthenticationRemoteDataSource;
@@ -55,13 +55,13 @@ public class ServiceLocator {
     }
 
     /**
-     * Returns an instance of NewsApiService class using Retrofit.
-     * @return an instance of NewsApiService.
+     * Returns an instance of CampionatoApiService class using Retrofit.
+     * @return an instance of CampionatoApiService.
      */
-    public NewsApiService getNewsApiService() {
+    public CampionatoApiService getNewsApiService() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.NEWS_API_BASE_URL).
                 addConverterFactory(GsonConverterFactory.create()).build();
-        return retrofit.create(NewsApiService.class);
+        return retrofit.create(CampionatoApiService.class);
     }
 
     /**

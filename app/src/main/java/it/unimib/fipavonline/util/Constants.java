@@ -39,16 +39,13 @@ public class Constants {
     public static final String NEWS_API_TEST_JSON_FILE = "newsapi-test.json";
 
     // Constants for NewsApi (https://newsapi.org)
-    public static final String NEWS_API_BASE_URL = "https://newsapi.org/v2/";
-    public static final String TOP_HEADLINES_ENDPOINT = "top-headlines";
-    public static final String TOP_HEADLINES_COUNTRY_PARAMETER = "country";
-    public static final String TOP_HEADLINES_PAGE_SIZE_PARAMETER = "pageSize";
-    public static final String TOP_HEADLINES_PAGE_PARAMETER = "page";
+    public static final String NEWS_API_BASE_URL = "https://unimib.kmsolution.it/api/";
+    public static final String CAMPIONATO_ENDPOINT = "campionato.php";
     public static final int TOP_HEADLINES_PAGE_SIZE_VALUE = 10;
 
     // Constants for refresh rate of news
     public static final String LAST_UPDATE = "last_update";
-    public static final int FRESH_TIMEOUT = 60*60*1000; // 1 hour in milliseconds
+    public static final int FRESH_TIMEOUT = 1000; // *60*5; // 5 minuti in millisecondi
 
     // Constants for Room database
     public static final String FIPAV_ONLINE_DATABASE_NAME = "news_db";

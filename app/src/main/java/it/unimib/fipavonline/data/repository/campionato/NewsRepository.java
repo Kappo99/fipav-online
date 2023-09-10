@@ -15,7 +15,7 @@ import it.unimib.fipavonline.data.database.CampionatoDao;
 import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
-import it.unimib.fipavonline.data.service.NewsApiService;
+import it.unimib.fipavonline.data.service.CampionatoApiService;
 import it.unimib.fipavonline.util.ServiceLocator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,13 +30,13 @@ public class NewsRepository implements INewsRepository {
     private static final String TAG = NewsRepository.class.getSimpleName();
 
     private final Application application;
-    private final NewsApiService newsApiService;
+    private final CampionatoApiService campionatoApiService;
     private final CampionatoDao campionatoDao;
     private final NewsResponseCallback newsResponseCallback;
 
     public NewsRepository(Application application, NewsResponseCallback newsResponseCallback) {
         this.application = application;
-        this.newsApiService = ServiceLocator.getInstance().getNewsApiService();
+        this.campionatoApiService = ServiceLocator.getInstance().getNewsApiService();
         FipavOnlineRoomDatabase fipavOnlineRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
         this.campionatoDao = fipavOnlineRoomDatabase.newsDao();
         this.newsResponseCallback = newsResponseCallback;
@@ -50,8 +50,8 @@ public class NewsRepository implements INewsRepository {
         // It gets the news from the Web Service if the last download
         // of the news has been performed more than FRESH_TIMEOUT value ago
         if (currentTime - lastUpdate > FRESH_TIMEOUT) {
-            Call<CampionatoApiResponse> newsResponseCall = newsApiService.getNews(country,
-                    TOP_HEADLINES_PAGE_SIZE_VALUE, page, application.getString(R.string.api_key));
+            Call<CampionatoApiResponse> newsResponseCall = campionatoApiService.getCampionato(
+                    application.getString(R.string.api_key));
 
             newsResponseCall.enqueue(new Callback<CampionatoApiResponse>() {
                 @Override
@@ -59,7 +59,7 @@ public class NewsRepository implements INewsRepository {
                                        @NonNull Response<CampionatoApiResponse> response) {
 
                     if (response.body() != null && response.isSuccessful() &&
-                            !response.body().getStatus().equals("error")) {
+                            response.body().getStatus() == 200) {
                         List<Campionato> campionatoList = response.body().getNewsList();
                         saveDataInDatabase(campionatoList);
                     } else {

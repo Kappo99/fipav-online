@@ -25,7 +25,7 @@ public class NewsMockRemoteDataSource extends BaseNewsRemoteDataSource {
     }
 
     @Override
-    public void getNews(String country, int page) {
+    public void getNews() {
         CampionatoApiResponse campionatoApiResponse = null;
 
         switch (jsonParserType) {

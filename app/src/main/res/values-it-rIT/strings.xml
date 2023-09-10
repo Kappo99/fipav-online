@@ -52,7 +52,8 @@
     <string name="settings">Impostazioni</string>
     <string name="news_details">Notizia</string>
     <string name="delete">Elimina</string>
-    <string name="campionato">Notizie</string>
+    <string name="campionato_list_item_nome">Serie X</string>
+    <string name="campionato">Campionato</string>
     <string name="personal_area">Area personale</string>
 
     <string name="nav_drawer_subtitle">Rimani aggiornato sulle notizie dal mondo</string>
