@@ -48,7 +48,7 @@ public class Constants {
     public static final int FRESH_TIMEOUT = 1000; // *60*5; // 5 minuti in millisecondi
 
     // Constants for Room database
-    public static final String FIPAV_ONLINE_DATABASE_NAME = "news_db";
+    public static final String FIPAV_ONLINE_DATABASE_NAME = "fipavonline_db";
     public static final int DATABASE_VERSION = 1;
 
     // Constants for managing errors

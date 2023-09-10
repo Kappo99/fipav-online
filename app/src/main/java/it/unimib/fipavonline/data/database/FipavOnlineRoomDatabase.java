@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.unimib.fipavonline.model.Campionato;
+import it.unimib.fipavonline.util.Constants;
 
 /**
  * Main access point for the underlying connection to the local database.
@@ -29,7 +30,7 @@ public abstract class FipavOnlineRoomDatabase extends RoomDatabase {
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static FipavOnlineRoomDatabase getDatabase(final Context context) {
-//        context.deleteDatabase(Constants.CAMPIONATO_DATABASE_NAME); // ELIMINA Database
+//        context.deleteDatabase(Constants.FIPAV_ONLINE_DATABASE_NAME); // ELIMINA Database
         if (INSTANCE == null) {
             synchronized (FipavOnlineRoomDatabase.class) {
                 if (INSTANCE == null) {
