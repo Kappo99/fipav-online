@@ -19,7 +19,7 @@ android {
         versionName "0.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resValue "string", "news_api_key", properties.getProperty("news_api_key", "")
+        resValue "string", "api_key", properties.getProperty("api_key", "")
         resValue "bool", "debug_mode", properties.getProperty("debug_mode", "false")
     }
 
