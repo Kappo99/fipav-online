@@ -25,7 +25,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
     private final BaseCampionatoLocalDataSource campionatoLocalDataSource;
     private final MutableLiveData<Result> userMutableLiveData;
-    private final MutableLiveData<Result> userFavoriteNewsMutableLiveData;
+    private final MutableLiveData<Result> userFavoriteCampionatoMutableLiveData;
     private final MutableLiveData<Result> userPreferencesMutableLiveData;
 
     public UserRepository(BaseUserAuthenticationRemoteDataSource userRemoteDataSource,
@@ -36,7 +36,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
         this.campionatoLocalDataSource = campionatoLocalDataSource;
         this.userMutableLiveData = new MutableLiveData<>();
         this.userPreferencesMutableLiveData = new MutableLiveData<>();
-        this.userFavoriteNewsMutableLiveData = new MutableLiveData<>();
+        this.userFavoriteCampionatoMutableLiveData = new MutableLiveData<>();
         this.userRemoteDataSource.setUserResponseCallback(this);
         this.userDataRemoteDataSource.setUserResponseCallback(this);
         this.campionatoLocalDataSource.setCampionatoCallback(this);
@@ -59,9 +59,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     }
 
     @Override
-    public MutableLiveData<Result> getUserFavoriteNews(String idToken) {
-        userDataRemoteDataSource.getUserFavoriteNews(idToken);
-        return userFavoriteNewsMutableLiveData;
+    public MutableLiveData<Result> getUserFavoriteCampionato(String idToken) {
+        userDataRemoteDataSource.getUserFavoriteCampionato(idToken);
+        return userFavoriteCampionatoMutableLiveData;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     @Override
     public void onSuccessFromLocal(CampionatoApiResponse campionatoApiResponse) {
         Result.CampionatoResponseSuccess result = new Result.CampionatoResponseSuccess(campionatoApiResponse);
-        userFavoriteNewsMutableLiveData.postValue(result);
+        userFavoriteCampionatoMutableLiveData.postValue(result);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
 
     @Override
     public void onSuccessSynchronization() {
-        userFavoriteNewsMutableLiveData.postValue(new Result.CampionatoResponseSuccess(null));
+        userFavoriteCampionatoMutableLiveData.postValue(new Result.CampionatoResponseSuccess(null));
     }
 
     @Override
@@ -174,7 +174,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     }
 
     @Override
-    public void onCampionatoFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteNews) {
+    public void onCampionatoFavoriteStatusChanged(Campionato campionato, List<Campionato> favoriteCampionato) {
 
     }
 
@@ -184,7 +184,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ca
     }
 
     @Override
-    public void onDeleteFavoriteCampionatoSuccess(List<Campionato> favoriteNews) {
+    public void onDeleteFavoriteCampionatoSuccess(List<Campionato> favoriteCampionato) {
 
     }
 

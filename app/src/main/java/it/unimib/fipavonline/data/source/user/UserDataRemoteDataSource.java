@@ -80,7 +80,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
     }
 
     @Override
-    public void getUserFavoriteNews(String idToken) {
+    public void getUserFavoriteCampionato(String idToken) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
             child(FIREBASE_FAVORITE_CAMPIONATO_COLLECTION).get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
@@ -124,13 +124,13 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                                     }
 
                                     if (favoriteTopics.size() > 0) {
-                                        Set<String> favoriteNewsSet = new HashSet<>(favoriteTopics);
-                                        favoriteNewsSet.addAll(favoriteTopics);
+                                        Set<String> favoriteCampionatoSet = new HashSet<>(favoriteTopics);
+                                        favoriteCampionatoSet.addAll(favoriteTopics);
 
                                         sharedPreferencesUtil.writeStringSetData(
                                                 SHARED_PREFERENCES_FILE_NAME,
                                                 SHARED_PREFERENCES_TOPICS_OF_INTEREST,
-                                                favoriteNewsSet);
+                                                favoriteCampionatoSet);
                                     }
                                     userResponseCallback.onSuccessFromGettingUserPreferences();
                                 }

@@ -6,10 +6,7 @@ import static it.unimib.fipavonline.util.Constants.ENCRYPTED_SHARED_PREFERENCES_
 import static it.unimib.fipavonline.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static it.unimib.fipavonline.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.fipavonline.util.Constants.PASSWORD;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_COUNTRY_OF_INTEREST;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 import static it.unimib.fipavonline.util.Constants.ID_TOKEN;
-import static it.unimib.fipavonline.util.Constants.SHARED_PREFERENCES_TOPICS_OF_INTEREST;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -54,7 +51,6 @@ import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.ui.main.MainActivityWithBottomNavigationView;
 import it.unimib.fipavonline.util.DataEncryptionUtil;
 import it.unimib.fipavonline.util.ServiceLocator;
-import it.unimib.fipavonline.util.SharedPreferencesUtil;
 
 /**
  * Fragment that allows the user to login.
@@ -155,7 +151,7 @@ public class LoginFragment extends Fragment {
     private void retrieveUserInformationAndStartActivity(User user, int destination) {
         progressIndicator.setVisibility(View.VISIBLE);
 
-        userViewModel.getUserFavoriteNewsMutableLiveData(user.getIdToken()).observe(
+        userViewModel.getUserFavoriteCampionatoMutableLiveData(user.getIdToken()).observe(
             getViewLifecycleOwner(), userFavoriteNewsRetrievalResult -> {
                 progressIndicator.setVisibility(View.GONE);
                 startActivityBasedOnCondition(MainActivityWithBottomNavigationView.class, destination);

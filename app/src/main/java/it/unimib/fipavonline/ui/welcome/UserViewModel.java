@@ -14,7 +14,7 @@ public class UserViewModel extends ViewModel {
 
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
-    private MutableLiveData<Result> userFavoriteNewsMutableLiveData;
+    private MutableLiveData<Result> userFavoriteCampionatoMutableLiveData;
     private MutableLiveData<Result> userPreferencesMutableLiveData;
     private boolean authenticationError;
 
@@ -38,11 +38,11 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
-    public MutableLiveData<Result> getUserFavoriteNewsMutableLiveData(String idToken) {
-        if (userFavoriteNewsMutableLiveData == null) {
-            getUserFavoriteNews(idToken);
+    public MutableLiveData<Result> getUserFavoriteCampionatoMutableLiveData(String idToken) {
+        if (userFavoriteCampionatoMutableLiveData == null) {
+            getUserFavoriteCampionato(idToken);
         }
-        return userFavoriteNewsMutableLiveData;
+        return userFavoriteCampionatoMutableLiveData;
     }
 
     public void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
@@ -72,8 +72,8 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
-    private void getUserFavoriteNews(String idToken) {
-        userFavoriteNewsMutableLiveData = userRepository.getUserFavoriteNews(idToken);
+    private void getUserFavoriteCampionato(String idToken) {
+        userFavoriteCampionatoMutableLiveData = userRepository.getUserFavoriteCampionato(idToken);
     }
 
     public void getUser(String email, String password, boolean isUserRegistered) {
