@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.source.news;
+package it.unimib.fipavonline.data.source.campionato;
 
 import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;

@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.repository.news;
+package it.unimib.fipavonline.data.repository.campionato;
 
 import it.unimib.fipavonline.model.Campionato;
 

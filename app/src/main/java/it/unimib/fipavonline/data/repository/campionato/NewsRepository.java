@@ -1,64 +1,96 @@
-package it.unimib.fipavonline.data.repository.news;
+package it.unimib.fipavonline.data.repository.campionato;
 
-import static it.unimib.fipavonline.util.Constants.NEWS_API_TEST_JSON_FILE;
+import static it.unimib.fipavonline.util.Constants.FRESH_TIMEOUT;
+import static it.unimib.fipavonline.util.Constants.TOP_HEADLINES_PAGE_SIZE_VALUE;
 
 import android.app.Application;
+import android.util.Log;
 
-import java.io.IOException;
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 import it.unimib.fipavonline.R;
-import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.data.database.CampionatoDao;
+import it.unimib.fipavonline.data.database.FipavOnlineRoomDatabase;
 import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
-import it.unimib.fipavonline.util.CampionatoJSONParserUtil;
+import it.unimib.fipavonline.data.service.NewsApiService;
 import it.unimib.fipavonline.util.ServiceLocator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
- * Mock Repository that gets the news from the local JSON file newsapi-test.json,
- * that is saved in "assets" folder.
+ * Repository to get the news using the API
+ * provided by NewsApi.org (https://newsapi.org).
  */
-public class NewsMockRepository implements INewsRepository {
+public class NewsRepository implements INewsRepository {
+
+    private static final String TAG = NewsRepository.class.getSimpleName();
 
     private final Application application;
-    private final NewsResponseCallback newsResponseCallback;
+    private final NewsApiService newsApiService;
     private final CampionatoDao campionatoDao;
-    private final CampionatoJSONParserUtil.JsonParserType jsonParserType;
+    private final NewsResponseCallback newsResponseCallback;
 
-    public NewsMockRepository(Application application, NewsResponseCallback newsResponseCallback,
-                              CampionatoJSONParserUtil.JsonParserType jsonParserType) {
+    public NewsRepository(Application application, NewsResponseCallback newsResponseCallback) {
         this.application = application;
-        this.newsResponseCallback = newsResponseCallback;
+        this.newsApiService = ServiceLocator.getInstance().getNewsApiService();
         FipavOnlineRoomDatabase fipavOnlineRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
         this.campionatoDao = fipavOnlineRoomDatabase.newsDao();
-        this.jsonParserType = jsonParserType;
+        this.newsResponseCallback = newsResponseCallback;
     }
 
     @Override
     public void fetchNews(String country, int page, long lastUpdate) {
 
-        CampionatoApiResponse campionatoApiResponse = null;
-        CampionatoJSONParserUtil campionatoJsonParserUtil = new CampionatoJSONParserUtil(application);
+        long currentTime = System.currentTimeMillis();
 
-        switch (jsonParserType) {
-            case GSON:
-                try {
-                    campionatoApiResponse = campionatoJsonParserUtil.parseJSONFileWithGSon(NEWS_API_TEST_JSON_FILE);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        // It gets the news from the Web Service if the last download
+        // of the news has been performed more than FRESH_TIMEOUT value ago
+        if (currentTime - lastUpdate > FRESH_TIMEOUT) {
+            Call<CampionatoApiResponse> newsResponseCall = newsApiService.getNews(country,
+                    TOP_HEADLINES_PAGE_SIZE_VALUE, page, application.getString(R.string.api_key));
+
+            newsResponseCall.enqueue(new Callback<CampionatoApiResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<CampionatoApiResponse> call,
+                                       @NonNull Response<CampionatoApiResponse> response) {
+
+                    if (response.body() != null && response.isSuccessful() &&
+                            !response.body().getStatus().equals("error")) {
+                        List<Campionato> campionatoList = response.body().getNewsList();
+                        saveDataInDatabase(campionatoList);
+                    } else {
+                        newsResponseCallback.onFailure(application.getString(R.string.error_retrieving_news));
+                    }
                 }
-                break;
-            case JSON_ERROR:
-                newsResponseCallback.onFailure(application.getString(R.string.error_retrieving_news));
-                break;
-        }
 
-        if (campionatoApiResponse != null) {
-            saveDataInDatabase(campionatoApiResponse.getNewsList());
+                @Override
+                public void onFailure(@NonNull Call<CampionatoApiResponse> call, @NonNull Throwable t) {
+                    newsResponseCallback.onFailure(t.getMessage());
+                }
+            });
         } else {
-            newsResponseCallback.onFailure(application.getString(R.string.error_retrieving_news));
+            Log.d(TAG, application.getString(R.string.data_read_from_local_database));
+            readDataFromDatabase(lastUpdate);
         }
+    }
+
+    /**
+     * Marks the favorite news as not favorite.
+     */
+    @Override
+    public void deleteFavoriteNews() {
+        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
+            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
+            for (Campionato campionato : favoriteNews) {
+                campionato.setFavorite(false);
+            }
+            campionatoDao.updateListFavoriteNews(favoriteNews);
+            newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
+        });
     }
 
     /**
@@ -80,21 +112,6 @@ public class NewsMockRepository implements INewsRepository {
     @Override
     public void getFavoriteNews() {
         FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
-        });
-    }
-
-    /**
-     * Marks the favorite news as not favorite.
-     */
-    @Override
-    public void deleteFavoriteNews() {
-        FipavOnlineRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Campionato> favoriteNews = campionatoDao.getFavoriteNews();
-            for (Campionato campionato : favoriteNews) {
-                campionato.setFavorite(false);
-            }
-            campionatoDao.updateListFavoriteNews(favoriteNews);
             newsResponseCallback.onSuccess(campionatoDao.getFavoriteNews(), System.currentTimeMillis());
         });
     }

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import it.unimib.fipavonline.data.repository.news.INewsRepositoryWithLiveData;
+import it.unimib.fipavonline.data.repository.campionato.INewsRepositoryWithLiveData;
 
 /**
  * Custom ViewModelProvider to be able to have a custom constructor

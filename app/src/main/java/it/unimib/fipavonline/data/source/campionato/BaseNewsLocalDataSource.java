@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.source.news;
+package it.unimib.fipavonline.data.source.campionato;
 
 import java.util.List;
 

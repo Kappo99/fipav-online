@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.repository.news;
+package it.unimib.fipavonline.data.repository.campionato;
 
 import static it.unimib.fipavonline.util.Constants.FRESH_TIMEOUT;
 
@@ -13,10 +13,10 @@ import it.unimib.fipavonline.model.Campionato;
 import it.unimib.fipavonline.model.CampionatoApiResponse;
 import it.unimib.fipavonline.model.CampionatoResponse;
 import it.unimib.fipavonline.model.Result;
-import it.unimib.fipavonline.data.source.news.BaseFavoriteNewsDataSource;
-import it.unimib.fipavonline.data.source.news.BaseNewsLocalDataSource;
-import it.unimib.fipavonline.data.source.news.BaseNewsRemoteDataSource;
-import it.unimib.fipavonline.data.source.news.NewsCallback;
+import it.unimib.fipavonline.data.source.campionato.BaseFavoriteNewsDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseNewsLocalDataSource;
+import it.unimib.fipavonline.data.source.campionato.BaseNewsRemoteDataSource;
+import it.unimib.fipavonline.data.source.campionato.NewsCallback;
 
 /**
  * Repository class to get the news from local or from a remote source.

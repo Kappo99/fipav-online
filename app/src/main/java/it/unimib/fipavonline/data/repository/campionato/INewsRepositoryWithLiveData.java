@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.repository.news;
+package it.unimib.fipavonline.data.repository.campionato;
 
 import androidx.lifecycle.MutableLiveData;
 

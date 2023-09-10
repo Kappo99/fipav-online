@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.source.news;
+package it.unimib.fipavonline.data.source.campionato;
 
 import static it.unimib.fipavonline.util.Constants.ENCRYPTED_DATA_FILE_NAME;
 import static it.unimib.fipavonline.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;

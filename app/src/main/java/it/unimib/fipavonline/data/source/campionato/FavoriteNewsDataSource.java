@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.source.news;
+package it.unimib.fipavonline.data.source.campionato;
 
 import static it.unimib.fipavonline.util.Constants.FIREBASE_FAVORITE_NEWS_COLLECTION;
 import static it.unimib.fipavonline.util.Constants.FIREBASE_REALTIME_DATABASE;

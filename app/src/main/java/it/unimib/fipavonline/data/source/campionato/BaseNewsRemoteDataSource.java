@@ -1,4 +1,4 @@
-package it.unimib.fipavonline.data.source.news;
+package it.unimib.fipavonline.data.source.campionato;
 
 /**
  * Base class to get news from a remote source.
