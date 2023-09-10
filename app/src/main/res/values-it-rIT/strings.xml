@@ -54,7 +54,7 @@
     <string name="campionato">Campionato</string>
     <string name="personal_area">Area personale</string>
 
-    <string name="nav_drawer_subtitle">Rimani aggiornato sulle notizie dal mondo</string>
+    <string name="nav_drawer_subtitle">Rimani aggiornato sui campionati di pallavolo</string>
 
     <string name="error_retrieving_api">Errore nel recupero dei dati da API</string>
     <string name="api_key_error">API Key non valida o numero massimo di richieste raggiunto</string>

@@ -57,7 +57,7 @@
     <string name="campionato">Championship</string>
     <string name="personal_area">Personal area</string>
 
-    <string name="nav_drawer_subtitle">Stay tuned for campionato from the world</string>
+    <string name="nav_drawer_subtitle">Stay tuned for campionato from the volley</string>
 
     <string name="error_retrieving_api">Error in retrieving the API data</string>
     <string name="api_key_error">API Key not valid or maximum number of requests reached</string>
