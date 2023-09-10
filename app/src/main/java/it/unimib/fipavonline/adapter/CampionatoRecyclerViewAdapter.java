@@ -67,7 +67,7 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         } else {
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.loading_item, parent, false);
-            return new LoadingNewsViewHolder(view);
+            return new LoadingCampionatoViewHolder(view);
         }
     }
 
@@ -75,8 +75,8 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof NewsViewHolder) {
             ((NewsViewHolder) holder).bind(campionatoList.get(position));
-        } else if (holder instanceof LoadingNewsViewHolder) {
-            ((LoadingNewsViewHolder) holder).activate();
+        } else if (holder instanceof LoadingCampionatoViewHolder) {
+            ((LoadingCampionatoViewHolder) holder).activate();
         }
     }
 
@@ -145,12 +145,12 @@ public class CampionatoRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    public static class LoadingNewsViewHolder extends RecyclerView.ViewHolder {
+    public static class LoadingCampionatoViewHolder extends RecyclerView.ViewHolder {
         private final ProgressBar progressBar;
 
-        LoadingNewsViewHolder(View view) {
+        LoadingCampionatoViewHolder(View view) {
             super(view);
-            progressBar = view.findViewById(R.id.progressbar_loading_news);
+            progressBar = view.findViewById(R.id.progressbar_loading_api);
         }
 
         public void activate() {
