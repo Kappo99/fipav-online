@@ -203,4 +203,25 @@ public class PartitaListFragment extends Fragment {
         super.onDestroyView();
         fragmentPartitaListBinding = null;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        partitaViewModel.resetPartitaResponseLiveData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IPartitaRepositoryWithLiveData partitaRepositoryWithLiveData =
+                ServiceLocator.getInstance().getPartitaRepository(
+                        requireActivity().getApplication(),
+                        requireActivity().getApplication().getResources().getBoolean(R.bool.debug_mode)
+                );
+
+        partitaViewModel = new ViewModelProvider(
+                requireActivity(),
+                new PartitaViewModelFactory(partitaRepositoryWithLiveData)).get(PartitaViewModel.class);
+    }
 }

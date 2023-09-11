@@ -1,5 +1,6 @@
 package it.unimib.fipavonline.data.source.partita;
 
+import static it.unimib.fipavonline.util.Constants.API_DATA_NOT_FOUND_ERROR;
 import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;
 
@@ -57,10 +58,12 @@ public class PartitaRemoteDataSource extends BasePartitaRemoteDataSource {
             public void onResponse(@NonNull Call<PartitaApiResponse> call,
                                    @NonNull Response<PartitaApiResponse> response) {
 
-                if (response.body() != null && response.isSuccessful() &&
-                        response.body().getStatus() == 200) {
-                    partitaCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
-
+                if (response.body() != null && response.isSuccessful()) {
+                    if (response.body().getStatus() == 200) {
+                        partitaCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
+                    } else {
+                        partitaCallback.onFailureFromRemote(new Exception(API_DATA_NOT_FOUND_ERROR));
+                    }
                 } else {
                     partitaCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }

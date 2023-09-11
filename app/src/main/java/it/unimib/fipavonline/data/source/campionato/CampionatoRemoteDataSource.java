@@ -1,5 +1,6 @@
 package it.unimib.fipavonline.data.source.campionato;
 
+import static it.unimib.fipavonline.util.Constants.API_DATA_NOT_FOUND_ERROR;
 import static it.unimib.fipavonline.util.Constants.API_KEY_ERROR;
 import static it.unimib.fipavonline.util.Constants.RETROFIT_ERROR;
 
@@ -35,10 +36,12 @@ public class CampionatoRemoteDataSource extends BaseCampionatoRemoteDataSource {
             public void onResponse(@NonNull Call<CampionatoApiResponse> call,
                                    @NonNull Response<CampionatoApiResponse> response) {
 
-                if (response.body() != null && response.isSuccessful() &&
-                        response.body().getStatus() == 200) {
-                    campionatoCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
-
+                if (response.body() != null && response.isSuccessful()) {
+                    if (response.body().getStatus() == 200) {
+                        campionatoCallback.onSuccessFromRemote(response.body(), System.currentTimeMillis());
+                    } else {
+                        campionatoCallback.onFailureFromRemote(new Exception(API_DATA_NOT_FOUND_ERROR));
+                    }
                 } else {
                     campionatoCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 }

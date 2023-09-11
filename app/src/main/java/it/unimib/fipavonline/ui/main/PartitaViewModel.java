@@ -96,4 +96,8 @@ public class PartitaViewModel extends ViewModel {
     public MutableLiveData<Result> getPartitaResponseLiveData() {
         return partitaListLiveData;
     }
+
+    public void resetPartitaResponseLiveData() {
+        this.partitaListLiveData = null;
+    }
 }
