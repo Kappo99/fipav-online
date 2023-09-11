@@ -18,6 +18,7 @@ import it.unimib.fipavonline.data.repository.partita.PartitaRepositoryWithLiveDa
 import it.unimib.fipavonline.data.repository.user.IUserRepository;
 import it.unimib.fipavonline.data.repository.user.UserRepository;
 import it.unimib.fipavonline.data.service.CampionatoApiService;
+import it.unimib.fipavonline.data.service.PartitaApiService;
 import it.unimib.fipavonline.data.source.campionato.BaseFavoriteCampionatoDataSource;
 import it.unimib.fipavonline.data.source.campionato.BaseCampionatoLocalDataSource;
 import it.unimib.fipavonline.data.source.campionato.BaseCampionatoRemoteDataSource;
