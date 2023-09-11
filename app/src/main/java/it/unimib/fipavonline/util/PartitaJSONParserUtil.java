@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import it.unimib.fipavonline.model.PartitaApiResponse;
-
 /**
  * Utility class to show different ways to parse a JSON file.
  */

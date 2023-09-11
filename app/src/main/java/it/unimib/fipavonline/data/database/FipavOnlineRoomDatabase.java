@@ -13,8 +13,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.unimib.fipavonline.model.Campionato;
-import it.unimib.fipavonline.model.Partita;
-import it.unimib.fipavonline.util.Constants;
 
 /**
  * Main access point for the underlying connection to the local database.
