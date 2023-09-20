@@ -70,7 +70,7 @@ public class PartitaRepositoryWithLiveData implements IPartitaRepositoryWithLive
         if (allPartitaMutableLiveData.getValue() != null && allPartitaMutableLiveData.getValue().isSuccess()) {
             List<Partita> partitaList = ((Result.PartitaResponseSuccess) allPartitaMutableLiveData.getValue()).getData().getPartitaList();
             partitaList.addAll(partitaApiResponse.getPartitaList());
-            partitaApiResponse.setPartitaList(partitaList);
+//            partitaApiResponse.setPartitaList(partitaList);
             Result.PartitaResponseSuccess result = new Result.PartitaResponseSuccess(partitaApiResponse);
             allPartitaMutableLiveData.postValue(result);
         } else {

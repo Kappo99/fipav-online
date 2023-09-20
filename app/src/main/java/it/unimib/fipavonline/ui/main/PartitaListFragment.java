@@ -151,20 +151,22 @@ public class PartitaListFragment extends Fragment {
 
                     if (!partitaViewModel.isLoading()) {
                         if (partitaViewModel.isFirstLoading()) {
-                            partitaViewModel.setTotalResults(((PartitaApiResponse) partitaResponse).getResults());
+//                            partitaViewModel.setTotalResults(((PartitaApiResponse) partitaResponse).getResults());
                             partitaViewModel.setFirstLoading(false);
                             this.partitaList.addAll(fetchedPartita);
-                            partitaRecyclerViewAdapter.notifyItemRangeInserted(0,
-                                    this.partitaList.size());
+//                            partitaRecyclerViewAdapter.notifyItemRangeInserted(0,
+//                                    this.partitaList.size());
+                            partitaRecyclerViewAdapter.notifyDataSetChanged();
                         } else {
                             partitaList.clear();
                             partitaList.addAll(fetchedPartita);
-                            partitaRecyclerViewAdapter.notifyItemChanged(0, fetchedPartita.size());
+//                            partitaRecyclerViewAdapter.notifyItemChanged(0, fetchedPartita.size());
+                            partitaRecyclerViewAdapter.notifyDataSetChanged();
                         }
                         fragmentPartitaListBinding.progressBar.setVisibility(View.GONE);
                     } else {
                         partitaViewModel.setLoading(false);
-                        partitaViewModel.setCurrentResults(partitaList.size());
+//                        partitaViewModel.setCurrentResults(partitaList.size());
                         partitaRecyclerViewAdapter.notifyDataSetChanged();
                     }
                 } else {

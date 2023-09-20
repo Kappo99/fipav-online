@@ -15,17 +15,12 @@ public class PartitaViewModel extends ViewModel {
     private static final String TAG = PartitaViewModel.class.getSimpleName();
 
     private final IPartitaRepositoryWithLiveData partitaRepositoryWithLiveData;
-    private int page;
-    private int currentResults;
-    private int totalResults;
     private boolean isLoading;
     private boolean firstLoading;
     private MutableLiveData<Result> partitaListLiveData;
 
     public PartitaViewModel(IPartitaRepositoryWithLiveData iPartitaRepositoryWithLiveData) {
         this.partitaRepositoryWithLiveData = iPartitaRepositoryWithLiveData;
-        this.page = 1;
-        this.totalResults = 0;
         this.firstLoading = true;
     }
 
@@ -51,30 +46,6 @@ public class PartitaViewModel extends ViewModel {
      */
     private void fetchPartita(long lastUpdate) {
         partitaListLiveData = partitaRepositoryWithLiveData.fetchPartita(lastUpdate);
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getTotalResults() {
-        return totalResults;
-    }
-
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
-    }
-
-    public int getCurrentResults() {
-        return currentResults;
-    }
-
-    public void setCurrentResults(int currentResults) {
-        this.currentResults = currentResults;
     }
 
     public boolean isLoading() {
